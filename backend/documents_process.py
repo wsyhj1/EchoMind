@@ -16,6 +16,8 @@ from pathlib import Path
 import uuid
 import hashlib
 import logging
+from functools import lru_cache
+from observability import measure
 from postgresql_client import get_postgresql_client
 
 logger = logging.getLogger(__name__)
@@ -150,10 +152,6 @@ class DocumentProcessor:
             None, process_all_sync
         )
 
-        logger.info(
-            f"==========文本分块完成: 文件={filename}, 父块数={len(parent_data_list)}, 子块数={len(all_child_items)}=========="
-        )
-
         if not parent_data_list:
             logger.warning(f"文件 {filename} 加载或分割后无内容")
             return
@@ -172,19 +170,23 @@ class DocumentProcessor:
         existing_hashes = await self.hash_storage.batch_check_duplicates(
             all_hashes, file_hash, knowledge_base_id, user_id
         )
+        logger.info("shared_child_hashes=%d; preserving independent source rows", len(existing_hashes))
 
-        # ========== 3. 过滤出新子块（未被其他文件使用过的） ==========
+        # Every source needs its own row. Only deduplicate within the same parent;
+        # shared text vectors can be reused by the Milvus manager.
         new_child_items = []
         new_hashes = []
+        seen_sources = set()
 
         for child_chunk in all_child_items:
             child_hash = hashlib.sha256(child_chunk.page_content.encode()).hexdigest()
-            if child_hash in existing_hashes:
-                logger.debug(f"子块已被其他文件使用，跳过: {child_hash[:16]}...")
+            source_key = child_chunk.metadata["parent_id"], child_hash
+            if source_key in seen_sources:
                 continue
-
+            seen_sources.add(source_key)
             new_child_items.append(child_chunk)
-            new_hashes.append(child_hash)
+            if child_hash not in new_hashes:
+                new_hashes.append(child_hash)
 
         # ========== 4-6. 并行执行独立的数据库操作 ==========
         # 注意：批量添加新哈希依赖文件元数据（已存在），可以与 Milvus 和 PostgreSQL 并行
@@ -198,7 +200,7 @@ class DocumentProcessor:
                 )
             )
         
-        # 任务2：批量插入 Milvus 数据库（只插入新子块）
+        # 任务2：批量插入 Milvus 来源行，向量由 manager 去重/复用
         if new_child_items:
             milvus_client = await self._get_milvus_client()
             tasks.append(
@@ -227,6 +229,19 @@ class DocumentProcessor:
         
         logger.info(f"==========批量插入 {len(parent_data_list)} 个父块到postgresql完成==========")
 
+        from rag.settings import env_bool
+        if env_bool("GRAPH_EXTRACTION_ENABLED"):
+            try:
+                from graph.repository import GraphRepository
+                from graph.settings import GraphSettings
+                repository = GraphRepository(postgresql_client.pool)
+                await repository.initialize()
+                await repository.enqueue(user_id, knowledge_base_id, file_hash, GraphSettings.from_env().version)
+            except Exception as error:
+                # The vector index remains usable. CLI backfill can recover a
+                # failed enqueue, without treating the upload as a failed vector index.
+                logger.warning("graph_enqueue_failed error_type=%s", type(error).__name__)
+
         # 清理临时文件
         tempProcessor = TempDocumentProcessor()
         await tempProcessor.delete_temp_file(temp_file_path)
@@ -239,6 +254,13 @@ class DocumentProcessor:
                 "new_chunks": len(new_child_items),
             }
         ]
+
+
+@lru_cache(maxsize=1)
+def _rerank_ssl_context():
+    # Preserve HTTPX's CA/environment policy, including certificate verification.
+    # Rebuilding it for the default and proxy transports blocks this Windows host.
+    return httpx.create_ssl_context()
 
 
 async def rerank_documents(query: str, documents: list, top_n=5):
@@ -275,8 +297,13 @@ async def rerank_documents(query: str, documents: list, top_n=5):
 
     for attempt in range(max_retries):
         try:
-            async with httpx.AsyncClient(timeout=3.0) as client:  # 3秒超时
-                response = await client.post(url, headers=headers, json=payload)
+            tls_context = await asyncio.to_thread(_rerank_ssl_context)
+            async with httpx.AsyncClient(timeout=3.0, verify=tls_context) as client:  # 3秒超时
+                with measure("rerank_attempt", "knowledge", attempt=attempt + 1) as attempt_span:
+                    response = await client.post(url, headers=headers, json=payload)
+                    attempt_span["attributes"]["http_status"] = response.status_code
+                    if response.status_code != 200:
+                        attempt_span["status"] = "failed"
 
             if response.status_code == HTTPStatus.OK:
                 return response.json()
@@ -289,7 +316,8 @@ async def rerank_documents(query: str, documents: list, top_n=5):
                     return None
                 else:
                     logger.warning(f"等待 1 秒后重试...")
-                    await asyncio.sleep(1)
+                    with measure("retry_wait", "knowledge"):
+                        await asyncio.sleep(1)
                     continue
 
         except httpx.TimeoutException as e:

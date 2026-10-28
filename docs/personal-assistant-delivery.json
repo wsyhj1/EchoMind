@@ -1,0 +1,109 @@
+{
+  "date": "2026-10-27T23:40:18+08:00",
+  "scope": "personal_assistant_phase_A_to_D",
+  "status": "accepted",
+  "suites": [
+    {
+      "name": "backend",
+      "tests": 241,
+      "seconds": 264.569,
+      "skipped": 0,
+      "result": "OK"
+    },
+    {
+      "name": "frontend",
+      "tests": 67,
+      "seconds": 13.886,
+      "skipped": 0,
+      "result": "OK"
+    },
+    {
+      "name": "backup",
+      "tests": 4,
+      "seconds": 0.203,
+      "skipped": 0,
+      "result": "OK"
+    },
+    {
+      "name": "core_evaluation",
+      "tests": 44,
+      "seconds": 1.044,
+      "skipped": 0,
+      "result": "OK"
+    }
+  ],
+  "total_tests": 356,
+  "all_suites_passed": true,
+  "skipped_tests": 0,
+  "source_sha256": {
+    "backend/assistant/__init__.py": "08a50eaf3cc5da5eefca59e3ba961263af1ba4d8a5d197f019218417bcef294e",
+    "backend/assistant/models.py": "182cf9b89d0d1fe9bbdad62127b2be3c342030e0e4caea7df2b4e607cb7e6f40",
+    "backend/assistant/store.py": "8f5dc2fab0db61ffdb7e835cc7e96d190d570e1261835b2f6b15b6295627f78c",
+    "backend/assistant/service.py": "0154a102b3eb27213272bcaeb1c4d46d08dd72e13d696e30ed270940ff7d905f",
+    "backend/assistant/tools.py": "67cc61a7687009af19be128e424b0bafdd4b61e377a823abc514f111d2408de6",
+    "backend/assistant_api.py": "2eeadff08ac6b26430376566c905656c55808b687bd0df67baf05dcda47a6d67",
+    "backend/migrations/010_personal_assistant.sql": "1b7bac9c3fb17bbe4ca8e8c69c1a61693df27bce5cce96fc2ff69cb3a429a852",
+    "backend/main.py": "6b69f43489ee6f9b3c91b7354777261e2fcba125b58a46bf7bbbc42ef4fbeb52",
+    "backend/agent.py": "e2add1b868eda652dd39481cae7171e59ed80b9e4ca499fbfa6730359f2d6d46",
+    "backend/schemas.py": "1b06433b8e02a2b7b8b4b799156f0958a0e7b3f3610df9544020d20e425b1241",
+    "backend/conversations_api.py": "fef3b610a5272726f12669ee889942bc5bb88d8610aa90499d54c3f6d18b2cb8",
+    "frontend/assistant_ui.py": "c880904247f22e6c8f0a8ce656dc9077d17268b3b1f3b5f2d2dcbfe4b41a85d2",
+    "frontend/app.py": "caa295d09784c0b7a715af6249fbbd0fbaf88809c0674a304c9c003552e1945c",
+    "frontend/conversations_ui.py": "88ff7533bcb1e5cf6bd94823b4c8332daa4a5b49aee177c383bafff21ef48593",
+    "frontend/style.css": "b13907b6c70d8e2f6241b7f75de30de06f6992686831c9291cbe94cb0e120fb0",
+    "scripts/seed_personal_assistant_demo.py": "0d618bb707115869c1ed83148bf6592dfd8aa52ea2d9c5a20a4afb429cd02fd5",
+    "backend/tests/test_personal_assistant.py": "b1d0b29bda48550b79f7fb46bad8ecd71ff4f54b6d7a48731a4425fb2ca4a2ea",
+    "backend/tests/test_personal_assistant_agent.py": "427b34452788b06f5f71d4e579f88f1d4ffb2acf731a8178f2ee8d986ddd6e71",
+    "frontend/tests/test_personal_assistant_ui.py": "96e90cddf43b2ffef0797b1183ca064b335df13db87b4ef73e83842a62d6c184",
+    "frontend/tests/test_workspace_ui.py": "27c3c9aeb82d98d4db7d3de0bbb93e4d27bb3b6678c576a255d2edd1e052ee9d"
+  },
+  "test_log_sha256": "cc573cea35108986c1317547c3c8e1d0b838205ecf6a984cc102ba832151f25e",
+  "browser_checks": {
+    "model_chat_sent": false,
+    "project_id": "ae5530aa-2f4c-4c28-91aa-6d3c092ddfbe",
+    "checks": {
+      "desktop_project_loaded": true,
+      "real_form_saved_note": true,
+      "review_generated_from_events": true,
+      "project_chat_opened_without_model_call": true,
+      "return_from_chat": true,
+      "reload_keeps_project_state": true,
+      "mobile_no_horizontal_overflow": {
+        "width": 390,
+        "client": 390,
+        "scroll": 390
+      }
+    },
+    "desktop_screenshot": "E:\\codex demo\\Echo Mind\\outputs\\personal-assistant\\workbench-desktop.png",
+    "review_screenshot": "E:\\codex demo\\Echo Mind\\outputs\\personal-assistant\\review-desktop.png",
+    "mobile_screenshot": "E:\\codex demo\\Echo Mind\\outputs\\personal-assistant\\workbench-mobile.png",
+    "final_project_revision": 9,
+    "final_note_count": 3
+  },
+  "demo": {
+    "labelled_synthetic": true,
+    "project_id": "ae5530aa-2f4c-4c28-91aa-6d3c092ddfbe",
+    "revision": 9,
+    "tasks": 4,
+    "current_notes": 3,
+    "seed_replay_verified": true,
+    "workspace_url": "http://127.0.0.1:8501/?project=ae5530aa-2f4c-4c28-91aa-6d3c092ddfbe"
+  },
+  "runtime": {
+    "backend_health": "ok",
+    "frontend_health": "ok",
+    "listen_scope": "loopback",
+    "services_left_running": true
+  },
+  "provider_validation": "offline_model_substitute_only",
+  "quality_claims": {
+    "real_model_planning_quality": null,
+    "one_week_user_effectiveness": null,
+    "production_sla": null
+  },
+  "limitations": [
+    "No timed reminders, notification delivery, or external calendar integration in this phase.",
+    "Completion evidence is a user report, not independent verification.",
+    "Rule-based recovery and event review do not call models; ordinary project chat uses existing configured providers."
+  ]
+}

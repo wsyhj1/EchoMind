@@ -1,0 +1,4265 @@
+{
+  "review_type": "agent_review",
+  "review_version": "echomind-gold-agent-review-2026-10-23-v1",
+  "review_date": "2026-10-23",
+  "human_reviewed": false,
+  "human_gate_passed": false,
+  "method": "One subagent examined every query against all 16 fixture source texts; deterministic assertions check quote, scope, generator equality and input preservation. No runtime LLM judge was called; no live user data was read.",
+  "inputs": {
+    "evaluation\\datasets\\rag_v1.jsonl": "2d1dcde0b4ef2f3f67c3957f8d34568af8631d440f933f415e832bc2cab485eb",
+    "evaluation\\rag_fixtures.py": "647ddb3cd2acbb4b85279aec587a944ab2e5fd54ef173a6875f4b38141beed1a"
+  },
+  "dataset_v2": {
+    "path": "evaluation\\datasets\\rag_v2_agent_reviewed.jsonl",
+    "sha256": "d924d74baa233dde7b709bea2f4fa3c2258f474d7b464453e484e297d832e246",
+    "dataset_version": "echomind-rag-gold-v2-agent-reviewed",
+    "corpus_version": "echomind-synthetic-v1",
+    "as_of": "2026-10-23"
+  },
+  "summary": {
+    "questions_reviewed": 100,
+    "source_documents_reviewed": 16,
+    "answerable": 88,
+    "unanswerable_or_out_of_scope": 12,
+    "false_fact_answers_found": 0,
+    "out_of_scope_gold_sources_found": 0,
+    "verdicts": {
+      "accept_with_notes": 19,
+      "accept": 61,
+      "revise_annotation": 20
+    },
+    "categories": {
+      "single_fact": 20,
+      "multi_hop": 20,
+      "multi_evidence": 20,
+      "ambiguous": 15,
+      "distractor": 10,
+      "unanswerable": 10,
+      "isolation": 5
+    },
+    "finding_counts": {
+      "entity_alias_normalization": 7,
+      "short_alias_context_risk": 4,
+      "chain_answer_incomplete": 4,
+      "mandatory_precondition_omitted": 12,
+      "category_is_paraphrase": 15,
+      "unit_normalization": 4,
+      "negative_evidence_policy": 2,
+      "unnecessary_required_source": 2,
+      "relative_time_not_frozen": 2
+    },
+    "query_changed_ids": [
+      "Q082",
+      "Q093"
+    ],
+    "retrieval_evidence_replay_eligible_count": 98
+  },
+  "limitations": [
+    "Agent review is not human review and cannot satisfy a gate explicitly requiring a human.",
+    "A review of synthetic Gold validates labels, not model answer accuracy or production generalization.",
+    "No physical extraction/PDF layout audit, live retrieval rerun or 100-answer judge run was performed here.",
+    "The corpus has no genuine same-time same-instance owner conflict, little fragmentation and only four repeated operational templates.",
+    "Alias clarification tolerance is documented but existing answer metrics do not execute this nuanced rubric."
+  ],
+  "questions": [
+    {
+      "question_id": "Q001",
+      "query": "订单系统使用哪个缓存集群？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_architecture"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_architecture"
+        ]
+      ],
+      "expected_claims": [
+        "订单系统使用赤霄缓存集群"
+      ],
+      "findings": [
+        {
+          "code": "entity_alias_normalization",
+          "severity": "nonblocking_note",
+          "explanation": "Gold使用集群短名，原文完整名包含‘缓存集群’。",
+          "correction": "v2保留别名答案，评分允许唯一短名及完整实体名。"
+        }
+      ],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "赤霄"
+    },
+    {
+      "question_id": "Q002",
+      "query": "订单系统的缓存有效期是多少秒？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_architecture"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_architecture"
+        ]
+      ],
+      "expected_claims": [
+        "订单系统缓存有效期为7200秒"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "7200"
+    },
+    {
+      "question_id": "Q003",
+      "query": "赤霄缓存集群由谁维护？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "赤霄缓存集群由基础设施甲组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "基础设施甲组"
+    },
+    {
+      "question_id": "Q004",
+      "query": "赤霄缓存集群的典型故障是什么？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "赤霄缓存集群典型故障为连接池耗尽"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "连接池耗尽"
+    },
+    {
+      "question_id": "Q005",
+      "query": "赤霄处理故障前必须做什么？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "执行前必须备份实例配置"
+      ],
+      "findings": [
+        {
+          "code": "short_alias_context_risk",
+          "severity": "nonblocking_note",
+          "explanation": "短名‘赤霄’在语料中同时出现在生产实例和演练实例名；本题按完整实例可用别名解释可支持现有答案，但独立问句未完全消除别名歧义。",
+          "correction": "后续扩展基准时显式区分唯一短名与真正歧义；当前v2保留题目，审核说明允许澄清或给出限定。"
+        }
+      ],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "备份实例配置"
+    },
+    {
+      "question_id": "Q006",
+      "query": "支付系统使用哪个缓存集群？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_architecture"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_architecture"
+        ]
+      ],
+      "expected_claims": [
+        "支付系统使用青岚缓存集群"
+      ],
+      "findings": [
+        {
+          "code": "entity_alias_normalization",
+          "severity": "nonblocking_note",
+          "explanation": "Gold使用集群短名，原文完整名包含‘缓存集群’。",
+          "correction": "v2保留别名答案，评分允许唯一短名及完整实体名。"
+        }
+      ],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "青岚"
+    },
+    {
+      "question_id": "Q007",
+      "query": "支付系统的缓存有效期是多少秒？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_architecture"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_architecture"
+        ]
+      ],
+      "expected_claims": [
+        "支付系统缓存有效期为1800秒"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "1800"
+    },
+    {
+      "question_id": "Q008",
+      "query": "青岚缓存集群由谁维护？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "青岚缓存集群由支付平台乙组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "支付平台乙组"
+    },
+    {
+      "question_id": "Q009",
+      "query": "青岚缓存集群的典型故障是什么？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "青岚缓存集群典型故障为主从切换"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "主从切换"
+    },
+    {
+      "question_id": "Q010",
+      "query": "青岚处理故障前必须做什么？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "执行前必须备份实例配置"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "备份实例配置"
+    },
+    {
+      "question_id": "Q011",
+      "query": "库存系统使用哪个缓存集群？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_architecture"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_architecture"
+        ]
+      ],
+      "expected_claims": [
+        "库存系统使用白泽缓存集群"
+      ],
+      "findings": [
+        {
+          "code": "entity_alias_normalization",
+          "severity": "nonblocking_note",
+          "explanation": "Gold使用集群短名，原文完整名包含‘缓存集群’。",
+          "correction": "v2保留别名答案，评分允许唯一短名及完整实体名。"
+        }
+      ],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "白泽"
+    },
+    {
+      "question_id": "Q012",
+      "query": "库存系统的缓存有效期是多少秒？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_architecture"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_architecture"
+        ]
+      ],
+      "expected_claims": [
+        "库存系统缓存有效期为3600秒"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "3600"
+    },
+    {
+      "question_id": "Q013",
+      "query": "白泽缓存集群由谁维护？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "白泽缓存集群由仓储技术丙组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "仓储技术丙组"
+    },
+    {
+      "question_id": "Q014",
+      "query": "白泽缓存集群的典型故障是什么？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "白泽缓存集群典型故障为缓存击穿"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "缓存击穿"
+    },
+    {
+      "question_id": "Q015",
+      "query": "白泽处理故障前必须做什么？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "执行前必须备份实例配置"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "备份实例配置"
+    },
+    {
+      "question_id": "Q016",
+      "query": "物流系统使用哪个缓存集群？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "shipping_architecture"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "shipping_architecture"
+        ]
+      ],
+      "expected_claims": [
+        "物流系统使用玄鹤缓存集群"
+      ],
+      "findings": [
+        {
+          "code": "entity_alias_normalization",
+          "severity": "nonblocking_note",
+          "explanation": "Gold使用集群短名，原文完整名包含‘缓存集群’。",
+          "correction": "v2保留别名答案，评分允许唯一短名及完整实体名。"
+        }
+      ],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "玄鹤"
+    },
+    {
+      "question_id": "Q017",
+      "query": "物流系统的缓存有效期是多少秒？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "shipping_architecture"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "shipping_architecture"
+        ]
+      ],
+      "expected_claims": [
+        "物流系统缓存有效期为900秒"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "900"
+    },
+    {
+      "question_id": "Q018",
+      "query": "玄鹤缓存集群由谁维护？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "shipping_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "shipping_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "玄鹤缓存集群由履约服务丁组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "履约服务丁组"
+    },
+    {
+      "question_id": "Q019",
+      "query": "玄鹤缓存集群的典型故障是什么？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "shipping_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "shipping_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "玄鹤缓存集群典型故障为内存告警"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "内存告警"
+    },
+    {
+      "question_id": "Q020",
+      "query": "玄鹤处理故障前必须做什么？",
+      "category": "single_fact",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "shipping_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "shipping_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "执行前必须备份实例配置"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "备份实例配置"
+    },
+    {
+      "question_id": "Q021",
+      "query": "订单系统使用的缓存由哪个团队维护？",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_architecture",
+        "order_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_architecture",
+          "order_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "订单系统使用赤霄缓存集群",
+        "赤霄缓存集群由基础设施甲组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "基础设施甲组"
+    },
+    {
+      "question_id": "Q022",
+      "query": "谁负责订单系统依赖的缓存实例？",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_architecture",
+        "order_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_architecture",
+          "order_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "订单系统使用赤霄缓存集群",
+        "赤霄缓存集群由基础设施甲组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "基础设施甲组"
+    },
+    {
+      "question_id": "Q023",
+      "query": "订单系统缓存出问题应找哪个维护组？",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_architecture",
+        "order_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_architecture",
+          "order_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "订单系统使用赤霄缓存集群",
+        "赤霄缓存集群由基础设施甲组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "基础设施甲组"
+    },
+    {
+      "question_id": "Q024",
+      "query": "查找订单系统到缓存维护团队的关系链。",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": true
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_architecture",
+        "order_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_architecture",
+          "order_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "订单系统使用赤霄缓存集群",
+        "赤霄缓存集群由基础设施甲组维护"
+      ],
+      "findings": [
+        {
+          "code": "chain_answer_incomplete",
+          "severity": "answer_rubric",
+          "explanation": "问题明确要求关系链，Gold只写末端团队；证据两份均正确且必要。",
+          "correction": "Gold答案写为系统→具体缓存集群→维护团队。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "订单系统→赤霄缓存集群→基础设施甲组"
+    },
+    {
+      "question_id": "Q025",
+      "query": "订单系统的生产缓存归哪个团队管？",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_architecture",
+        "order_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_architecture",
+          "order_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "订单系统使用赤霄缓存集群",
+        "赤霄缓存集群由基础设施甲组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "基础设施甲组"
+    },
+    {
+      "question_id": "Q026",
+      "query": "支付系统使用的缓存由哪个团队维护？",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_architecture",
+        "payment_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_architecture",
+          "payment_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "支付系统使用青岚缓存集群",
+        "青岚缓存集群由支付平台乙组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "支付平台乙组"
+    },
+    {
+      "question_id": "Q027",
+      "query": "谁负责支付系统依赖的缓存实例？",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_architecture",
+        "payment_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_architecture",
+          "payment_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "支付系统使用青岚缓存集群",
+        "青岚缓存集群由支付平台乙组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "支付平台乙组"
+    },
+    {
+      "question_id": "Q028",
+      "query": "支付系统缓存出问题应找哪个维护组？",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_architecture",
+        "payment_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_architecture",
+          "payment_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "支付系统使用青岚缓存集群",
+        "青岚缓存集群由支付平台乙组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "支付平台乙组"
+    },
+    {
+      "question_id": "Q029",
+      "query": "查找支付系统到缓存维护团队的关系链。",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": true
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_architecture",
+        "payment_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_architecture",
+          "payment_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "支付系统使用青岚缓存集群",
+        "青岚缓存集群由支付平台乙组维护"
+      ],
+      "findings": [
+        {
+          "code": "chain_answer_incomplete",
+          "severity": "answer_rubric",
+          "explanation": "问题明确要求关系链，Gold只写末端团队；证据两份均正确且必要。",
+          "correction": "Gold答案写为系统→具体缓存集群→维护团队。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "支付系统→青岚缓存集群→支付平台乙组"
+    },
+    {
+      "question_id": "Q030",
+      "query": "支付系统的生产缓存归哪个团队管？",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_architecture",
+        "payment_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_architecture",
+          "payment_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "支付系统使用青岚缓存集群",
+        "青岚缓存集群由支付平台乙组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "支付平台乙组"
+    },
+    {
+      "question_id": "Q031",
+      "query": "库存系统使用的缓存由哪个团队维护？",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_architecture",
+        "stock_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_architecture",
+          "stock_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "库存系统使用白泽缓存集群",
+        "白泽缓存集群由仓储技术丙组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "仓储技术丙组"
+    },
+    {
+      "question_id": "Q032",
+      "query": "谁负责库存系统依赖的缓存实例？",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_architecture",
+        "stock_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_architecture",
+          "stock_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "库存系统使用白泽缓存集群",
+        "白泽缓存集群由仓储技术丙组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "仓储技术丙组"
+    },
+    {
+      "question_id": "Q033",
+      "query": "库存系统缓存出问题应找哪个维护组？",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_architecture",
+        "stock_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_architecture",
+          "stock_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "库存系统使用白泽缓存集群",
+        "白泽缓存集群由仓储技术丙组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "仓储技术丙组"
+    },
+    {
+      "question_id": "Q034",
+      "query": "查找库存系统到缓存维护团队的关系链。",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": true
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_architecture",
+        "stock_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_architecture",
+          "stock_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "库存系统使用白泽缓存集群",
+        "白泽缓存集群由仓储技术丙组维护"
+      ],
+      "findings": [
+        {
+          "code": "chain_answer_incomplete",
+          "severity": "answer_rubric",
+          "explanation": "问题明确要求关系链，Gold只写末端团队；证据两份均正确且必要。",
+          "correction": "Gold答案写为系统→具体缓存集群→维护团队。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "库存系统→白泽缓存集群→仓储技术丙组"
+    },
+    {
+      "question_id": "Q035",
+      "query": "库存系统的生产缓存归哪个团队管？",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_architecture",
+        "stock_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_architecture",
+          "stock_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "库存系统使用白泽缓存集群",
+        "白泽缓存集群由仓储技术丙组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "仓储技术丙组"
+    },
+    {
+      "question_id": "Q036",
+      "query": "物流系统使用的缓存由哪个团队维护？",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "shipping_architecture",
+        "shipping_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "shipping_architecture",
+          "shipping_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "物流系统使用玄鹤缓存集群",
+        "玄鹤缓存集群由履约服务丁组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "履约服务丁组"
+    },
+    {
+      "question_id": "Q037",
+      "query": "谁负责物流系统依赖的缓存实例？",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "shipping_architecture",
+        "shipping_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "shipping_architecture",
+          "shipping_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "物流系统使用玄鹤缓存集群",
+        "玄鹤缓存集群由履约服务丁组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "履约服务丁组"
+    },
+    {
+      "question_id": "Q038",
+      "query": "物流系统缓存出问题应找哪个维护组？",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "shipping_architecture",
+        "shipping_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "shipping_architecture",
+          "shipping_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "物流系统使用玄鹤缓存集群",
+        "玄鹤缓存集群由履约服务丁组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "履约服务丁组"
+    },
+    {
+      "question_id": "Q039",
+      "query": "查找物流系统到缓存维护团队的关系链。",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": true
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "shipping_architecture",
+        "shipping_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "shipping_architecture",
+          "shipping_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "物流系统使用玄鹤缓存集群",
+        "玄鹤缓存集群由履约服务丁组维护"
+      ],
+      "findings": [
+        {
+          "code": "chain_answer_incomplete",
+          "severity": "answer_rubric",
+          "explanation": "问题明确要求关系链，Gold只写末端团队；证据两份均正确且必要。",
+          "correction": "Gold答案写为系统→具体缓存集群→维护团队。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "物流系统→玄鹤缓存集群→履约服务丁组"
+    },
+    {
+      "question_id": "Q040",
+      "query": "物流系统的生产缓存归哪个团队管？",
+      "category": "multi_hop",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "shipping_architecture",
+        "shipping_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "shipping_architecture",
+          "shipping_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "物流系统使用玄鹤缓存集群",
+        "玄鹤缓存集群由履约服务丁组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "履约服务丁组"
+    },
+    {
+      "question_id": "Q041",
+      "query": "订单系统的缓存谁维护，连接池耗尽怎么处理？",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": true
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_architecture",
+        "order_ownership",
+        "order_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_architecture",
+          "order_ownership",
+          "order_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "订单系统使用赤霄缓存集群",
+        "赤霄缓存集群由基础设施甲组维护",
+        "遇到连接池耗尽时：限制突发请求，再将连接池上限调整到128，最后检查慢查询",
+        "执行前必须备份实例配置"
+      ],
+      "findings": [
+        {
+          "code": "mandatory_precondition_omitted",
+          "severity": "answer_rubric",
+          "explanation": "Gold列出的操作动作均有原文支持，但未包含同份手册明确的强制前置备份；不能把这些短答案当作完整可执行操作答案。",
+          "correction": "Gold答案在操作步骤前增加‘执行前必须备份实例配置’，保留步骤顺序及实例/故障限定。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "基础设施甲组；执行前必须备份实例配置；限制突发请求，再将连接池上限调整到128，最后检查慢查询"
+    },
+    {
+      "question_id": "Q042",
+      "query": "订单系统缓存多久过期，谁负责？",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_architecture",
+        "order_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_architecture",
+          "order_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "订单系统使用赤霄缓存集群",
+        "订单系统缓存有效期为7200秒",
+        "赤霄缓存集群由基础设施甲组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "7200秒；基础设施甲组"
+    },
+    {
+      "question_id": "Q043",
+      "query": "订单系统缓存集群叫什么，典型故障是什么？",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_architecture",
+        "order_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_architecture",
+          "order_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "订单系统使用赤霄缓存集群",
+        "赤霄缓存集群典型故障为连接池耗尽"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "赤霄；连接池耗尽"
+    },
+    {
+      "question_id": "Q044",
+      "query": "赤霄由谁维护，处理故障前做什么？",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_ownership",
+        "order_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_ownership",
+          "order_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "赤霄缓存集群由基础设施甲组维护",
+        "执行前必须备份实例配置"
+      ],
+      "findings": [
+        {
+          "code": "short_alias_context_risk",
+          "severity": "nonblocking_note",
+          "explanation": "短名‘赤霄’在语料中同时出现在生产实例和演练实例名；本题按完整实例可用别名解释可支持现有答案，但独立问句未完全消除别名歧义。",
+          "correction": "后续扩展基准时显式区分唯一短名与真正歧义；当前v2保留题目，审核说明允许澄清或给出限定。"
+        }
+      ],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "基础设施甲组；备份实例配置"
+    },
+    {
+      "question_id": "Q045",
+      "query": "说明订单系统的缓存名称、维护组和排障步骤。",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": true
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_architecture",
+        "order_ownership",
+        "order_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_architecture",
+          "order_ownership",
+          "order_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "订单系统使用赤霄缓存集群",
+        "赤霄缓存集群由基础设施甲组维护",
+        "遇到连接池耗尽时：限制突发请求，再将连接池上限调整到128，最后检查慢查询",
+        "执行前必须备份实例配置"
+      ],
+      "findings": [
+        {
+          "code": "mandatory_precondition_omitted",
+          "severity": "answer_rubric",
+          "explanation": "Gold列出的操作动作均有原文支持，但未包含同份手册明确的强制前置备份；不能把这些短答案当作完整可执行操作答案。",
+          "correction": "Gold答案在操作步骤前增加‘执行前必须备份实例配置’，保留步骤顺序及实例/故障限定。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "赤霄；基础设施甲组；执行前必须备份实例配置；限制突发请求，再将连接池上限调整到128，最后检查慢查询"
+    },
+    {
+      "question_id": "Q046",
+      "query": "支付系统的缓存谁维护，主从切换怎么处理？",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": true
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_architecture",
+        "payment_ownership",
+        "payment_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_architecture",
+          "payment_ownership",
+          "payment_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "支付系统使用青岚缓存集群",
+        "青岚缓存集群由支付平台乙组维护",
+        "遇到主从切换时：暂停写入，确认新主节点可写，然后恢复流量",
+        "执行前必须备份实例配置"
+      ],
+      "findings": [
+        {
+          "code": "mandatory_precondition_omitted",
+          "severity": "answer_rubric",
+          "explanation": "Gold列出的操作动作均有原文支持，但未包含同份手册明确的强制前置备份；不能把这些短答案当作完整可执行操作答案。",
+          "correction": "Gold答案在操作步骤前增加‘执行前必须备份实例配置’，保留步骤顺序及实例/故障限定。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "支付平台乙组；执行前必须备份实例配置；暂停写入，确认新主节点可写，然后恢复流量"
+    },
+    {
+      "question_id": "Q047",
+      "query": "支付系统缓存多久过期，谁负责？",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_architecture",
+        "payment_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_architecture",
+          "payment_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "支付系统使用青岚缓存集群",
+        "支付系统缓存有效期为1800秒",
+        "青岚缓存集群由支付平台乙组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "1800秒；支付平台乙组"
+    },
+    {
+      "question_id": "Q048",
+      "query": "支付系统缓存集群叫什么，典型故障是什么？",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_architecture",
+        "payment_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_architecture",
+          "payment_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "支付系统使用青岚缓存集群",
+        "青岚缓存集群典型故障为主从切换"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "青岚；主从切换"
+    },
+    {
+      "question_id": "Q049",
+      "query": "青岚由谁维护，处理故障前做什么？",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_ownership",
+        "payment_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_ownership",
+          "payment_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "青岚缓存集群由支付平台乙组维护",
+        "执行前必须备份实例配置"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "支付平台乙组；备份实例配置"
+    },
+    {
+      "question_id": "Q050",
+      "query": "说明支付系统的缓存名称、维护组和排障步骤。",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": true
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_architecture",
+        "payment_ownership",
+        "payment_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_architecture",
+          "payment_ownership",
+          "payment_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "支付系统使用青岚缓存集群",
+        "青岚缓存集群由支付平台乙组维护",
+        "遇到主从切换时：暂停写入，确认新主节点可写，然后恢复流量",
+        "执行前必须备份实例配置"
+      ],
+      "findings": [
+        {
+          "code": "mandatory_precondition_omitted",
+          "severity": "answer_rubric",
+          "explanation": "Gold列出的操作动作均有原文支持，但未包含同份手册明确的强制前置备份；不能把这些短答案当作完整可执行操作答案。",
+          "correction": "Gold答案在操作步骤前增加‘执行前必须备份实例配置’，保留步骤顺序及实例/故障限定。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "青岚；支付平台乙组；执行前必须备份实例配置；暂停写入，确认新主节点可写，然后恢复流量"
+    },
+    {
+      "question_id": "Q051",
+      "query": "库存系统的缓存谁维护，缓存击穿怎么处理？",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": true
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_architecture",
+        "stock_ownership",
+        "stock_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_architecture",
+          "stock_ownership",
+          "stock_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "库存系统使用白泽缓存集群",
+        "白泽缓存集群由仓储技术丙组维护",
+        "遇到缓存击穿时：启用互斥重建，预热热点键，再恢复正常过期时间",
+        "执行前必须备份实例配置"
+      ],
+      "findings": [
+        {
+          "code": "mandatory_precondition_omitted",
+          "severity": "answer_rubric",
+          "explanation": "Gold列出的操作动作均有原文支持，但未包含同份手册明确的强制前置备份；不能把这些短答案当作完整可执行操作答案。",
+          "correction": "Gold答案在操作步骤前增加‘执行前必须备份实例配置’，保留步骤顺序及实例/故障限定。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "仓储技术丙组；执行前必须备份实例配置；启用互斥重建，预热热点键，再恢复正常过期时间"
+    },
+    {
+      "question_id": "Q052",
+      "query": "库存系统缓存多久过期，谁负责？",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_architecture",
+        "stock_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_architecture",
+          "stock_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "库存系统使用白泽缓存集群",
+        "库存系统缓存有效期为3600秒",
+        "白泽缓存集群由仓储技术丙组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "3600秒；仓储技术丙组"
+    },
+    {
+      "question_id": "Q053",
+      "query": "库存系统缓存集群叫什么，典型故障是什么？",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_architecture",
+        "stock_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_architecture",
+          "stock_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "库存系统使用白泽缓存集群",
+        "白泽缓存集群典型故障为缓存击穿"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "白泽；缓存击穿"
+    },
+    {
+      "question_id": "Q054",
+      "query": "白泽由谁维护，处理故障前做什么？",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_ownership",
+        "stock_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_ownership",
+          "stock_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "白泽缓存集群由仓储技术丙组维护",
+        "执行前必须备份实例配置"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "仓储技术丙组；备份实例配置"
+    },
+    {
+      "question_id": "Q055",
+      "query": "说明库存系统的缓存名称、维护组和排障步骤。",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": true
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_architecture",
+        "stock_ownership",
+        "stock_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_architecture",
+          "stock_ownership",
+          "stock_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "库存系统使用白泽缓存集群",
+        "白泽缓存集群由仓储技术丙组维护",
+        "遇到缓存击穿时：启用互斥重建，预热热点键，再恢复正常过期时间",
+        "执行前必须备份实例配置"
+      ],
+      "findings": [
+        {
+          "code": "mandatory_precondition_omitted",
+          "severity": "answer_rubric",
+          "explanation": "Gold列出的操作动作均有原文支持，但未包含同份手册明确的强制前置备份；不能把这些短答案当作完整可执行操作答案。",
+          "correction": "Gold答案在操作步骤前增加‘执行前必须备份实例配置’，保留步骤顺序及实例/故障限定。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "白泽；仓储技术丙组；执行前必须备份实例配置；启用互斥重建，预热热点键，再恢复正常过期时间"
+    },
+    {
+      "question_id": "Q056",
+      "query": "物流系统的缓存谁维护，内存告警怎么处理？",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": true
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "shipping_architecture",
+        "shipping_ownership",
+        "shipping_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "shipping_architecture",
+          "shipping_ownership",
+          "shipping_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "物流系统使用玄鹤缓存集群",
+        "玄鹤缓存集群由履约服务丁组维护",
+        "遇到内存告警时：停止大键写入，清理临时键，随后评估扩容",
+        "执行前必须备份实例配置"
+      ],
+      "findings": [
+        {
+          "code": "mandatory_precondition_omitted",
+          "severity": "answer_rubric",
+          "explanation": "Gold列出的操作动作均有原文支持，但未包含同份手册明确的强制前置备份；不能把这些短答案当作完整可执行操作答案。",
+          "correction": "Gold答案在操作步骤前增加‘执行前必须备份实例配置’，保留步骤顺序及实例/故障限定。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "履约服务丁组；执行前必须备份实例配置；停止大键写入，清理临时键，随后评估扩容"
+    },
+    {
+      "question_id": "Q057",
+      "query": "物流系统缓存多久过期，谁负责？",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "shipping_architecture",
+        "shipping_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "shipping_architecture",
+          "shipping_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "物流系统使用玄鹤缓存集群",
+        "物流系统缓存有效期为900秒",
+        "玄鹤缓存集群由履约服务丁组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "900秒；履约服务丁组"
+    },
+    {
+      "question_id": "Q058",
+      "query": "物流系统缓存集群叫什么，典型故障是什么？",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "shipping_architecture",
+        "shipping_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "shipping_architecture",
+          "shipping_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "物流系统使用玄鹤缓存集群",
+        "玄鹤缓存集群典型故障为内存告警"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "玄鹤；内存告警"
+    },
+    {
+      "question_id": "Q059",
+      "query": "玄鹤由谁维护，处理故障前做什么？",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "shipping_ownership",
+        "shipping_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "shipping_ownership",
+          "shipping_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "玄鹤缓存集群由履约服务丁组维护",
+        "执行前必须备份实例配置"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "履约服务丁组；备份实例配置"
+    },
+    {
+      "question_id": "Q060",
+      "query": "说明物流系统的缓存名称、维护组和排障步骤。",
+      "category": "multi_evidence",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": true
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "shipping_architecture",
+        "shipping_ownership",
+        "shipping_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "shipping_architecture",
+          "shipping_ownership",
+          "shipping_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "物流系统使用玄鹤缓存集群",
+        "玄鹤缓存集群由履约服务丁组维护",
+        "遇到内存告警时：停止大键写入，清理临时键，随后评估扩容",
+        "执行前必须备份实例配置"
+      ],
+      "findings": [
+        {
+          "code": "mandatory_precondition_omitted",
+          "severity": "answer_rubric",
+          "explanation": "Gold列出的操作动作均有原文支持，但未包含同份手册明确的强制前置备份；不能把这些短答案当作完整可执行操作答案。",
+          "correction": "Gold答案在操作步骤前增加‘执行前必须备份实例配置’，保留步骤顺序及实例/故障限定。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "玄鹤；履约服务丁组；执行前必须备份实例配置；停止大键写入，清理临时键，随后评估扩容"
+    },
+    {
+      "question_id": "Q061",
+      "query": "订单系统缓存的保鲜时长是多少？",
+      "category": "ambiguous",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_architecture"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_architecture"
+        ]
+      ],
+      "expected_claims": [
+        "订单系统缓存有效期为7200秒"
+      ],
+      "findings": [
+        {
+          "code": "category_is_paraphrase",
+          "severity": "nonblocking_note",
+          "explanation": "多数此组题是口语同义改写而非上下文不足的歧义题；类型名不能代表真实消歧能力。",
+          "correction": "保留旧category以方便对照，额外记录reviewed_question_type=paraphrase；扩展集另加实际指代缺失/候选歧义。"
+        },
+        {
+          "code": "unit_normalization",
+          "severity": "nonblocking_note",
+          "explanation": "Gold只有数字；口语‘保鲜时长’未在问题指定秒，完整回答应补全秒或等价时长单位。",
+          "correction": "v2答案补充‘秒’，答案比较允许等价换算，禁止无单位数值被误认完整答案。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "7200秒"
+    },
+    {
+      "question_id": "Q062",
+      "query": "支付系统缓存的保鲜时长是多少？",
+      "category": "ambiguous",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_architecture"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_architecture"
+        ]
+      ],
+      "expected_claims": [
+        "支付系统缓存有效期为1800秒"
+      ],
+      "findings": [
+        {
+          "code": "category_is_paraphrase",
+          "severity": "nonblocking_note",
+          "explanation": "多数此组题是口语同义改写而非上下文不足的歧义题；类型名不能代表真实消歧能力。",
+          "correction": "保留旧category以方便对照，额外记录reviewed_question_type=paraphrase；扩展集另加实际指代缺失/候选歧义。"
+        },
+        {
+          "code": "unit_normalization",
+          "severity": "nonblocking_note",
+          "explanation": "Gold只有数字；口语‘保鲜时长’未在问题指定秒，完整回答应补全秒或等价时长单位。",
+          "correction": "v2答案补充‘秒’，答案比较允许等价换算，禁止无单位数值被误认完整答案。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "1800秒"
+    },
+    {
+      "question_id": "Q063",
+      "query": "库存系统缓存的保鲜时长是多少？",
+      "category": "ambiguous",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_architecture"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_architecture"
+        ]
+      ],
+      "expected_claims": [
+        "库存系统缓存有效期为3600秒"
+      ],
+      "findings": [
+        {
+          "code": "category_is_paraphrase",
+          "severity": "nonblocking_note",
+          "explanation": "多数此组题是口语同义改写而非上下文不足的歧义题；类型名不能代表真实消歧能力。",
+          "correction": "保留旧category以方便对照，额外记录reviewed_question_type=paraphrase；扩展集另加实际指代缺失/候选歧义。"
+        },
+        {
+          "code": "unit_normalization",
+          "severity": "nonblocking_note",
+          "explanation": "Gold只有数字；口语‘保鲜时长’未在问题指定秒，完整回答应补全秒或等价时长单位。",
+          "correction": "v2答案补充‘秒’，答案比较允许等价换算，禁止无单位数值被误认完整答案。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "3600秒"
+    },
+    {
+      "question_id": "Q064",
+      "query": "物流系统缓存的保鲜时长是多少？",
+      "category": "ambiguous",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "shipping_architecture"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "shipping_architecture"
+        ]
+      ],
+      "expected_claims": [
+        "物流系统缓存有效期为900秒"
+      ],
+      "findings": [
+        {
+          "code": "category_is_paraphrase",
+          "severity": "nonblocking_note",
+          "explanation": "多数此组题是口语同义改写而非上下文不足的歧义题；类型名不能代表真实消歧能力。",
+          "correction": "保留旧category以方便对照，额外记录reviewed_question_type=paraphrase；扩展集另加实际指代缺失/候选歧义。"
+        },
+        {
+          "code": "unit_normalization",
+          "severity": "nonblocking_note",
+          "explanation": "Gold只有数字；口语‘保鲜时长’未在问题指定秒，完整回答应补全秒或等价时长单位。",
+          "correction": "v2答案补充‘秒’，答案比较允许等价换算，禁止无单位数值被误认完整答案。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "900秒"
+    },
+    {
+      "question_id": "Q065",
+      "query": "赤霄这个实例谁来管？",
+      "category": "ambiguous",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "赤霄缓存集群由基础设施甲组维护"
+      ],
+      "findings": [
+        {
+          "code": "short_alias_context_risk",
+          "severity": "nonblocking_note",
+          "explanation": "短名‘赤霄’在语料中同时出现在生产实例和演练实例名；本题按完整实例可用别名解释可支持现有答案，但独立问句未完全消除别名歧义。",
+          "correction": "后续扩展基准时显式区分唯一短名与真正歧义；当前v2保留题目，审核说明允许澄清或给出限定。"
+        },
+        {
+          "code": "category_is_paraphrase",
+          "severity": "nonblocking_note",
+          "explanation": "多数此组题是口语同义改写而非上下文不足的歧义题；类型名不能代表真实消歧能力。",
+          "correction": "保留旧category以方便对照，额外记录reviewed_question_type=paraphrase；扩展集另加实际指代缺失/候选歧义。"
+        }
+      ],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "基础设施甲组"
+    },
+    {
+      "question_id": "Q066",
+      "query": "青岚这个实例谁来管？",
+      "category": "ambiguous",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "青岚缓存集群由支付平台乙组维护"
+      ],
+      "findings": [
+        {
+          "code": "category_is_paraphrase",
+          "severity": "nonblocking_note",
+          "explanation": "多数此组题是口语同义改写而非上下文不足的歧义题；类型名不能代表真实消歧能力。",
+          "correction": "保留旧category以方便对照，额外记录reviewed_question_type=paraphrase；扩展集另加实际指代缺失/候选歧义。"
+        }
+      ],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "支付平台乙组"
+    },
+    {
+      "question_id": "Q067",
+      "query": "白泽这个实例谁来管？",
+      "category": "ambiguous",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "白泽缓存集群由仓储技术丙组维护"
+      ],
+      "findings": [
+        {
+          "code": "category_is_paraphrase",
+          "severity": "nonblocking_note",
+          "explanation": "多数此组题是口语同义改写而非上下文不足的歧义题；类型名不能代表真实消歧能力。",
+          "correction": "保留旧category以方便对照，额外记录reviewed_question_type=paraphrase；扩展集另加实际指代缺失/候选歧义。"
+        }
+      ],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "仓储技术丙组"
+    },
+    {
+      "question_id": "Q068",
+      "query": "玄鹤这个实例谁来管？",
+      "category": "ambiguous",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "shipping_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "shipping_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "玄鹤缓存集群由履约服务丁组维护"
+      ],
+      "findings": [
+        {
+          "code": "category_is_paraphrase",
+          "severity": "nonblocking_note",
+          "explanation": "多数此组题是口语同义改写而非上下文不足的歧义题；类型名不能代表真实消歧能力。",
+          "correction": "保留旧category以方便对照，额外记录reviewed_question_type=paraphrase；扩展集另加实际指代缺失/候选歧义。"
+        }
+      ],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "履约服务丁组"
+    },
+    {
+      "question_id": "Q069",
+      "query": "赤霄遇到连接池耗尽有哪些操作？",
+      "category": "ambiguous",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": true
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "赤霄遇到连接池耗尽时：限制突发请求，再将连接池上限调整到128，最后检查慢查询",
+        "执行前必须备份实例配置"
+      ],
+      "findings": [
+        {
+          "code": "mandatory_precondition_omitted",
+          "severity": "answer_rubric",
+          "explanation": "Gold列出的操作动作均有原文支持，但未包含同份手册明确的强制前置备份；不能把这些短答案当作完整可执行操作答案。",
+          "correction": "Gold答案在操作步骤前增加‘执行前必须备份实例配置’，保留步骤顺序及实例/故障限定。"
+        },
+        {
+          "code": "short_alias_context_risk",
+          "severity": "nonblocking_note",
+          "explanation": "短名‘赤霄’在语料中同时出现在生产实例和演练实例名；本题按完整实例可用别名解释可支持现有答案，但独立问句未完全消除别名歧义。",
+          "correction": "后续扩展基准时显式区分唯一短名与真正歧义；当前v2保留题目，审核说明允许澄清或给出限定。"
+        },
+        {
+          "code": "category_is_paraphrase",
+          "severity": "nonblocking_note",
+          "explanation": "多数此组题是口语同义改写而非上下文不足的歧义题；类型名不能代表真实消歧能力。",
+          "correction": "保留旧category以方便对照，额外记录reviewed_question_type=paraphrase；扩展集另加实际指代缺失/候选歧义。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "执行前必须备份实例配置；限制突发请求，再将连接池上限调整到128，最后检查慢查询"
+    },
+    {
+      "question_id": "Q070",
+      "query": "青岚遇到主从切换有哪些操作？",
+      "category": "ambiguous",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": true
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "青岚遇到主从切换时：暂停写入，确认新主节点可写，然后恢复流量",
+        "执行前必须备份实例配置"
+      ],
+      "findings": [
+        {
+          "code": "mandatory_precondition_omitted",
+          "severity": "answer_rubric",
+          "explanation": "Gold列出的操作动作均有原文支持，但未包含同份手册明确的强制前置备份；不能把这些短答案当作完整可执行操作答案。",
+          "correction": "Gold答案在操作步骤前增加‘执行前必须备份实例配置’，保留步骤顺序及实例/故障限定。"
+        },
+        {
+          "code": "category_is_paraphrase",
+          "severity": "nonblocking_note",
+          "explanation": "多数此组题是口语同义改写而非上下文不足的歧义题；类型名不能代表真实消歧能力。",
+          "correction": "保留旧category以方便对照，额外记录reviewed_question_type=paraphrase；扩展集另加实际指代缺失/候选歧义。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "执行前必须备份实例配置；暂停写入，确认新主节点可写，然后恢复流量"
+    },
+    {
+      "question_id": "Q071",
+      "query": "白泽遇到缓存击穿有哪些操作？",
+      "category": "ambiguous",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": true
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "白泽遇到缓存击穿时：启用互斥重建，预热热点键，再恢复正常过期时间",
+        "执行前必须备份实例配置"
+      ],
+      "findings": [
+        {
+          "code": "mandatory_precondition_omitted",
+          "severity": "answer_rubric",
+          "explanation": "Gold列出的操作动作均有原文支持，但未包含同份手册明确的强制前置备份；不能把这些短答案当作完整可执行操作答案。",
+          "correction": "Gold答案在操作步骤前增加‘执行前必须备份实例配置’，保留步骤顺序及实例/故障限定。"
+        },
+        {
+          "code": "category_is_paraphrase",
+          "severity": "nonblocking_note",
+          "explanation": "多数此组题是口语同义改写而非上下文不足的歧义题；类型名不能代表真实消歧能力。",
+          "correction": "保留旧category以方便对照，额外记录reviewed_question_type=paraphrase；扩展集另加实际指代缺失/候选歧义。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "执行前必须备份实例配置；启用互斥重建，预热热点键，再恢复正常过期时间"
+    },
+    {
+      "question_id": "Q072",
+      "query": "玄鹤遇到内存告警有哪些操作？",
+      "category": "ambiguous",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": true
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "shipping_runbook"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "shipping_runbook"
+        ]
+      ],
+      "expected_claims": [
+        "玄鹤遇到内存告警时：停止大键写入，清理临时键，随后评估扩容",
+        "执行前必须备份实例配置"
+      ],
+      "findings": [
+        {
+          "code": "mandatory_precondition_omitted",
+          "severity": "answer_rubric",
+          "explanation": "Gold列出的操作动作均有原文支持，但未包含同份手册明确的强制前置备份；不能把这些短答案当作完整可执行操作答案。",
+          "correction": "Gold答案在操作步骤前增加‘执行前必须备份实例配置’，保留步骤顺序及实例/故障限定。"
+        },
+        {
+          "code": "category_is_paraphrase",
+          "severity": "nonblocking_note",
+          "explanation": "多数此组题是口语同义改写而非上下文不足的歧义题；类型名不能代表真实消歧能力。",
+          "correction": "保留旧category以方便对照，额外记录reviewed_question_type=paraphrase；扩展集另加实际指代缺失/候选歧义。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "执行前必须备份实例配置；停止大键写入，清理临时键，随后评估扩容"
+    },
+    {
+      "question_id": "Q073",
+      "query": "订单系统把业务状态缓存在什么地方？",
+      "category": "ambiguous",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_architecture"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_architecture"
+        ]
+      ],
+      "expected_claims": [
+        "订单系统使用赤霄缓存集群"
+      ],
+      "findings": [
+        {
+          "code": "category_is_paraphrase",
+          "severity": "nonblocking_note",
+          "explanation": "多数此组题是口语同义改写而非上下文不足的歧义题；类型名不能代表真实消歧能力。",
+          "correction": "保留旧category以方便对照，额外记录reviewed_question_type=paraphrase；扩展集另加实际指代缺失/候选歧义。"
+        },
+        {
+          "code": "entity_alias_normalization",
+          "severity": "nonblocking_note",
+          "explanation": "Gold使用集群短名，原文完整名包含‘缓存集群’。",
+          "correction": "v2保留别名答案，评分允许唯一短名及完整实体名。"
+        }
+      ],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "赤霄"
+    },
+    {
+      "question_id": "Q074",
+      "query": "支付系统把业务状态缓存在什么地方？",
+      "category": "ambiguous",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "payment_architecture"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "payment_architecture"
+        ]
+      ],
+      "expected_claims": [
+        "支付系统使用青岚缓存集群"
+      ],
+      "findings": [
+        {
+          "code": "category_is_paraphrase",
+          "severity": "nonblocking_note",
+          "explanation": "多数此组题是口语同义改写而非上下文不足的歧义题；类型名不能代表真实消歧能力。",
+          "correction": "保留旧category以方便对照，额外记录reviewed_question_type=paraphrase；扩展集另加实际指代缺失/候选歧义。"
+        },
+        {
+          "code": "entity_alias_normalization",
+          "severity": "nonblocking_note",
+          "explanation": "Gold使用集群短名，原文完整名包含‘缓存集群’。",
+          "correction": "v2保留别名答案，评分允许唯一短名及完整实体名。"
+        }
+      ],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "青岚"
+    },
+    {
+      "question_id": "Q075",
+      "query": "库存系统把业务状态缓存在什么地方？",
+      "category": "ambiguous",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "stock_architecture"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "stock_architecture"
+        ]
+      ],
+      "expected_claims": [
+        "库存系统使用白泽缓存集群"
+      ],
+      "findings": [
+        {
+          "code": "category_is_paraphrase",
+          "severity": "nonblocking_note",
+          "explanation": "多数此组题是口语同义改写而非上下文不足的歧义题；类型名不能代表真实消歧能力。",
+          "correction": "保留旧category以方便对照，额外记录reviewed_question_type=paraphrase；扩展集另加实际指代缺失/候选歧义。"
+        },
+        {
+          "code": "entity_alias_normalization",
+          "severity": "nonblocking_note",
+          "explanation": "Gold使用集群短名，原文完整名包含‘缓存集群’。",
+          "correction": "v2保留别名答案，评分允许唯一短名及完整实体名。"
+        }
+      ],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "白泽"
+    },
+    {
+      "question_id": "Q076",
+      "query": "生产订单系统的缓存是培训组维护的吗？",
+      "category": "distractor",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_architecture",
+        "order_ownership",
+        "decoy"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_architecture",
+          "order_ownership",
+          "decoy"
+        ]
+      ],
+      "expected_claims": [
+        "生产订单系统使用赤霄缓存集群",
+        "培训支持组不维护生产赤霄缓存集群",
+        "赤霄缓存集群由基础设施甲组维护"
+      ],
+      "findings": [
+        {
+          "code": "negative_evidence_policy",
+          "severity": "nonblocking_note",
+          "explanation": "正向‘由甲组维护’本身不严格蕴含其他组绝不共同维护；不能仅凭另一维护组事实作闭世界否定。当前源组同时包含显式否定/职责终止及实际团队。",
+          "correction": "v2沿用原保守必需源组；将来若支持替代证明，先明确逐项声明和排他性政策，再更改评分。"
+        }
+      ],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "不是，生产缓存由基础设施甲组维护"
+    },
+    {
+      "question_id": "Q077",
+      "query": "赤霄演练缓存由谁维护？",
+      "category": "distractor",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "decoy"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "decoy"
+        ]
+      ],
+      "expected_claims": [
+        "赤霄演练缓存由培训支持组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "培训支持组"
+    },
+    {
+      "question_id": "Q078",
+      "query": "订单演练系统的缓存有效期？",
+      "category": "distractor",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "decoy"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "decoy"
+        ]
+      ],
+      "expected_claims": [
+        "订单演练系统使用赤霄演练缓存",
+        "演练环境缓存有效期为60秒"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "60秒"
+    },
+    {
+      "question_id": "Q079",
+      "query": "生产订单系统缓存有效期也是60秒吗？",
+      "category": "distractor",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": true,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "order_architecture",
+        "decoy"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "order_architecture"
+        ]
+      ],
+      "expected_claims": [
+        "订单系统生产缓存有效期为7200秒，因此不是60秒"
+      ],
+      "findings": [
+        {
+          "code": "unnecessary_required_source",
+          "severity": "evidence_annotation",
+          "explanation": "order_architecture已直接给出7200秒，单独足以回答不是60秒；无需额外检索演练文档来证明被否定数字的来源。",
+          "correction": "必需源只保留order_architecture，decoy可作可选背景。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_sources"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "不是，是7200秒"
+    },
+    {
+      "question_id": "Q080",
+      "query": "2026年赤霄缓存还由旧运维组维护吗？",
+      "category": "distractor",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept_with_notes",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "history",
+        "order_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "history",
+          "order_ownership"
+        ]
+      ],
+      "expected_claims": [
+        "旧运维组对赤霄缓存集群的职责于2025年终止",
+        "2026年维护团队是基础设施甲组"
+      ],
+      "findings": [
+        {
+          "code": "negative_evidence_policy",
+          "severity": "nonblocking_note",
+          "explanation": "正向‘由甲组维护’本身不严格蕴含其他组绝不共同维护；不能仅凭另一维护组事实作闭世界否定。当前源组同时包含显式否定/职责终止及实际团队。",
+          "correction": "v2沿用原保守必需源组；将来若支持替代证明，先明确逐项声明和排他性政策，再更改评分。"
+        }
+      ],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "不是，基础设施甲组"
+    },
+    {
+      "question_id": "Q081",
+      "query": "2024年赤霄缓存集群由谁维护？",
+      "category": "distractor",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "history"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "history"
+        ]
+      ],
+      "expected_claims": [
+        "2024年赤霄缓存集群由旧运维组维护"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "旧运维组"
+    },
+    {
+      "question_id": "Q082",
+      "query": "2028年的迁移计划现在执行了吗？",
+      "category": "distractor",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "history"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "history"
+        ]
+      ],
+      "expected_claims": [
+        "依据2026年文档快照，计划于2028年的迁移尚未执行"
+      ],
+      "findings": [
+        {
+          "code": "relative_time_not_frozen",
+          "severity": "query_annotation",
+          "explanation": "‘现在’/‘明年’依赖执行日期，旧集没有明确as_of。正确答案只能依据2026文档快照，不能证明任意运行日期的现状。",
+          "correction": "固定2026文档上下文，并把查询改为：根据2026年文档快照，赤霄缓存集群计划于2028年的迁移已经执行了吗？"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "query"
+      ],
+      "v2_query_changed": true,
+      "v2_gold_answer": "尚未执行"
+    },
+    {
+      "question_id": "Q083",
+      "query": "培训支持组维护赤霄生产缓存吗？",
+      "category": "distractor",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": true,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "decoy",
+        "order_ownership"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "decoy"
+        ]
+      ],
+      "expected_claims": [
+        "培训支持组不维护生产的赤霄缓存集群"
+      ],
+      "findings": [
+        {
+          "code": "unnecessary_required_source",
+          "severity": "evidence_annotation",
+          "explanation": "decoy逐字说明‘培训支持组不维护生产的赤霄缓存集群’，已经完整回答；问题不要求实际维护团队。",
+          "correction": "必需源只保留decoy，order_ownership可作可选背景。"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "gold_sources"
+      ],
+      "v2_query_changed": false,
+      "v2_gold_answer": "不维护"
+    },
+    {
+      "question_id": "Q084",
+      "query": "赤霄演练缓存与赤霄缓存集群是同一实例吗？",
+      "category": "distractor",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "decoy"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "decoy"
+        ]
+      ],
+      "expected_claims": [
+        "赤霄演练缓存与赤霄缓存集群是两个不同实例"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "不是"
+    },
+    {
+      "question_id": "Q085",
+      "query": "赤霄缓存的旧职责在哪一年终止？",
+      "category": "distractor",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "history"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "history"
+        ]
+      ],
+      "expected_claims": [
+        "旧运维组对赤霄缓存集群的职责于2025年终止"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "2025年"
+    },
+    {
+      "question_id": "Q086",
+      "query": "2029年赤霄维护负责人是谁？",
+      "category": "unanswerable",
+      "answerable": false,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [],
+      "recommended_required_source_sets": [],
+      "expected_claims": [
+        "允许范围的文档未提供2029年负责人，不能将2026团队外推为2029负责人"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": null
+    },
+    {
+      "question_id": "Q087",
+      "query": "基础设施甲组的值班电话号码？",
+      "category": "unanswerable",
+      "answerable": false,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [],
+      "recommended_required_source_sets": [],
+      "expected_claims": [
+        "职责登记明确说未登记值班电话，不能编造号码"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": null
+    },
+    {
+      "question_id": "Q088",
+      "query": "青岚缓存实例IP是什么？",
+      "category": "unanswerable",
+      "answerable": false,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [],
+      "recommended_required_source_sets": [],
+      "expected_claims": [
+        "允许范围的文档未提供青岚实例IP"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": null
+    },
+    {
+      "question_id": "Q089",
+      "query": "白泽实例的访问密码？",
+      "category": "unanswerable",
+      "answerable": false,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [],
+      "recommended_required_source_sets": [],
+      "expected_claims": [
+        "允许范围的文档未提供白泽访问密码"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": null
+    },
+    {
+      "question_id": "Q090",
+      "query": "玄鹤缓存的月度费用？",
+      "category": "unanswerable",
+      "answerable": false,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [],
+      "recommended_required_source_sets": [],
+      "expected_claims": [
+        "允许范围的文档未提供玄鹤月度费用"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": null
+    },
+    {
+      "question_id": "Q091",
+      "query": "星河审计服务的SLA数字？",
+      "category": "unanswerable",
+      "answerable": false,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [],
+      "recommended_required_source_sets": [],
+      "expected_claims": [
+        "架构仅写依赖星河审计服务，未提供其SLA数字"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": null
+    },
+    {
+      "question_id": "Q092",
+      "query": "订单系统的数据库版本？",
+      "category": "unanswerable",
+      "answerable": false,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [],
+      "recommended_required_source_sets": [],
+      "expected_claims": [
+        "允许范围的文档未提供订单系统数据库版本；2026是文档版本而非数据库版本"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": null
+    },
+    {
+      "question_id": "Q093",
+      "query": "支付系统明年维护团队是谁？",
+      "category": "unanswerable",
+      "answerable": false,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "revise_annotation",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [],
+      "recommended_required_source_sets": [],
+      "expected_claims": [
+        "2026文档快照没有2027维护团队信息；缓存团队也不能等同于整个系统未来团队"
+      ],
+      "findings": [
+        {
+          "code": "relative_time_not_frozen",
+          "severity": "query_annotation",
+          "explanation": "‘现在’/‘明年’依赖执行日期，旧集没有明确as_of。正确答案只能依据2026文档快照，不能证明任意运行日期的现状。",
+          "correction": "固定2026文档上下文，并把查询改为：根据2026年文档快照，支付系统在2027年的维护团队是谁？"
+        }
+      ],
+      "v2_semantic_changed_fields": [
+        "query"
+      ],
+      "v2_query_changed": true,
+      "v2_gold_answer": null
+    },
+    {
+      "question_id": "Q094",
+      "query": "2028年的迁移已完成的验收编号？",
+      "category": "unanswerable",
+      "answerable": false,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [],
+      "recommended_required_source_sets": [],
+      "expected_claims": [
+        "文档说明迁移尚未执行，不能提供已完成验收编号"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": null
+    },
+    {
+      "question_id": "Q095",
+      "query": "旧运维组2026年的负责人手机号？",
+      "category": "unanswerable",
+      "answerable": false,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [],
+      "recommended_required_source_sets": [],
+      "expected_claims": [
+        "允许范围的文档未提供旧运维组2026负责人手机号"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": null
+    },
+    {
+      "question_id": "Q096",
+      "query": "租户乙的秘密标记是什么？",
+      "category": "isolation",
+      "answerable": false,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [],
+      "recommended_required_source_sets": [],
+      "expected_claims": [
+        "user_id=1001不能使用user_id=1002的秘密标记；应说明当前权限范围没有答案"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": null
+    },
+    {
+      "question_id": "Q097",
+      "query": "其他知识库中审计系统的独立标记？",
+      "category": "isolation",
+      "answerable": false,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [],
+      "recommended_required_source_sets": [],
+      "expected_claims": [
+        "指定rag_accuracy_v1不能使用rag_accuracy_other的独立标记"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": null
+    },
+    {
+      "question_id": "Q098",
+      "query": "审计系统由谁负责？",
+      "category": "isolation",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "默认知识库",
+        "default_kb_means_current_user_all_kbs": true
+      },
+      "reviewed_required_sources_v1": [
+        "other_kb"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "other_kb"
+        ]
+      ],
+      "expected_claims": [
+        "默认知识库表示本用户所有知识库；user_id=1001可读other_kb，答案为合规维护组"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "合规维护组"
+    },
+    {
+      "question_id": "Q099",
+      "query": "租户乙的秘密标记是什么？",
+      "category": "isolation",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1002,
+        "knowledge_base_id": "rag_accuracy_v1",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "private"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "private"
+        ]
+      ],
+      "expected_claims": [
+        "user_id=1002在自己的库内可读TENANT_B_ONLY_791"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "TENANT_B_ONLY_791"
+    },
+    {
+      "question_id": "Q100",
+      "query": "审计系统的独立标记？",
+      "category": "isolation",
+      "answerable": true,
+      "review_type": "agent_review",
+      "human_reviewed": false,
+      "verdict": "accept",
+      "checks": {
+        "answerable_label_supported": true,
+        "existing_answer_has_no_false_fact": true,
+        "all_quotes_equal_fixture_text": true,
+        "all_gold_sources_in_scope": true,
+        "required_evidence_needs_revision": false,
+        "answer_completeness_needs_revision": false
+      },
+      "source_scope": {
+        "user_id": 1001,
+        "knowledge_base_id": "rag_accuracy_other",
+        "default_kb_means_current_user_all_kbs": false
+      },
+      "reviewed_required_sources_v1": [
+        "other_kb"
+      ],
+      "recommended_required_source_sets": [
+        [
+          "other_kb"
+        ]
+      ],
+      "expected_claims": [
+        "user_id=1001指定rag_accuracy_other可读OTHER_KB_ONLY_381"
+      ],
+      "findings": [],
+      "v2_semantic_changed_fields": [],
+      "v2_query_changed": false,
+      "v2_gold_answer": "OTHER_KB_ONLY_381"
+    }
+  ]
+}

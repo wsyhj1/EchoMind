@@ -59,10 +59,21 @@ class GetKnowledgeBaseResponse(BaseModel):
     knowledge_bases: List[str]#知识库ID列表
 
 #上下文模型
-@dataclass
+@dataclass(frozen=True)
 class ContextSchema:
     """知识库检索上下文模型"""
     user_id: int
     knowledge_base_id: str
     top_k: int = 5
+    session_id: str = "default"
+    memory_enabled: bool = True
+    rerank_enabled: bool = True
+    retrieval_mode: str = "hybrid"
+    graph_enabled: Optional[bool] = None
+    evidence_enabled: Optional[bool] = None
+    profile_snapshot: Optional[Dict] = None
+    skill_id: Optional[str] = None
+    conversation_turn_id: Optional[str] = None
+    allowed_scope_ids: Optional[tuple[str, ...]] = None
+    project_snapshot: Optional[Dict] = None
 

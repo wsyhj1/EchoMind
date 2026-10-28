@@ -7,6 +7,11 @@ __pycache__/
 
 # 忽略虚拟环境
 .venv/
+.venv-eval/
+
+# Local deployment configuration, credentials, logs and downloaded packages
+.env
+.runtime/
 
 
 # 忽略其他项目目录

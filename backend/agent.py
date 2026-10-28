@@ -1,238 +1,233 @@
-import os
+"""Streaming Agent with request-local timings and durable evaluation snapshots."""
 import asyncio
-import logging
-import sys
-import time
-from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
-from langchain.agents import create_agent
-import config
-from typing import AsyncGenerator
-from tools import search_knowledge_base, get_memory, get_raw_conversation_by_summary_id
 import json
-from schemas import ContextSchema
-from langchain.agents.middleware import (
-    ToolCallLimitMiddleware,
-    dynamic_prompt,
-    ModelRequest,
-    SummarizationMiddleware,
-)
+import logging
+import os
+from copy import deepcopy
+from typing import AsyncGenerator
+from uuid import uuid4
+
+from dotenv import load_dotenv
 from fastapi import BackgroundTasks
-from postgresql_client import get_postgresql_client
+from langchain.agents import create_agent
+from langchain.agents.middleware import ToolCallLimitMiddleware, dynamic_prompt, ModelRequest, SummarizationMiddleware
+from langchain_openai import ChatOpenAI
 from langgraph.checkpoint.redis.aio import AsyncRedisSaver
 
-# 配置日志
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s-%(name)s-%(levelname)s-%(message)s",
-    handlers=[logging.StreamHandler(sys.stdout)],
-)
-logger = logging.getLogger(__name__)
+import config
+from observability import RunTrace, ModelTimingCallback, measure, record_context, safe_error, current_trace
+from profile_store import ProfileStore, describe_personalization
+from postgresql_client import get_postgresql_client
+from schemas import ContextSchema
+from tools import search_knowledge_base, get_memory, get_raw_conversation_by_summary_id
+from rag.settings import env_bool
+from runtime_limits import ChatLimits
+from skill_registry import build_skill_prompt, get_skill, SkillCommandError
+from orchestration.context_manager import ContextManagerMiddleware, conversation_messages
 
 load_dotenv()
-
+logger = logging.getLogger(__name__)
 REDIS_URL = os.getenv("REDIS_URL")
-# 2. 配置 TTL 过期时间（单位：分钟）
-# - default_ttl: 检查点数据保留时间，超过后自动删除
-# - refresh_on_read: 读取时是否刷新TTL，保持活跃会话
-TTL_CONFIG = {
-    "default_ttl": 60,  # 60分钟后过期
-    "refresh_on_read": True,  # 每次读取检查点时重置过期时间
-}
-
-# 使用 OpenAI 兼容接口的方式更通用
-model = ChatOpenAI(
-    model=os.getenv("AGENT_BASE_MODEL"),
-    openai_api_key=os.getenv("DASHSCOPE_API_KEY"),
-    openai_api_base=os.getenv("BASE_URL"),
-    temperature=0.7,
-    streaming=True,
-)
-
-summarize_model = ChatOpenAI(
-    model=os.getenv("SUMMARIZATION_MODEL", "qwen-turbo"),
-    openai_api_key=os.getenv("DASHSCOPE_API_KEY"),
-    openai_api_base=os.getenv("BASE_URL"),
-    temperature=0.2,  # 总结模型温度，控制总结对话的随机性，0-1之间，0越确定，1越随机
-)
-
-"""=============中间件============="""
-# 限制记忆检索最多 1 次
-memory_limit = ToolCallLimitMiddleware(
-    tool_name="get_memory",
-    run_limit=1,  # 单次对话最多检索 1 次记忆
-)
-
-# 单次提问最多调用2次search_knowledge_base工具
-search_knowledge_limit = ToolCallLimitMiddleware(
-    tool_name="search_knowledge_base",
-    run_limit=1,  # 最多调用1次
-)
+TTL_CONFIG = {"default_ttl": 60, "refresh_on_read": True}
+model = ChatOpenAI(model=os.getenv("AGENT_BASE_MODEL"), api_key=os.getenv("DASHSCOPE_API_KEY"),
+                   base_url=os.getenv("BASE_URL"), temperature=0.7, streaming=True, stream_usage=True,
+                   max_tokens=ChatLimits.from_env().output_tokens,max_retries=0)
+summarize_model = ChatOpenAI(model=os.getenv("SUMMARIZATION_MODEL", "qwen-turbo"),
+                            api_key=os.getenv("DASHSCOPE_API_KEY"), base_url=os.getenv("BASE_URL"), temperature=0.2)
 
 
-# 动态系统系统提示词切换，根据知识库id切换系统提示词
+def build_system_prompt(context) -> str:
+    snapshot = context.profile_snapshot or {}
+    profile = snapshot.get("profile_text", "") if snapshot.get("enabled") else ""
+    if profile:
+        trace = current_trace()
+        if not snapshot.get("injected"):
+            record_context("prompt", "profile", profile, included_in_prompt=True,
+                           revision=snapshot["revision"], profile_source=snapshot["source"])
+        snapshot["injected"] = True
+        snapshot["reason"] = "injected"
+        if trace:
+            trace.personalization = snapshot.copy()
+    template = config.SYSTEM_PROMPT_DEFAULT if context.knowledge_base_id == "默认知识库" else config.SYSTEM_PROMPT_SPECIFIC
+    if getattr(context, 'conversation_turn_id', None):
+        template = config.CONTEXTUAL_SYSTEM_PROMPT
+    prompt = template.format(user_profile=profile)
+    skill_id = getattr(context, 'skill_id', None)
+    if skill_id:
+        # Only the server-owned catalog supplies workflow instructions. User
+        # arguments and retrieved documents never become a skill definition.
+        prompt += '\n\n【本轮技能工作流】\n' + build_skill_prompt(skill_id)
+    project = getattr(context, 'project_snapshot', None)
+    if project:
+        from assistant.service import render_project_context
+        project_text = render_project_context(project)
+        prompt += '\n\n' + project_text
+        record_context('prompt','project',project_text,included_in_prompt=True,
+                       project_id=project['project']['project_id'],revision=project['project']['revision'])
+    return prompt
+
+
 @dynamic_prompt
 async def dynamic_prompt(request: ModelRequest) -> str:
-    knowledge_base_id = request.runtime.context.knowledge_base_id
-    user_id = request.runtime.context.user_id
-
-    # 注入用户画像（用户画像会随着对话的更新而更新，准确的说是在后台任务提取用户画像后更新）
-    postgresql_client = await get_postgresql_client()
-    user_profile = await postgresql_client.get_user_profile(user_id)
-    SYSTEM_PROMPT_DEFAULT = config.SYSTEM_PROMPT_DEFAULT.format(
-        user_profile=user_profile
-    )
-    SYSTEM_PROMPT_SPECIFIC = config.SYSTEM_PROMPT_SPECIFIC.format(
-        user_profile=user_profile
-    )
-
-    if knowledge_base_id == "默认知识库":
-        return SYSTEM_PROMPT_DEFAULT
-    else:
-        return SYSTEM_PROMPT_SPECIFIC
+    return build_system_prompt(request.runtime.context)
 
 
-# 全局单例
-_global_agent = None
-_agent_lock = asyncio.Lock()
+async def get_or_create_agent(checkpointer, memory_enabled=True, *, contextual=False, project_enabled=False, proposals_enabled=True):
+    # A compiled graph must not retain the previous request's closed checkpointer.
+    tools = [search_knowledge_base]
+    middleware = [ToolCallLimitMiddleware(tool_name="search_knowledge_base", run_limit=1), dynamic_prompt]
+    if memory_enabled:
+        tools += [get_memory, get_raw_conversation_by_summary_id]
+        middleware += [ToolCallLimitMiddleware(tool_name="get_memory", run_limit=1)]
+        if not contextual:
+            middleware += [SummarizationMiddleware(model=summarize_model, trigger=("tokens", 10000), keep=("messages", 20))]
+    if contextual:
+        middleware.append(ContextManagerMiddleware())
+    if project_enabled:
+        from assistant.tools import get_project_workspace, propose_project_action
+        tools.append(get_project_workspace)
+        middleware.append(ToolCallLimitMiddleware(tool_name='get_project_workspace',run_limit=2))
+        if proposals_enabled:
+            tools.append(propose_project_action)
+            middleware.append(ToolCallLimitMiddleware(tool_name='propose_project_action',run_limit=4))
+    return create_agent(model=model, tools=tools, context_schema=ContextSchema,
+                        checkpointer=checkpointer, middleware=middleware)
 
 
-async def get_or_create_agent(checkpointer: AsyncRedisSaver):
-    start_time = time.time()
-    """获取或创建全局agent实例"""
-    global _global_agent
-
-    if _global_agent is None:
-        async with _agent_lock:
-            if _global_agent is None:
-                _global_agent = create_agent(
-                    model=model,
-                    tools=[
-                        search_knowledge_base,
-                        get_memory,
-                        get_raw_conversation_by_summary_id,
-                    ],
-                    context_schema=ContextSchema,
-                    checkpointer=checkpointer,
-                    middleware=[
-                        memory_limit,
-                        search_knowledge_limit,
-                        dynamic_prompt,
-                        SummarizationMiddleware(  # 对于异步运行方式，总结对话中间件会在 每次调用模型之前 执行，所以不用担心对话没被保存进psql
-                            model=summarize_model,
-                            trigger=("tokens", 10000),
-                            keep=("messages", 20),
-                        ),
-                    ],
-                )
-    logger.info(f"创建全局agent实例耗时: {time.time() - start_time} 秒")
-    return _global_agent
+def text_content(content):
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        return "".join(part.get("text", "") for part in content if isinstance(part, dict) and part.get("type") == "text")
+    return ""
 
 
-async def stream_agent_response(
-    user_message: str,
-    knowledge_base_id: str,
-    user_id: int,
-    background_tasks: BackgroundTasks = None,
-) -> AsyncGenerator[str, None]:
-    # 1. 配置 Redis 检查点保存器
-    # 使用异步上下文管理器
-    start_time = time.time()
-    async with AsyncRedisSaver.from_conn_string(
-        redis_url=REDIS_URL, ttl=TTL_CONFIG
-    ) as checkpointer:
-        await checkpointer.asetup()
-        logger.info(f"配置 Redis 检查点保存器耗时: {time.time() - start_time} 秒")
+def event(kind, **fields):
+    return json.dumps({"type": kind, "version": 1, **fields}, ensure_ascii=False, default=str) + "\n"
 
-        start_time = time.time()
-        # 获取全局agent实例
-        agent = await get_or_create_agent(checkpointer)
 
-        # 组装AI回复
-        ai_message = ""
-        ai_message_parts = []
+async def stream_agent_response(user_message: str, knowledge_base_id: str, user_id: int,
+                                background_tasks: BackgroundTasks = None, *, trace=None, store=None,
+                                session_id="legacy", top_k=5, memory_enabled=True,
+                                rerank_enabled=True, retrieval_mode="hybrid", evaluation_mode=False,
+                                graph_enabled=None, evidence_enabled=None, skill_id=None,
+                                skill_version=None, conversation_history=None,
+                                conversation_turn_id=None, project_snapshot=None) -> AsyncGenerator[str, None]:
+    trace = trace or RunTrace(user_id, session_id, user_message, knowledge_base_id)
+    limits = ChatLimits.from_env()
+    trace.config['chat_limits'] = {'total_seconds':limits.total_seconds,'model_calls':limits.model_calls,'output_tokens':limits.output_tokens}
+    if skill_id:
+        build_skill_prompt(skill_id)  # Reject unknown/local skills before model work.
+        actual_version = get_skill(skill_id).version
+        if skill_version is not None and skill_version != actual_version:
+            raise SkillCommandError('技能版本已变化，请重新选择技能。')
+        trace.config['skill'] = {'id':skill_id,'version':actual_version}
+    trace.config.update({"model": os.getenv("AGENT_BASE_MODEL"), "embedding_model": os.getenv("EMBEDDING_MODEL"),
+                         "rerank_model": os.getenv("RERANK_MODEL"), "top_k": top_k,
+                         "memory_enabled": memory_enabled, "rerank_enabled": rerank_enabled,
+                         "retrieval_mode": retrieval_mode, "evaluation_mode": evaluation_mode,
+                         "graph_enabled": graph_enabled if graph_enabled is not None else env_bool("GRAPH_RAG_ENABLED"),
+                         "evidence_enabled": evidence_enabled if evidence_enabled is not None else env_bool("EVIDENCE_CHECK_ENABLED")})
+    thread_id = str(user_id) if session_id == "legacy" else f"{user_id}:{session_id}"
+    contextual = conversation_turn_id is not None
+    if contextual:
+        # PostgreSQL is authoritative for inter-turn continuity. A fresh graph
+        # thread per turn prevents expired/stale checkpoints and old tool E IDs
+        # from silently becoming this turn's evidence.
+        thread_id += ':run:'+trace.run_id
+        trace.config['context_source'] = 'postgresql_completed_turns'
+    answer_parts = []
+    persistence_error = None
+    with trace.activate():
         try:
-            context = ContextSchema(
-                user_id=user_id, knowledge_base_id=knowledge_base_id, top_k=5
-            )
-            async for chunk in agent.astream(
-                {"messages": [{"role": "user", "content": user_message}]},
-                {
-                    "configurable": {"thread_id": f"{user_id}"}
-                },  # 这里的线程id是user_id因为没有做会话管理和会话隔离
-                stream_mode=[
-                    "messages",
-                    "custom",
-                ],  # 使用messages模式逐token输出实现打字效果，custom模式输出工具调用信息展示agent的思考过程
-                context=context,
-            ):
-                stream_mode, chunk_data = chunk
+            yield event("run", run_id=trace.run_id, session_id=session_id, skill=trace.config.get('skill'))
+            remaining = limits.total_seconds - trace.elapsed()/1000
+            if remaining <= 0:
+                raise TimeoutError('本轮处理已达到时间上限')
+            async with asyncio.timeout(remaining), AsyncRedisSaver.from_conn_string(redis_url=REDIS_URL, ttl=TTL_CONFIG) as checkpointer:
+                with measure("checkpoint", "redis"):
+                    await checkpointer.asetup()
+                if memory_enabled and not evaluation_mode:
+                    with measure("profile", "postgresql"):
+                        database = await get_postgresql_client()
+                        profile_state = await ProfileStore(database.pool).get(user_id)
+                        trace.personalization = describe_personalization(profile_state)
+                else:
+                    trace.personalization = {"enabled": False, "injected": False, "revision": None,
+                                             "source": "empty", "profile_text": "", "reason": "disabled"}
+                with measure("agent_setup", "agent"):
+                    if project_snapshot and contextual and not evaluation_mode:
+                        agent = await get_or_create_agent(checkpointer, memory_enabled, contextual=True,
+                            project_enabled=True, proposals_enabled=not bool(skill_id))
+                    else:
+                        agent = await get_or_create_agent(checkpointer, memory_enabled, contextual=True) if contextual else await get_or_create_agent(checkpointer, memory_enabled)
+                context = ContextSchema(user_id=user_id, knowledge_base_id=knowledge_base_id, top_k=top_k,
+                                        session_id=session_id, memory_enabled=memory_enabled,
+                                        rerank_enabled=rerank_enabled, retrieval_mode=retrieval_mode,
+                                        graph_enabled=graph_enabled,
+                                        evidence_enabled=evidence_enabled,
+                                        profile_snapshot=trace.personalization, skill_id=skill_id,
+                                        conversation_turn_id=conversation_turn_id,
+                                        allowed_scope_ids=tuple(trace.config.get('scope_snapshot', [])) if contextual else None,
+                                        project_snapshot=deepcopy(project_snapshot) if not evaluation_mode else None)
+                messages = conversation_messages(conversation_history or [], user_message, conversation_turn_id) if contextual else [{"role": "user", "content": user_message}]
+                async for mode, chunk in bounded_agent_stream(agent,
+                    {"messages": messages},
+                    {"configurable": {"thread_id": thread_id}, "callbacks": [ModelTimingCallback(trace)]},
+                    stream_mode=["messages", "custom"], context=context,
+                    remaining_seconds=limits.total_seconds-trace.elapsed()/1000):
+                    if mode == "messages":
+                        message, metadata = chunk
+                        text = text_content(getattr(message, "content", ""))
+                        if metadata.get("langgraph_node") == "model" and text:
+                            trace.mark_answer()
+                            answer_parts.append(text)
+                            yield event("answer", content=text)
+                    elif mode == "custom":
+                        yield event("status", content=chunk)
+            trace.finish("".join(answer_parts))
+            if background_tasks and not evaluation_mode and not contextual:
+                background_tasks.add_task(save_conversation_messages, user_id, thread_id, user_message, trace.answer)
+        except (asyncio.CancelledError, GeneratorExit):
+            trace.finish("".join(answer_parts), "cancelled")
+            raise
+        except Exception as exc:
+            logger.exception("Chat run failed: %s", trace.run_id)
+            if isinstance(exc, TimeoutError) and not str(exc):
+                exc = TimeoutError('本轮处理已达到时间上限，请稍后重试或缩小问题范围')
+            trace.finish("".join(answer_parts), "failed", exc)
+            yield event("error", content=safe_error(exc))
+        finally:
+            if trace.status == "running":
+                trace.finish("".join(answer_parts), "cancelled")
+            if store is not None:
+                try:
+                    await asyncio.wait_for(asyncio.shield(store.save_run(trace.snapshot())), timeout=5)
+                    trace.persisted = True
+                except Exception as error:
+                    logger.exception("Could not persist chat trace %s", trace.run_id)
+                    if contextual:
+                        trace.finish(''.join(answer_parts), 'failed', error)
+                        persistence_error = '回答未能确认为已保存，请刷新会话核对后再发送。'
+        if persistence_error:
+            yield event('error', content=persistence_error)
+        yield event("metrics", run_id=trace.run_id, timings=trace.timings(), status=trace.status,
+                    persisted=trace.persisted, personalization=trace.personalization)
+        yield event("done", run_id=trace.run_id, status=trace.status)
 
-                # ---------------- 回答内容 ----------------
-                if stream_mode == "messages":
-                    message_chunk, metadata = chunk_data
-                    node = metadata.get("langgraph_node", "")
-                    if (
-                        node == "model"
-                        and hasattr(message_chunk, "content")
-                        and message_chunk.content
-                    ):
-                        ai_message_parts.append(message_chunk.content)  # 累加ai回复
-                        yield json.dumps(
-                            {"type": "answer", "content": message_chunk.content},
-                            ensure_ascii=False,
-                        ) + "\n"
 
-                # ---------------- 工具状态（显示agent的执行过程，避免静默思考） ----------------
-                elif stream_mode == "custom":
-                    custom_info = chunk_data
-                    logger.info(f"【工具信息】: {custom_info}")
-                    yield json.dumps(
-                        {"type": "status", "content": custom_info}, ensure_ascii=False
-                    ) + "\n"
-
-            logger.info(f"模型回答耗时: {time.time() - start_time} 秒")
-            # 循环结束后，合并所有ai回复部分
-            ai_message = "".join(ai_message_parts)
-            # 添加后台任务保存对话到psql数据库
-            if background_tasks:
-                background_tasks.add_task(
-                    save_conversation_messages,
-                    user_id=user_id,
-                    thread_id=f"{user_id}",
-                    user_message=user_message,
-                    ai_message=ai_message,
-                )
-
-        except Exception as e:
-            logger.error(f"错误: {e}")
-            yield json.dumps(
-                {"type": "error", "content": str(e)}, ensure_ascii=False
-            ) + "\n"
-
-
-# 保存对话到数据库
-async def save_conversation_messages(
-    user_id: int, thread_id: str, user_message: str, ai_message: str
-):
-    start_time = time.time()
-    """后台任务：保存对话到数据库"""
+async def save_conversation_messages(user_id, thread_id, user_message, ai_message):
     try:
-        postgresql_client = await get_postgresql_client()
+        database = await get_postgresql_client()
+        await database.add_conversation_message(user_id, thread_id, "human", user_message)
+        await database.add_conversation_message(user_id, thread_id, "ai", ai_message)
+    except Exception:
+        logger.exception("Could not persist conversation")
 
-        # 保存用户消息
-        await postgresql_client.add_conversation_message(
-            user_id=user_id, thread_id=thread_id, role="human", content=user_message
-        )
 
-        # 保存 AI回复
-        await postgresql_client.add_conversation_message(
-            user_id=user_id, thread_id=thread_id, role="ai", content=ai_message
-        )
-
-        logger.info(
-            f"[postgresql] 对话已保存: user_id={user_id}, thread_id={thread_id}"
-        )
-        logger.info(f"保存对话到数据库耗时: {time.time() - start_time} 秒")
-    except Exception as e:
-        logger.error(f"保存对话失败: {e}")
+async def bounded_agent_stream(agent,*args,remaining_seconds,**kwargs):
+    if remaining_seconds<=0:
+        raise TimeoutError('本轮处理已达到时间上限')
+    async with asyncio.timeout(remaining_seconds):
+        async for item in agent.astream(*args,**kwargs):
+            yield item

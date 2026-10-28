@@ -1,0 +1,1295 @@
+{
+  "review_type": "independent_subagent_gold_source_review",
+  "reviewer": "/root/answer_review",
+  "human_reviewed": false,
+  "review_date_local": "2026-10-24",
+  "source_files_read": 12,
+  "questions_reviewed": 32,
+  "new_model_calls": 0,
+  "new_retrieval_calls": 0,
+  "live_accuracy_result": false,
+  "input_sha256": {
+    "draft": "ffaf421bc01a8302d0326506aeda095b4166a8665edaf2faff2237d3b34cc791",
+    "sources": "84bce6e6bd9bde6d710bea5dbeb21ce9a72d3f84efab9be988cccd6f7458cf97",
+    "manifest": "f3f36c483dead58c65043d7f78328820b7db4d73a1ae6262b5cdaf8297f56eff"
+  },
+  "output_dataset": "evaluation\\datasets\\business_holdout_v2_agent_reviewed.jsonl",
+  "output_sha256": "0e0d125ff7415bbb0aebfdba49a82288ad6f5eb9f1b9141917e932a40aa53d25",
+  "draft_preserved": true,
+  "substantively_revised_questions": [
+    "BH001",
+    "BH007",
+    "BH011",
+    "BH013",
+    "BH030",
+    "BH031",
+    "BH032"
+  ],
+  "answer_modes": {
+    "answer": 23,
+    "conflict": 2,
+    "clarify": 1,
+    "abstain": 6
+  },
+  "answerable": 25,
+  "unanswerable_or_clarification": 7,
+  "reviewed_rows": [
+    {
+      "question_id": "BH001",
+      "decision": "revised_and_agent_reviewed",
+      "changed_substantive_fields": [
+        "gold_sources"
+      ],
+      "note": "补齐长文末尾未实现/计划状态的第二跨度；只取开头两功能不能证明答案额外否定。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "具有证据定位功能",
+        "具有实验对比功能",
+        "自动评分尚未实现",
+        "跨作品推荐只是未来计划"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "report_overview",
+          "quote": "映澈作品台具有证据定位功能。映澈作品台具有实验对比功能。",
+          "start_char": 34,
+          "end_char": 62,
+          "source_span_id": "ad4336c4d29a0abfb343778b",
+          "source_text_sha256": "10025420f3be0699d0f7d746cbc0eb7d00aa82ef54f10db9675a43d613bd785d"
+        },
+        {
+          "doc_id": "report_overview",
+          "quote": "映澈作品台尚未实现自动评分功能。未来计划加入跨作品推荐功能。",
+          "start_char": 1833,
+          "end_char": 1863,
+          "source_span_id": "e3c683a42f03540758d4156a",
+          "source_text_sha256": "10025420f3be0699d0f7d746cbc0eb7d00aa82ef54f10db9675a43d613bd785d"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH002",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "单一功能到实现模块直接原句，不需要猜测模块依赖。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "证据定位功能由页码锚点模块实现"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "implementation",
+          "quote": "证据定位功能由页码锚点模块实现。",
+          "start_char": 7,
+          "end_char": 23,
+          "source_span_id": "135a5a60682e66358ac9b5f0",
+          "source_text_sha256": "679dc0e8b701014e5bb61940469baef7e39eb752493aaead3be32132d5fcfcad"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH003",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "保留跨章节两条关系，不能只用功能模块事实推断作品拥有功能。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "映澈作品台具有证据定位功能",
+        "证据定位功能由页码锚点模块实现"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "report_overview",
+          "quote": "映澈作品台具有证据定位功能。",
+          "start_char": 34,
+          "end_char": 48,
+          "source_span_id": "0b88aa0af508cb8df1a6bdef",
+          "source_text_sha256": "10025420f3be0699d0f7d746cbc0eb7d00aa82ef54f10db9675a43d613bd785d"
+        },
+        {
+          "doc_id": "implementation",
+          "quote": "证据定位功能由页码锚点模块实现。",
+          "start_char": 7,
+          "end_char": 23,
+          "source_span_id": "135a5a60682e66358ac9b5f0",
+          "source_text_sha256": "679dc0e8b701014e5bb61940469baef7e39eb752493aaead3be32132d5fcfcad"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH004",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "主体是表格规整模块，不取列边界模型对应G4。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "表格规整模块在版面样本集L2上评估"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "evaluation_data",
+          "quote": "表格规整模块在版面样本集L2上评估。",
+          "start_char": 7,
+          "end_char": 25,
+          "source_span_id": "d0b24bed9eed6099a42a12e6",
+          "source_text_sha256": "4a2bddf6b88b4439e5b1ee6e371424c79a1f6262f874741d8ab72a10785f5137"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH005",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "作品包含模块与模块评估数据需两个章节完整链。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "映澈作品台包含表格规整模块",
+        "表格规整模块在L2上评估"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "implementation",
+          "quote": "映澈作品台包含表格规整模块。",
+          "start_char": 52,
+          "end_char": 66,
+          "source_span_id": "958b99fe1fe1501ac9a13c76",
+          "source_text_sha256": "679dc0e8b701014e5bb61940469baef7e39eb752493aaead3be32132d5fcfcad"
+        },
+        {
+          "doc_id": "evaluation_data",
+          "quote": "表格规整模块在版面样本集L2上评估。",
+          "start_char": 7,
+          "end_char": 25,
+          "source_span_id": "d0b24bed9eed6099a42a12e6",
+          "source_text_sha256": "4a2bddf6b88b4439e5b1ee6e371424c79a1f6262f874741d8ab72a10785f5137"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH006",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "模型采用关系明确，不把与模块共现的其他实体替换成模型。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "表格规整模块使用列边界模型"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "implementation",
+          "quote": "表格规整模块使用列边界模型。",
+          "start_char": 81,
+          "end_char": 95,
+          "source_span_id": "88b3b73ba4e4d92c5e665e9f",
+          "source_text_sha256": "679dc0e8b701014e5bb61940469baef7e39eb752493aaead3be32132d5fcfcad"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH007",
+      "decision": "revised_and_agent_reviewed",
+      "changed_substantive_fields": [
+        "gold_sources"
+      ],
+      "note": "补齐明确未报告准确率的原文，不因百分数存在就改指标名称。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "报告定位命中率",
+        "报告平均跳转步数",
+        "没有报告准确率指标"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "experiment",
+          "quote": "去除页码实验报告定位命中率指标。去除页码实验报告平均跳转步数指标。",
+          "start_char": 45,
+          "end_char": 78,
+          "source_span_id": "497f2f96e52ba790af0394fc",
+          "source_text_sha256": "34ec169eae6b1cfa59ae94c79e7e53a8f294d0ed9e78471dfc786fb6625a8976"
+        },
+        {
+          "doc_id": "experiment",
+          "quote": "去除页码实验的定位命中率为81.2%，平均跳转步数为2.8。该实验未报告准确率指标。",
+          "start_char": 79,
+          "end_char": 121,
+          "source_span_id": "9265bc2f5a2f6e017958ffdb",
+          "source_text_sha256": "34ec169eae6b1cfa59ae94c79e7e53a8f294d0ed9e78471dfc786fb6625a8976"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH008",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "数值2.8是步数；81.2%是另一个指标，不串值。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "去除页码实验平均跳转步数为2.8，不是百分比"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "experiment",
+          "quote": "去除页码实验的定位命中率为81.2%，平均跳转步数为2.8。",
+          "start_char": 79,
+          "end_char": 109,
+          "source_span_id": "3177c2417879295e03a8e18a",
+          "source_text_sha256": "34ec169eae6b1cfa59ae94c79e7e53a8f294d0ed9e78471dfc786fb6625a8976"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH009",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "作品到实验与实验到数据两句都需保留。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "映澈作品台包含去除页码实验",
+        "该实验使用章节导航集N1评估"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "experiment",
+          "quote": "映澈作品台包含去除页码实验。去除页码实验在章节导航集N1上评估。",
+          "start_char": 12,
+          "end_char": 44,
+          "source_span_id": "439557d2fcafff6ea6c527ea",
+          "source_text_sha256": "34ec169eae6b1cfa59ae94c79e7e53a8f294d0ed9e78471dfc786fb6625a8976"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH010",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "表头和同一实验行可直接证明F1及样本数，不把样本叫真实用户。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "列切分实验同一表行的宏平均F1为0.842",
+        "该行样本数为180，不能使用去噪行的320"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "table_extract",
+          "quote": "实验 | 评估数据 | 宏平均F1 | 样本数\n列切分实验 | 版面样本集L2 | 0.842 | 180",
+          "start_char": 12,
+          "end_char": 65,
+          "source_span_id": "2171c838bd92c5ae69e6bb69",
+          "source_text_sha256": "cec4777171c673e78bd31940d338dfd20b3ec9b86abaf0e40b2e92d2d0c8ee7e"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH011",
+      "decision": "revised_and_agent_reviewed",
+      "changed_substantive_fields": [
+        "gold_sources"
+      ],
+      "note": "补表头，明确两行数据列；不能把F1高低变成可比成绩结论。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "列切分使用版面样本集L2",
+        "去噪使用合成网格集G4",
+        "两行使用不同数据"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "table_extract",
+          "quote": "实验 | 评估数据 | 宏平均F1 | 样本数\n列切分实验 | 版面样本集L2 | 0.842 | 180\n去噪实验 | 合成网格集G4 | 0.901 | 320",
+          "start_char": 12,
+          "end_char": 94,
+          "source_span_id": "56c7c348849475b71d82fecf",
+          "source_text_sha256": "cec4777171c673e78bd31940d338dfd20b3ec9b86abaf0e40b2e92d2d0c8ee7e"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH012",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "严格保留2024与作品台整体主体。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "2024年作品台整体定位命中率记录为67.0%，不替换成2026模块结果"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "history",
+          "quote": "2024年映澈作品台的定位命中率为67.0%。",
+          "start_char": 0,
+          "end_char": 23,
+          "source_span_id": "49a196e334ebb33b4e35c535",
+          "source_text_sha256": "f6ce8db0262ed7cefe21c0eb72c5ab41f092e4225fbfcbc1272bf57e02f0e7ef"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH013",
+      "decision": "revised_and_agent_reviewed",
+      "changed_substantive_fields": [
+        "gold_sources"
+      ],
+      "note": "同年同月同模块同数据指标冲突；两份全文限定支持不能擅选复核覆盖初版。",
+      "answer_mode": "conflict",
+      "answerable": true,
+      "expected_claims": [
+        "同一2026年6月模块与N1记录分别为93.0%和91.5%",
+        "没有明确替代或差异解释，不给唯一值"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "current_a",
+          "quote": "2026年6月评估记录：页码锚点模块在章节导航集N1的定位命中率为93.0%。记录没有注明草稿或撤回。",
+          "start_char": 0,
+          "end_char": 51,
+          "source_span_id": "87c3777e922056eef1f51f58",
+          "source_text_sha256": "c3978399164398e3d16acf1aba77eafa024c7462e91803ca5da3d6ae308b053b"
+        },
+        {
+          "doc_id": "current_b",
+          "quote": "2026年6月评估复核记录：页码锚点模块在章节导航集N1的定位命中率为91.5%。文中未解释与初版结果的差异，也未声明替代初版。",
+          "start_char": 0,
+          "end_char": 64,
+          "source_span_id": "cbe88f8d3f668f04fd68611b",
+          "source_text_sha256": "c9530ebff5186380775940ede8ad3d600cc4cda05553536e738d1cd58d6aa3c3"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH014",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "短名映澈在当前范围唯一，别名定义与两个功能同在原文。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "映澈是映澈作品台的唯一已登记短名",
+        "具有证据定位与实验对比功能"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "report_overview",
+          "quote": "映澈作品台简称映澈。\n映澈作品台具有证据定位功能。映澈作品台具有实验对比功能。",
+          "start_char": 23,
+          "end_char": 62,
+          "source_span_id": "4dd60c442dd1c3810c695a42",
+          "source_text_sha256": "10025420f3be0699d0f7d746cbc0eb7d00aa82ef54f10db9675a43d613bd785d"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH015",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "保持无唯一值/澄清分类；审阅证据另列，不将澄清题纳入唯一答案Recall分母。",
+      "answer_mode": "clarify",
+      "answerable": false,
+      "expected_claims": [
+        "页签可指页码锚点模块，也可指对照视图模块",
+        "没有足够上下文唯一定位，应澄清，不能任选一个"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [],
+      "review_only_evidence_spans": [
+        {
+          "doc_id": "implementation",
+          "quote": "页码锚点模块简称页签。",
+          "start_char": 40,
+          "end_char": 51,
+          "source_span_id": "dc58fc8f2c8ce07b076d93e5",
+          "source_text_sha256": "679dc0e8b701014e5bb61940469baef7e39eb752493aaead3be32132d5fcfcad"
+        },
+        {
+          "doc_id": "alias_conflict",
+          "quote": "对照视图模块也使用简称页签。页码锚点模块和对照视图模块是两个不同模块。只有短名页签时，本文无法唯一确定指向哪个模块。",
+          "start_char": 0,
+          "end_char": 58,
+          "source_span_id": "cfa758a72f30204898ccb92a",
+          "source_text_sha256": "f5d12556b6059207a7f3cda6d15980d9be12be74cba79104068154cee507a48a"
+        }
+      ],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH016",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "明确否定实现状态，不用其他模块已实现推断评分也实现。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "2026文档明确自动评分尚未实现"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "report_overview",
+          "quote": "映澈作品台尚未实现自动评分功能。",
+          "start_char": 1833,
+          "end_char": 1849,
+          "source_span_id": "36e0107e04e964edcb0fe300",
+          "source_text_sha256": "10025420f3be0699d0f7d746cbc0eb7d00aa82ef54f10db9675a43d613bd785d"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH017",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "计划不是已上线；也不能从未确认上线断言此刻永远不可能实现。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "2026文档仅提供未来推荐计划，不能据此确认现在已经上线"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "report_overview",
+          "quote": "未来计划加入跨作品推荐功能。",
+          "start_char": 1849,
+          "end_char": 1863,
+          "source_span_id": "3eb1c59bb57be3787ce31936",
+          "source_text_sha256": "10025420f3be0699d0f7d746cbc0eb7d00aa82ef54f10db9675a43d613bd785d"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH018",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "独立开发与无依赖不是同一概念，原Gold的“没有相互依赖证据”口径正确。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "原文明确独立开发且未说明相互依赖",
+        "不把独立开发等同已证明运行时绝无依赖"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "implementation",
+          "quote": "对照视图模块与页码锚点模块独立开发；文中未说明两者相互依赖。",
+          "start_char": 95,
+          "end_char": 125,
+          "source_span_id": "732b09568de7c369153f605b",
+          "source_text_sha256": "679dc0e8b701014e5bb61940469baef7e39eb752493aaead3be32132d5fcfcad"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH019",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "实体非同一关系明确，不用同一项目或都作评估推断同一数据。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "L2与G4不是同一数据集"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "evaluation_data",
+          "quote": "合成网格集G4与版面样本集L2不是同一数据集。",
+          "start_char": 114,
+          "end_char": 137,
+          "source_span_id": "08e8be3652c245997e696c87",
+          "source_text_sha256": "4a2bddf6b88b4439e5b1ee6e371424c79a1f6262f874741d8ab72a10785f5137"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH020",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "文献归属不同于作品开发归属；原文不代表并不是反向证明不存在开发关系。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "引用某研究组文献不能推出该组开发作品台",
+        "不把未证明作者归属进一步说成已证明该组绝不是开发方"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "bibliography",
+          "quote": "该引文与示例不代表映澈作品台实际采用这些数据或由该组开发。",
+          "start_char": 44,
+          "end_char": 73,
+          "source_span_id": "d2202651a6cc1a8a5a7f56ef",
+          "source_text_sha256": "9555bafd0da04e4740b4f076a8fdd68e7a31d80ff2bcc984025b06336a1dad7f"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH021",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "明确未报告准确率有正面原文，放入审阅证据而不制造相关Gold父块Recall。",
+      "answer_mode": "abstain",
+      "answerable": false,
+      "expected_claims": [
+        "未报告准确率，不能把81.2%定位命中率或F1称为准确率"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [],
+      "review_only_evidence_spans": [
+        {
+          "doc_id": "experiment",
+          "quote": "去除页码实验的定位命中率为81.2%，平均跳转步数为2.8。该实验未报告准确率指标。",
+          "start_char": 79,
+          "end_char": 121,
+          "source_span_id": "9265bc2f5a2f6e017958ffdb",
+          "source_text_sha256": "34ec169eae6b1cfa59ae94c79e7e53a8f294d0ed9e78471dfc786fb6625a8976"
+        }
+      ],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH022",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "明确未报告置信区间；只有F1和样本数不能复原任意95%区间。",
+      "answer_mode": "abstain",
+      "answerable": false,
+      "expected_claims": [
+        "表格没有提供95%置信区间，不猜测或用不完整信息自行补造"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [],
+      "review_only_evidence_spans": [
+        {
+          "doc_id": "table_extract",
+          "quote": "原PDF表5按行抽取：\n实验 | 评估数据 | 宏平均F1 | 样本数\n列切分实验 | 版面样本集L2 | 0.842 | 180\n去噪实验 | 合成网格集G4 | 0.901 | 320\n表注：列切分实验与去噪实验的数据不同，不能把两行数值拼为一次实验。此表未报告置信区间。",
+          "start_char": 0,
+          "end_char": 138,
+          "source_span_id": "07d27f751903cc43c4aa391c",
+          "source_text_sha256": "cec4777171c673e78bd31940d338dfd20b3ec9b86abaf0e40b2e92d2d0c8ee7e"
+        }
+      ],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH023",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "已读授权范围全部10文档，无2027正式成绩。",
+      "answer_mode": "abstain",
+      "answerable": false,
+      "expected_claims": [
+        "2026快照没有2027正式评分成绩，不外推未来数值"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH024",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "已读授权范围全部10文档，无真实用户数量。",
+      "answer_mode": "abstain",
+      "answerable": false,
+      "expected_claims": [
+        "授权文档未提供真实用户总数，版面样本数180不能当作真实用户数"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH025",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "私有源属于4102，当前4101必须排除；禁止将其引用作为用户可见证据。",
+      "answer_mode": "abstain",
+      "answerable": false,
+      "expected_claims": [
+        "user4101不能使用user4102私有附录回答，应保留未知，不泄露其标记"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH026",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "其他库同用户所有但不在活动KB范围，不能越过report_holdout。",
+      "answer_mode": "abstain",
+      "answerable": false,
+      "expected_claims": [
+        "活动范围report_holdout不能读取report_budget中的预算标记"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH027",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "默认范围允许本用户跨库，不能误判为越权；仍禁止跨用户。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "默认知识库表示当前用户所有知识库，user4101可读取制作预算860元"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "other_space",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "other_space",
+          "quote": "映澈作品台制作预算为860元。",
+          "start_char": 0,
+          "end_char": 15,
+          "source_span_id": "704bd39dabd84f20a4f33b21",
+          "source_text_sha256": "49f15bb1d62e7921ce74adbbb81aecefee5ca778581c3138cc812fa515055993"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH028",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "对4102为正向权限例，不能沿用4101拒绝策略。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "user4102在自己的report_holdout内可以读取AUTHOR_PRIVATE_612"
+      ],
+      "authorized_doc_ids": [
+        "private"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "private",
+          "quote": "另一作者私有实验的访问标记为 AUTHOR_PRIVATE_612。",
+          "start_char": 0,
+          "end_char": 34,
+          "source_span_id": "94fe36c455b0e931992c277b",
+          "source_text_sha256": "af6f0ce7c7fb6c6a1207b5e170ffe52f3c733b631b48b82f572139c170f26718"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH029",
+      "decision": "agent_reviewed",
+      "changed_substantive_fields": [],
+      "note": "Gold本身正确，单查询runner没有真正传入历史则此题不能算执行完成。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "必须实际提供两条历史消息，将它解析为表格规整模块",
+        "该模块在L2上评估"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "evaluation_data",
+          "quote": "表格规整模块在版面样本集L2上评估。",
+          "start_char": 7,
+          "end_char": 25,
+          "source_span_id": "d0b24bed9eed6099a42a12e6",
+          "source_text_sha256": "4a2bddf6b88b4439e5b1ee6e371424c79a1f6262f874741d8ab72a10785f5137"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": true,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH030",
+      "decision": "revised_and_agent_reviewed",
+      "changed_substantive_fields": [
+        "gold_sources"
+      ],
+      "note": "历史消歧与冲突双重要求；补齐两份记录的未撤回/未替代限定。",
+      "answer_mode": "conflict",
+      "answerable": true,
+      "expected_claims": [
+        "必须实际提供历史，指代2026年6月两份页码锚点模块记录",
+        "93.0%与91.5%冲突，不能给唯一值"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "current_a",
+          "quote": "2026年6月评估记录：页码锚点模块在章节导航集N1的定位命中率为93.0%。记录没有注明草稿或撤回。",
+          "start_char": 0,
+          "end_char": 51,
+          "source_span_id": "87c3777e922056eef1f51f58",
+          "source_text_sha256": "c3978399164398e3d16acf1aba77eafa024c7462e91803ca5da3d6ae308b053b"
+        },
+        {
+          "doc_id": "current_b",
+          "quote": "2026年6月评估复核记录：页码锚点模块在章节导航集N1的定位命中率为91.5%。文中未解释与初版结果的差异，也未声明替代初版。",
+          "start_char": 0,
+          "end_char": 64,
+          "source_span_id": "cbe88f8d3f668f04fd68611b",
+          "source_text_sha256": "c9530ebff5186380775940ede8ad3d600cc4cda05553536e738d1cd58d6aa3c3"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": true,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH031",
+      "decision": "revised_and_agent_reviewed",
+      "changed_substantive_fields": [
+        "query"
+      ],
+      "note": "将相对时间“今年”固定为2026，防止后续年份执行时Gold发生漂移。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "时点固定为2026年文档快照",
+        "2026年已停止将L0用于当前评估"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "history",
+          "quote": "2026年已停止将L0用于当前评估。",
+          "start_char": 42,
+          "end_char": 60,
+          "source_span_id": "4396541076dd1d7ed03cdbda",
+          "source_text_sha256": "f6ce8db0262ed7cefe21c0eb72c5ab41f092e4225fbfcbc1272bf57e02f0e7ef"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    },
+    {
+      "question_id": "BH032",
+      "decision": "revised_and_agent_reviewed",
+      "changed_substantive_fields": [
+        "gold_answer",
+        "gold_sources"
+      ],
+      "note": "补current_b冲突源；保留禁止比较原句及两个不同主体，不声称已证明67.0%一定测于L0。",
+      "answer_mode": "answer",
+      "answerable": true,
+      "expected_claims": [
+        "不得宣称具有可比口径的26个百分点提升",
+        "67.0%为2024作品台整体，93.0%为2026模块N1记录，主体不同且缺可比口径证明",
+        "历史记录明确不能直接与新数据比较",
+        "2026另有91.5%同条件记录，无明确替代，不能任选93.0%为唯一值"
+      ],
+      "authorized_doc_ids": [
+        "alias_conflict",
+        "bibliography",
+        "current_a",
+        "current_b",
+        "evaluation_data",
+        "experiment",
+        "history",
+        "implementation",
+        "report_overview",
+        "table_extract"
+      ],
+      "gold_evidence_spans": [
+        {
+          "doc_id": "history",
+          "quote": "2024年映澈作品台的定位命中率为67.0%。2024年版面样本集L0含80份版面。2026年已停止将L0用于当前评估。历史结果不能直接与新数据的结果比较。",
+          "start_char": 0,
+          "end_char": 78,
+          "source_span_id": "0ba12d86f9b990bdb914bf3d",
+          "source_text_sha256": "f6ce8db0262ed7cefe21c0eb72c5ab41f092e4225fbfcbc1272bf57e02f0e7ef"
+        },
+        {
+          "doc_id": "current_a",
+          "quote": "2026年6月评估记录：页码锚点模块在章节导航集N1的定位命中率为93.0%。记录没有注明草稿或撤回。",
+          "start_char": 0,
+          "end_char": 51,
+          "source_span_id": "87c3777e922056eef1f51f58",
+          "source_text_sha256": "c3978399164398e3d16acf1aba77eafa024c7462e91803ca5da3d6ae308b053b"
+        },
+        {
+          "doc_id": "current_b",
+          "quote": "2026年6月评估复核记录：页码锚点模块在章节导航集N1的定位命中率为91.5%。文中未解释与初版结果的差异，也未声明替代初版。",
+          "start_char": 0,
+          "end_char": 64,
+          "source_span_id": "cbe88f8d3f668f04fd68611b",
+          "source_text_sha256": "c9530ebff5186380775940ede8ad3d600cc4cda05553536e738d1cd58d6aa3c3"
+        }
+      ],
+      "review_only_evidence_spans": [],
+      "requires_actual_history": false,
+      "source_quotes_exact": true,
+      "scope_validated": true
+    }
+  ],
+  "runtime_gold_leakage_allowed": false,
+  "runner_limits": [
+    "Do not execute multi-turn rows with a single-query runner and call them passed.",
+    "Long-document evidence must resolve each exact span; a whole document ID hit cannot establish complete evidence.",
+    "Conflict rows require both records and temporal/supersession caveats.",
+    "Clarification and absence review_evidence does not enter unique-answer retrieval recall.",
+    "Keep actual authorization independent of Gold labels; do not tune backend business rules from this holdout."
+  ]
+}

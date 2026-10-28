@@ -137,7 +137,8 @@ class AsyncMilvusClientWrapper:
     # ==================== 知识库管理方法代理 ====================
 
     async def hybrid_retrieval_knowledge_base(
-        self, query: str, knowledge_base_id: str, top_k: int, user_id: int
+        self, query: str, knowledge_base_id: str, top_k: int, user_id: int,
+        retrieval_mode: str = "hybrid",
     ):
         """混合检索知识库 - 代理到 knowledge_base_manager"""
         return await self.knowledge_base_manager.hybrid_retrieval_knowledge_base(
@@ -145,6 +146,7 @@ class AsyncMilvusClientWrapper:
             knowledge_base_id=knowledge_base_id,
             top_k=top_k,
             user_id=user_id,
+            retrieval_mode=retrieval_mode,
         )
 
     async def add_chunks_batch(
@@ -154,6 +156,13 @@ class AsyncMilvusClientWrapper:
         return await self.knowledge_base_manager.add_chunks_batch(
             knowledge_base_id, chunks, user_id
         )
+
+    async def retrieve_knowledge_hits(self, query: str, knowledge_base_id: str, top_k: int,
+                                      user_id: int, retrieval_mode: str = "hybrid"):
+        """Structured retrieval proxy; legacy parent-ID API remains available."""
+        return await self.knowledge_base_manager.retrieve_knowledge_hits(
+            query=query, knowledge_base_id=knowledge_base_id, top_k=top_k,
+            user_id=user_id, retrieval_mode=retrieval_mode)
 
     async def delete_knowledge_file_chunks(
         self, knowledge_base_id: str, user_id: int

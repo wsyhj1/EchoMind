@@ -1,0 +1,236 @@
+{
+  "type": "offline_audit_of_preserved_actual_agent_records",
+  "reviewer": "/root/answer_review",
+  "human_review_performed": false,
+  "model_calls": 0,
+  "source_engine_sha256": "2878379d22001209256f698a8f15f66c1858f3399081cf65f649e7953efb08d4",
+  "root_cause": "Raw substring matching cannot match multiline PDF paragraph against JSON-escaped tool payload; decode evidence records and verify text/file/knowledge_base against last actual model tool messages.",
+  "corrections": [
+    {
+      "input_file": ".runtime\\rag_accuracy\\phase3\\qa_final.jsonl",
+      "input_sha256": "e72afb99f64db9f717e4c6c167beceaaa35372cd770ade3abc52afe67e7142f9",
+      "line": 1,
+      "question_id": "Q045",
+      "run_id": "8881c32f-db90-4d07-a6b5-630b1546785c",
+      "old_final_parent_ids": [
+        "02328dff-0f86-4a05-931c-fd749a6f6046",
+        "e1e80fc2-f5f2-4b6c-9bb0-9254b1e1e651",
+        "ef2f2232-c6fa-48d8-9623-c19199efd2e7"
+      ],
+      "corrected_final_parent_ids": [
+        "02328dff-0f86-4a05-931c-fd749a6f6046",
+        "723c5f2c-856a-4398-81d1-201389010202",
+        "e1e80fc2-f5f2-4b6c-9bb0-9254b1e1e651",
+        "ef2f2232-c6fa-48d8-9623-c19199efd2e7",
+        "af0de6bf-7ed0-46e1-9263-9f434da791e2"
+      ],
+      "added_ids": [
+        "723c5f2c-856a-4398-81d1-201389010202",
+        "af0de6bf-7ed0-46e1-9263-9f434da791e2"
+      ],
+      "removed_ids": [],
+      "old_metrics": {
+        "recall_at_k": 0.6666666666666666,
+        "hit_at_k": 1.0,
+        "complete_evidence_at_k": 0.0,
+        "mrr_at_k": 1.0
+      },
+      "corrected_metrics": {
+        "recall_at_k": 1.0,
+        "hit_at_k": 1.0,
+        "complete_evidence_at_k": 1.0,
+        "mrr_at_k": 1.0
+      },
+      "model_rerun": false,
+      "original_record_modified": false
+    },
+    {
+      "input_file": ".runtime\\rag_accuracy\\phase3\\qa_final.jsonl",
+      "input_sha256": "e72afb99f64db9f717e4c6c167beceaaa35372cd770ade3abc52afe67e7142f9",
+      "line": 2,
+      "question_id": "Q086",
+      "run_id": "7b9f5cb2-d5d5-48f0-89b8-85efcc189e72",
+      "old_final_parent_ids": [
+        "ef2f2232-c6fa-48d8-9623-c19199efd2e7",
+        "e1e80fc2-f5f2-4b6c-9bb0-9254b1e1e651",
+        "02328dff-0f86-4a05-931c-fd749a6f6046"
+      ],
+      "corrected_final_parent_ids": [
+        "89559bc2-dcd5-46fa-88e4-3b2bcf70c883",
+        "723c5f2c-856a-4398-81d1-201389010202",
+        "ef2f2232-c6fa-48d8-9623-c19199efd2e7",
+        "e1e80fc2-f5f2-4b6c-9bb0-9254b1e1e651",
+        "02328dff-0f86-4a05-931c-fd749a6f6046"
+      ],
+      "added_ids": [
+        "89559bc2-dcd5-46fa-88e4-3b2bcf70c883",
+        "723c5f2c-856a-4398-81d1-201389010202"
+      ],
+      "removed_ids": [],
+      "old_metrics": {
+        "recall_at_k": null,
+        "hit_at_k": null,
+        "complete_evidence_at_k": null,
+        "mrr_at_k": null
+      },
+      "corrected_metrics": {
+        "recall_at_k": null,
+        "hit_at_k": null,
+        "complete_evidence_at_k": null,
+        "mrr_at_k": null
+      },
+      "model_rerun": false,
+      "original_record_modified": false
+    },
+    {
+      "input_file": ".runtime\\rag_accuracy\\phase3\\qa_delivery.jsonl",
+      "input_sha256": "fbcdce884d5be6364d9c5f399c5e536d7393b1d4beb5ad734c5965ac2204e740",
+      "line": 1,
+      "question_id": "Q045",
+      "run_id": "c1299bb2-c54c-43e0-b3fd-dfc6ad2465c8",
+      "old_final_parent_ids": [
+        "02328dff-0f86-4a05-931c-fd749a6f6046",
+        "e1e80fc2-f5f2-4b6c-9bb0-9254b1e1e651",
+        "ef2f2232-c6fa-48d8-9623-c19199efd2e7"
+      ],
+      "corrected_final_parent_ids": [
+        "02328dff-0f86-4a05-931c-fd749a6f6046",
+        "723c5f2c-856a-4398-81d1-201389010202",
+        "e1e80fc2-f5f2-4b6c-9bb0-9254b1e1e651",
+        "ef2f2232-c6fa-48d8-9623-c19199efd2e7",
+        "ce9779a9-6ae7-4267-8440-eba69355aedc"
+      ],
+      "added_ids": [
+        "723c5f2c-856a-4398-81d1-201389010202",
+        "ce9779a9-6ae7-4267-8440-eba69355aedc"
+      ],
+      "removed_ids": [],
+      "old_metrics": {
+        "recall_at_k": 0.6666666666666666,
+        "hit_at_k": 1.0,
+        "complete_evidence_at_k": 0.0,
+        "mrr_at_k": 1.0
+      },
+      "corrected_metrics": {
+        "recall_at_k": 1.0,
+        "hit_at_k": 1.0,
+        "complete_evidence_at_k": 1.0,
+        "mrr_at_k": 1.0
+      },
+      "model_rerun": false,
+      "original_record_modified": false
+    },
+    {
+      "input_file": ".runtime\\rag_accuracy\\phase3\\qa_delivery.jsonl",
+      "input_sha256": "fbcdce884d5be6364d9c5f399c5e536d7393b1d4beb5ad734c5965ac2204e740",
+      "line": 2,
+      "question_id": "Q086",
+      "run_id": "215b25a9-2596-43b8-8cf2-adcd4518f5f6",
+      "old_final_parent_ids": [
+        "ef2f2232-c6fa-48d8-9623-c19199efd2e7",
+        "e1e80fc2-f5f2-4b6c-9bb0-9254b1e1e651",
+        "02328dff-0f86-4a05-931c-fd749a6f6046"
+      ],
+      "corrected_final_parent_ids": [
+        "89559bc2-dcd5-46fa-88e4-3b2bcf70c883",
+        "723c5f2c-856a-4398-81d1-201389010202",
+        "ef2f2232-c6fa-48d8-9623-c19199efd2e7",
+        "e1e80fc2-f5f2-4b6c-9bb0-9254b1e1e651",
+        "02328dff-0f86-4a05-931c-fd749a6f6046"
+      ],
+      "added_ids": [
+        "89559bc2-dcd5-46fa-88e4-3b2bcf70c883",
+        "723c5f2c-856a-4398-81d1-201389010202"
+      ],
+      "removed_ids": [],
+      "old_metrics": {
+        "recall_at_k": null,
+        "hit_at_k": null,
+        "complete_evidence_at_k": null,
+        "mrr_at_k": null
+      },
+      "corrected_metrics": {
+        "recall_at_k": null,
+        "hit_at_k": null,
+        "complete_evidence_at_k": null,
+        "mrr_at_k": null
+      },
+      "model_rerun": false,
+      "original_record_modified": false
+    },
+    {
+      "input_file": ".runtime\\rag_accuracy\\phase2\\qa_graph.jsonl",
+      "input_sha256": "647be5eaa8fa3df67d13fb5e1a14b6da8393569b9abfa06ec22c336634f0f5f1",
+      "line": 1,
+      "question_id": "Q021",
+      "run_id": "85b46b67-16d1-42ec-97b7-866729c14d3e",
+      "old_final_parent_ids": [
+        "02328dff-0f86-4a05-931c-fd749a6f6046",
+        "723c5f2c-856a-4398-81d1-201389010202",
+        "ef2f2232-c6fa-48d8-9623-c19199efd2e7",
+        "89559bc2-dcd5-46fa-88e4-3b2bcf70c883",
+        "af0de6bf-7ed0-46e1-9263-9f434da791e2"
+      ],
+      "corrected_final_parent_ids": [
+        "02328dff-0f86-4a05-931c-fd749a6f6046",
+        "723c5f2c-856a-4398-81d1-201389010202",
+        "ef2f2232-c6fa-48d8-9623-c19199efd2e7",
+        "89559bc2-dcd5-46fa-88e4-3b2bcf70c883",
+        "af0de6bf-7ed0-46e1-9263-9f434da791e2"
+      ],
+      "added_ids": [],
+      "removed_ids": [],
+      "old_metrics": {
+        "recall_at_k": 1.0,
+        "hit_at_k": 1.0,
+        "complete_evidence_at_k": 1.0,
+        "mrr_at_k": 1.0
+      },
+      "corrected_metrics": {
+        "recall_at_k": 1.0,
+        "hit_at_k": 1.0,
+        "complete_evidence_at_k": 1.0,
+        "mrr_at_k": 1.0
+      },
+      "model_rerun": false,
+      "original_record_modified": false
+    },
+    {
+      "input_file": ".runtime\\rag_accuracy\\phase2\\qa_graph.jsonl",
+      "input_sha256": "647be5eaa8fa3df67d13fb5e1a14b6da8393569b9abfa06ec22c336634f0f5f1",
+      "line": 2,
+      "question_id": "Q036",
+      "run_id": "e752075b-f6d2-471d-9192-e25eb871bf06",
+      "old_final_parent_ids": [
+        "aa736a84-3196-4f15-8689-e43b033bd213",
+        "2ac555e0-df25-4dc2-86f4-ac7065b0c7de",
+        "ce9779a9-6ae7-4267-8440-eba69355aedc",
+        "723c5f2c-856a-4398-81d1-201389010202",
+        "89559bc2-dcd5-46fa-88e4-3b2bcf70c883"
+      ],
+      "corrected_final_parent_ids": [
+        "aa736a84-3196-4f15-8689-e43b033bd213",
+        "2ac555e0-df25-4dc2-86f4-ac7065b0c7de",
+        "ce9779a9-6ae7-4267-8440-eba69355aedc",
+        "723c5f2c-856a-4398-81d1-201389010202",
+        "89559bc2-dcd5-46fa-88e4-3b2bcf70c883"
+      ],
+      "added_ids": [],
+      "removed_ids": [],
+      "old_metrics": {
+        "recall_at_k": 1.0,
+        "hit_at_k": 1.0,
+        "complete_evidence_at_k": 1.0,
+        "mrr_at_k": 1.0
+      },
+      "corrected_metrics": {
+        "recall_at_k": 1.0,
+        "hit_at_k": 1.0,
+        "complete_evidence_at_k": 1.0,
+        "mrr_at_k": 1.0
+      },
+      "model_rerun": false,
+      "original_record_modified": false
+    }
+  ]
+}

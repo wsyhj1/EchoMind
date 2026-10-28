@@ -1,0 +1,32 @@
+{
+  "dataset_version": "echomind-report-holdout-v1",
+  "gold_review": "agent_draft",
+  "human_reviewed": false,
+  "as_of": "2026-10-24",
+  "documents": 12,
+  "questions": 32,
+  "sources_sha256": "84bce6e6bd9bde6d710bea5dbeb21ce9a72d3f84efab9be988cccd6f7458cf97",
+  "dataset_sha256": "ffaf421bc01a8302d0326506aeda095b4166a8665edaf2faff2237d3b34cc791",
+  "new_retrieval_calls": 0,
+  "new_model_calls": 0,
+  "evaluation_status": "candidate_pending_independent_source_review",
+  "not_a_live_accuracy_result": true,
+  "coverage": [
+    "long_report",
+    "cross_section",
+    "table_row",
+    "same_time_conflict",
+    "ambiguous_alias",
+    "historical",
+    "multi_turn",
+    "unanswerable",
+    "tenant_isolation",
+    "kb_isolation"
+  ],
+  "execution_requirements": [
+    "Dedicated isolated schema/collection and users; never ingest into a real user's library.",
+    "Long documents require source-span/parent mapping rather than requiring the full document in one parent.",
+    "History-bearing cases require a runner that actually supplies history; the existing single-query answer runner is not sufficient.",
+    "Numeric and conflict answers require full evidence and claim review; graph edge hit is not answer correctness."
+  ]
+}

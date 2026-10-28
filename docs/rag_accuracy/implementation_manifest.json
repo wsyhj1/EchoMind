@@ -1,0 +1,30 @@
+{
+  "created_at": "2026-10-21T13:19:07.596415+00:00",
+  "source_sha256": {
+    "backend/tools.py": "9d1452bc0f5e7d5339fb40c6863cf0356c58f7376447640a6762f0bd8395bf97",
+    "backend/knowledeg_base_manager.py": "1013b901d6ee66be2989ed8e85b4a97ca49f917cdeef13c000ec666d431dbbc4",
+    "backend/milvus_client.py": "188e1337315fa8b534dfb883a3063d2f708f62c455f732a0336f1d46f2040069",
+    "backend/postgresql_client.py": "61f1ff7ab848d5f94df01b1cd6de50b9e667df1abcd2d7f89d1507e56962d512",
+    "backend/rag/retrieval_service.py": "a34cbe8edde1b0704105b8992fe37eeca7ba40cdeb6209139c119e49ec4640a0",
+    "backend/rag/settings.py": "26f3540d825854b048e883e918db27cbd81a92d68c242d22d0487c08ab284d42",
+    "backend/rag/types.py": "11e8f51091930d3480eeaca6df5c62e9b280f3077844db2d2b58a40db4907525",
+    "backend/rag/__init__.py": "4f0cc7313638b6b2b7aac7a4119d1b29ca3d521189b455bb06e63380a9d8e9b2"
+  },
+  "full_backend_suite": {
+    "tests": 48,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "successful": true
+  },
+  "additional_integration_suite": {
+    "tests": 3,
+    "passed": 3,
+    "new_unique_tests": 1
+  },
+  "benchmark_tool_tests": {
+    "tests": 5,
+    "passed": 5
+  },
+  "formal_gold_gate_passed": false
+}

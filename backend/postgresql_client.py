@@ -243,6 +243,9 @@ class PostgreSQLParentClient:
             async with self.pool.acquire() as conn:
                 async with conn.transaction():
                     # 先检查知识库是否已存在（可选，但保持风格一致）
+                    from graph.repository import pending_delete
+                    if await pending_delete(conn, user_id, knowledge_base_id):
+                        return {"success": False, "message": "知识库正在完成删除清理，请稍后重试"}
                     exists = await conn.fetchval(
                         """
                         SELECT knowledge_base_id FROM knowledge_bases 
@@ -336,6 +339,8 @@ class PostgreSQLParentClient:
                     )
 
                     # 删除知识库（由于外键级联，会自动删除所有关联数据）
+                    from graph.repository import queue_delete, prune_graph
+                    await queue_delete(conn, user_id, knowledge_base_id)
                     await conn.execute(
                         """
                         DELETE FROM knowledge_bases 
@@ -344,10 +349,8 @@ class PostgreSQLParentClient:
                         knowledge_base_id,
                         user_id,
                     )
-
-                    logger.info(
-                        f"成功删除知识库 {knowledge_base_id}（用户 {user_id}），以及其中包含的{file_count} 个文件"
-                    )
+                    await prune_graph(conn, user_id, knowledge_base_id)
+                    logger.info(f"成功删除知识库 {knowledge_base_id}（用户 {user_id}），以及其中包含的{file_count} 个文件")
 
                     return {
                         "success": True,
@@ -436,6 +439,9 @@ class PostgreSQLParentClient:
             async with self.pool.acquire() as conn:
                 async with conn.transaction():
                     # 1. 先确保用户存在
+                    from graph.repository import pending_delete
+                    if await pending_delete(conn, user_id, knowledge_base_id):
+                        raise RuntimeError("Knowledge base deletion cleanup is pending")
                     await conn.execute(
                         """
                         INSERT INTO users (user_id, created_at)
@@ -524,6 +530,8 @@ class PostgreSQLParentClient:
                     )
 
                     # 删除文件元数据（由于外键级联，会自动删除关联的父块和块哈希）
+                    from graph.repository import queue_delete, prune_graph
+                    await queue_delete(conn, user_id, knowledge_base_id, file_hash)
                     result = await conn.execute(
                         """
                         DELETE FROM file_metadata 
@@ -537,6 +545,7 @@ class PostgreSQLParentClient:
                     deleted_file_count = (
                         int(result.split()[-1]) if result.startswith("DELETE ") else 0
                     )
+                    await prune_graph(conn, user_id, knowledge_base_id)
 
                     logger.info(
                         f"删除文件 {file_hash[:16]}（知识库 {knowledge_base_id}，用户 {user_id}），关联的 {parent_count} 个父块将被级联删除"
@@ -639,50 +648,37 @@ class PostgreSQLParentClient:
             logger.error(f"Error batch adding parents: {e}")
             raise
 
-    async def get_parents(
-        self, parent_ids: List[str], knowledge_base_id: str, user_id: int
-    ) -> List[str]:
-        """批量获取父块，混合检索出子块后用来检索父块文本"""
+    async def get_parent_records(self, parent_ids, knowledge_base_id, user_id):
+        """Fetch source metadata and restore retrieval order explicitly."""
         if not self.pool:
             raise RuntimeError("Connection pool not initialized")
-
         if not parent_ids:
             return []
+        rows = await self.pool.fetch(
+            """SELECT parent_id,knowledge_base_id,file_hash,file_name,text FROM parent_chunks
+               WHERE parent_id=ANY($1::text[]) AND user_id=$2
+               AND ($3::boolean OR knowledge_base_id=$4)""",
+            parent_ids, user_id, knowledge_base_id == "默认知识库", knowledge_base_id)
+        by_id = {row["parent_id"]: dict(row) for row in rows}
+        return [by_id[parent_id] for parent_id in dict.fromkeys(parent_ids) if parent_id in by_id]
 
-        try:
-            async with self.pool.acquire() as conn:
-                # 默认知识库的情况下查询所有知识库的父块文本，其他知识库名就限制在知识库里查找
-                if knowledge_base_id == "默认知识库":
-                    rows = await conn.fetch(
-                        """
-                    SELECT text
-                    FROM parent_chunks
-                    WHERE parent_id = ANY($1::text[]) 
-                    AND user_id = $2
-                """,
-                        parent_ids,
-                        user_id,
-                    )
-                else:
-                    rows = await conn.fetch(
-                        """
-                    SELECT text
-                    FROM parent_chunks
-                    WHERE parent_id = ANY($1::text[]) 
-                    AND knowledge_base_id = $2 
-                    AND user_id = $3
-                """,
-                        parent_ids,
-                        knowledge_base_id,
-                        user_id,
-                    )
+    async def get_parents_with_metadata(self, parent_ids, knowledge_base_id, user_id):
+        """Scoped rows preserving composite parent identity, including default-KB searches."""
+        if not self.pool:
+            raise RuntimeError("Connection pool not initialized")
+        if not parent_ids:
+            return []
+        rows = await self.pool.fetch(
+            """SELECT parent_id,user_id,knowledge_base_id,file_hash,file_name,text FROM parent_chunks
+               WHERE parent_id=ANY($1::text[]) AND user_id=$2
+                 AND ($3::boolean OR knowledge_base_id=$4)
+               ORDER BY array_position($1::text[],parent_id),knowledge_base_id""",
+            list(dict.fromkeys(parent_ids)), user_id, knowledge_base_id == "默认知识库", knowledge_base_id)
+        return [dict(row) for row in rows]
 
-            # 提取所有文本内容
-            texts = [row["text"] for row in rows]
-            return texts
-        except Exception as e:
-            logger.error(f"Error getting parents: {e}")
-            raise
+    async def get_parents(self, parent_ids, knowledge_base_id, user_id):
+        records = await self.get_parent_records(parent_ids, knowledge_base_id, user_id)
+        return [record["text"] for record in records]
 
     # 文档块去重
     async def batch_check_chunk_duplicates(
@@ -881,51 +877,16 @@ class PostgreSQLParentClient:
             return None
 
     async def update_user_profile(self, user_id: int, user_profile: str) -> bool:
-        """
-        更新用户画像，同时写入 Redis 缓存
-
-        Args:
-            user_id: 用户ID
-            user_profile: 用户画像内容
-
-        Returns:
-            bool: 更新成功返回 True，失败返回 False
-        """
-        if not self.pool:
-            logger.error("Connection pool not initialized")
+        """Legacy automatic writer; honor the same settings and revision checks."""
+        if not self.pool or not user_profile or not user_profile.strip():
             return False
-
-        if not user_profile or not user_profile.strip():
-            logger.warning(f"用户画像内容为空，跳过更新")
-            return False
-
         try:
-            # 1. 先更新数据库
-            async with self.pool.acquire() as conn:
-                await conn.execute(
-                    """
-                    INSERT INTO users (user_id, user_profile, created_at, updated_at)
-                    VALUES ($1, $2, NOW(), NOW())
-                    ON CONFLICT (user_id) DO UPDATE SET
-                        user_profile = EXCLUDED.user_profile,
-                        updated_at = NOW()
-                """,
-                    user_id,
-                    user_profile.strip(),
-                )
-
-            # 2.更新 Redis 缓存
-            try:
-                redis_client = await get_redis_client()
-                cache_key = f"user_profile:{user_id}"
-                await redis_client.setex(cache_key, 3600, user_profile.strip())# 缓存 1 小时
-                logger.info(f"用户画像缓存已更新 user_id={user_id}")
-            except Exception as e:
-                logger.warning(f"更新 Redis 缓存失败: {e}")
-            return True
-
-        except Exception as e:
-            logger.error(f"更新用户画像失败: {e}")
+            from profile_store import ProfileStore
+            store = ProfileStore(self.pool)
+            state = await store.get(user_id)
+            return await store.save_automatic(user_id, user_profile, state["revision"]) is not None
+        except Exception:
+            logger.exception("更新自动画像失败 user_id=%s", user_id)
             return False
 
     async def get_raw_conversation_by_summary_id(

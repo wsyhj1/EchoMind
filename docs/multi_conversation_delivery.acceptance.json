@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-26",
+  "scope": "multi-conversation MVP and contextual ReAct input projection",
+  "backend": {
+    "command": ".venv/Scripts/python.exe .runtime/run_conversation_checks.py --full",
+    "tests": 223,
+    "failures": 0,
+    "log": ".runtime/conversation_full_checks.log",
+    "initial_failure_log": ".runtime/conversation_full_checks.initial.log",
+    "database": "isolated random PostgreSQL schemas; existing isolated Milvus integration fixtures",
+    "models": "offline; provider URL forced to an unused loopback endpoint"
+  },
+  "frontend": {
+    "command": ".venv/Scripts/python.exe .runtime/run_conversation_checks.py --frontend",
+    "tests": 57,
+    "failures": 0,
+    "log": ".runtime/conversation_frontend_checks.log"
+  },
+  "browser": {
+    "environment": "separate loopback fixture with real conversation API, isolated PostgreSQL and offline model",
+    "same_knowledge_base_multiple_conversations": true,
+    "refresh_restores_history": true,
+    "context_after_checkpoint_loss": true,
+    "two_browser_tabs": true,
+    "mobile_no_horizontal_overflow": true,
+    "local_skills_help": true,
+    "menu_size_and_active_text_contrast": true,
+    "offline_model_calls": 3,
+    "provider_calls": 0,
+    "result": ".runtime/conversation_browser_result.json",
+    "screenshots": [
+      ".runtime/ui-review/conversation-list-desktop.png",
+      ".runtime/ui-review/conversation-mobile.png"
+    ]
+  },
+  "review": {
+    "method": "two read-only sub-agent reviews plus lease follow-up regression",
+    "resolved": [
+      "scope selection and stale library directory mismatch",
+      "unstable updated_at cursor",
+      "history loading outside run deadline",
+      "uncertain sends must reuse original client_turn_id",
+      "transaction-start timestamp allowing late lease commits"
+    ]
+  },
+  "local_rollout": {
+    "migration": "009_conversations.sql, additive",
+    "backend": "http://127.0.0.1:8000/health",
+    "frontend": "http://127.0.0.1:8501/",
+    "existing_users_knowledge_files_parents_graph_fingerprints_unchanged": true,
+    "synthetic_conversations_in_real_database": 0,
+    "synthetic_turns_in_real_database": 0,
+    "private_document_provider_acceptance_calls": 0,
+    "temporary_fixture_servers_stopped": true,
+    "temporary_browser_schemas_removed": 3,
+    "metadata_result": ".runtime/conversation_production_result.json"
+  },
+  "remaining": [
+    "structured constraint updates and semantic compaction",
+    "explicit business state graph and durable pause/resume",
+    "background stream subscription and in-app tabs/split view",
+    "legacy directory/run pagination beyond current display limits"
+  ]
+}

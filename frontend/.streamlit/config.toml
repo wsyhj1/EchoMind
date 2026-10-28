@@ -1,0 +1,10 @@
+[server]
+address = "127.0.0.1"
+
+[theme]
+base = "light"
+primaryColor = "#2d6954"
+backgroundColor = "#fbfcfa"
+secondaryBackgroundColor = "#f0f4ed"
+textColor = "#203c34"
+font = "sans serif"

@@ -1,0 +1,308 @@
+{
+  "review_date_local": "2026-10-25",
+  "timezone": "Asia/Shanghai",
+  "reviewer": "/root/answer_review",
+  "review_type": "independent_subagent_source_test_and_read_only_runtime_review",
+  "human_review_performed": false,
+  "formal_production_security_or_disaster_recovery_gate_passed": false,
+  "independently_executed_suites": {
+    "frontend": {
+      "tests_run": 39,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": true
+    },
+    "citation": {
+      "tests_run": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": true
+    }
+  },
+  "test_source_unchanged_during_execution": true,
+  "reviewer_actions": {
+    "real_env_modified": false,
+    "real_profile_or_document_modified": false,
+    "real_account_created": false,
+    "graph_job_submitted_or_cancelled": false,
+    "model_requests_initiated": 0,
+    "real_cold_backup_or_restore_performed": false,
+    "database_writes": "Only random isolated citation_test schema for the explicit integration test; not public user tables."
+  },
+  "scope_note": "Other authorized root/worker activity can change real graph indexes concurrently; this is not a claim that the entire environment was unchanged.",
+  "artifact_sha256": {
+    ".runtime/final_review_20261025/answer_review_tests.json": "16d8e94b90a22c67f3c388fd3de3f64b8658b5bf020154a90fe776ab2c393f39",
+    ".runtime/final_review_20261025/runtime_identity_probe.json": "af41f5240817d72cd7fa53c2a1d006a5e5d47785aadcfb6a4e65c05848c93bf2",
+    ".runtime/final_review_20261025/runtime_identity_probe_restored.json": "b470d693e908802a897519035e8a3e82e23a9aa6fafcc8180257590a3a8d027e",
+    ".runtime/final_review_20261025/graph_metadata_probe.json": "a562f60de3055fadc850e3404b51f4016406004d5b5c7b295f07d79ba19d6768",
+    ".runtime/final_review_20261025/graph_metadata_final.json": "509ec27df372e2ed92973f4a6df1ebfa7f2cb455501bb066595b76f4692d6b34",
+    ".runtime/graph_management_debug/lifecycle_before.log": "d4a59b3a02a45413b76d71e6679cf9d81db0e4c74e1d0d118156d34726ae226a",
+    ".runtime/graph_management_debug/lifecycle_after.log": "5a39be69ba83ad8de92cef5d3e8865d906ef6fc2ce0c93269e805374f16233f9"
+  },
+  "reviewed_source_sha256": {
+    "frontend/app.py": "2f44339527a4cf6121172b8fb019e48e619da10c1a8dd7e64d751f21a666b1f5",
+    "frontend/api_client.py": "94c2e2a6d4b0724cc0c6bdd4cbc8d976b4b8e8cd9922934c79d50dec973acb6c",
+    "frontend/identity_ui.py": "bbd9dc050e95f391793371d0d422cb01229f62199ffb37505ea50363830fbc1e",
+    "frontend/citations_ui.py": "61cbc98a5767957a3edc446714cd6bc7fa978bba3180b4861cd54b09e73e0cf9",
+    "frontend/graph_ui.py": "9b56a159b35363144997d665a5ffcbf2445e4858e4a62f55ec9907190dc418d6",
+    "frontend/evaluation_ui.py": "2478f2f27487b9b2b202394b3b7f91dcf6948094c756f476c7612ca1c65d6f1b",
+    "frontend/operations_ui.py": "fcc97d02f9cad081ceb09ee8ef8ea39e0897e9a72fc766364c6e746f5d03cb80",
+    "frontend/.streamlit/config.toml": "2f3ac588aef133b43a6744e25e970e0584de3e3751a2ef8382dc854eb0dc2082",
+    "backend/auth.py": "593619d1353a467e8907dde842435c4ced2695612a1454a3c9a5d69ab663355f",
+    "backend/auth_cli.py": "4a9d01d73e4d26a7895dd66b5022fd2c0d1df006f0ef3530cb15346e63e16c86",
+    "backend/citation_service.py": "c43b5a52062f6cd16a162013faa2bfe5929b9a7ddc61065b5697d14afe45fae4",
+    "backend/citations_api.py": "6f5f63edd25f27b8b4de07b25d793dd80cbf67f466accce9b0e4be14e2f906bc",
+    "backend/operations_api.py": "a39dad46da1633f3d4d1589be5f98dc6a6a7f271338784ad3137b1d0d70a8767",
+    "backend/runtime_limits.py": "a8bc1d1b781dc8628ff1dae3523589da2a91de5cc5ab6c9c1f9aeb1cfc53e9be",
+    "backend/agent.py": "fa1af9c246ccc2aa32722c8aae43f5bc2e88456060bd4235f3ee013978ae9ff2",
+    "backend/graph/extractor.py": "7f4d7a8ea90d8dd3e6eb445b2f98410dbd28565d2848ce4fc8f500eeea0e63ad",
+    "backend/graph/indexer.py": "2617c652001117b3a6efa70f8b82497431cdb74b7e2025115804c25219fac687",
+    "backend/tests/test_graph_client_lifecycle.py": "ea6e4646af574492af3b188b3370d7a7a5d013b0af9bbf4a540d8bc013849c55",
+    "backend/tests/test_runtime_controls.py": "fb896456af4984fafb376820d01f242129253079db91fa13f167898dba67e3c5",
+    "backend/tests/test_citation_validation.py": "b173ef4b23dc8ede7f20d45cd11bc537a2b1a0b5c586e96f06e048bfae9100f7",
+    "backend/migrations/007_auth.sql": "bf60f936ca16d3140419ce14a69f2f6d44c62931a8bef221dd289ba95aafd4b8",
+    "backend/migrations/008_citation_validation.sql": "813ae30a63ab93f30c9a3a266109625e59e59d993d9bfe4f8031526aed9f31e3",
+    "deploy/backup.py": "669f41586cf38f3fba99250610e27bed04df3e3c4f43c30221727d084e6426e0",
+    "deploy/release_manifest.py": "e9760bd593f9d848fb3125762dc67efe92c6308d7bc311f6ab9bee617455c614",
+    "scripts/run_checks.py": "ec0b3f505cbf6a9de8958086fcc5dbca3007d57b0dcb9758204e12b0b2dc8664",
+    ".github/workflows/checks.yml": "dada442587480a0a448ad64df20ca5672af376951de83291dbfb8c983b84ba6c",
+    "start.ps1": "0741377be7db7d577b1e9938e79651c12d4ee2203d62cc0b8656610a2c7373a4",
+    "README.md": "20b14cf22bd447f1ff93991eb184ddcab2e57d83969f07a485975272e68faced",
+    "docs/identity_and_operations.md": "38af118df7934f4a9ed74a6282fe96fa4f9ca806a43a875d28831575b566f2ac",
+    "docs/citations_and_graph_management.md": "20a976001432de6a2b8226f6069b407926b93a31128789cd16cda74ecc64cc4d",
+    "docs/rag_accuracy/05_identity_agent_review.md": "a3d8c8eb8f7814f454d3cd53dcb09090dd21d826f4379d112308cdffd1c7ad35",
+    "docs/rag_accuracy/06_final_identity_operations_agent_review.md": "04d1b9fc1bdcb518956fd3fafd7bebc503087e93cbf50bd1a314c633797b24f6",
+    "frontend/tests/test_background_session_isolation.py": "917e79462f53d8a3cde0e36b86dfddc596203d27d405dd19606641abe000ca23",
+    "frontend/tests/test_citations_graph_ui.py": "ef1bd40380077fb3c4c826896b9ae2bab9b1118fb677266209449235660c4bc1",
+    "frontend/tests/test_identity_listener_ui.py": "21662796031a59d16283503b2c27fd812d0d43e15dd66f67301aac4e039ff192",
+    "frontend/tests/test_identity_transport_review.py": "db0a90d82c7eff74e66d657300311325df6047e2dff71129fa9d5a27670bb861",
+    "frontend/tests/test_workspace_ui.py": "499f4e81ba51b8c7707ea4ac9d0eb31b58afa755cdcfc4562038d255534eb162"
+  },
+  "source_files_changed_after_independent_test_snapshot": [
+    "backend\\agent.py"
+  ],
+  "runtime_probes": {
+    "initial": {
+      "health": {
+        "error_type": "ConnectionError"
+      },
+      "auth/status": {
+        "error_type": "ConnectionError"
+      },
+      "auth/me": {
+        "error_type": "ConnectionError"
+      }
+    },
+    "after_owner_restored_service": {
+      "health": {
+        "status_code": 200,
+        "data": {
+          "status": "ok"
+        }
+      },
+      "auth/status": {
+        "status_code": 200,
+        "data": {
+          "mode": "local",
+          "login_required": false
+        }
+      },
+      "auth/me": {
+        "status_code": 200,
+        "data": {
+          "user_id": 1,
+          "mode": "local"
+        }
+      }
+    },
+    "listeners_observed": [
+      {
+        "local_address": "127.0.0.1",
+        "port": 8000
+      },
+      {
+        "local_address": "127.0.0.1",
+        "port": 8501
+      }
+    ],
+    "listener_probe_command": "Get-NetTCPConnection -LocalPort 8000,8501 -State Listen | Select LocalAddress,LocalPort"
+  },
+  "fix_verification": [
+    {
+      "issue": "frontend local listener including cached identity",
+      "status": "independent_AppTest_passed",
+      "test_cases": 5
+    },
+    {
+      "issue": "per-session queue and delayed completion identity capture",
+      "status": "independent_real_function_AST_tests_passed",
+      "test_cases": 4
+    },
+    {
+      "issue": "session-origin transport, all verbs and no redirects",
+      "status": "independent_tests_in_frontend_suite_passed",
+      "test_cases": 7
+    },
+    {
+      "issue": "JSON U+2028/U+2029/U+0085 citation visibility",
+      "status": "independent_citation_suite_passed"
+    },
+    {
+      "issue": "preparation steps outside chat deadline",
+      "status": "owner_fixed_then_independent_source_reviewed",
+      "owner_reported_regression": "test_preparation_redis_setup_is_inside_chat_deadline_and_trace_is_saved",
+      "independently_rerun_after_patch": false,
+      "caveat": "Cooperative timeout including preparation; audit persistence wait up to five additional seconds; not a hard HTTP/process deadline."
+    },
+    {
+      "issue": "release fingerprint omitted .toml",
+      "status": "owner_fixed_then_independent_source_reviewed",
+      "included_suffixes": [
+        ".toml",
+        ".css",
+        ".html",
+        ".svg",
+        ".js",
+        ".ts",
+        ".tsx",
+        ".jsx"
+      ]
+    }
+  ],
+  "graph_client_lifecycle": {
+    "independent_method": "Read actual extractor/indexer and owner red/green logs; no model call or job mutation.",
+    "current_test_definitions": [
+      "test_sdk_construction_cannot_block_running_cancellation_check",
+      "test_cancel_during_sdk_setup_closes_client_without_request_or_budget",
+      "test_indexer_cancel_keeps_sdk_cleanup_alive_until_client_is_closed"
+    ],
+    "owner_saved_green_log_test_count": 2,
+    "current_complete_test_file_independently_executed": false,
+    "assessment": "to_thread keeps loop responsive; shield then awaited creation closes owned client on normal cancellation before budget hook or model call; indexer avoids recancelling cleanup.",
+    "limits": [
+      "Thread construction cannot be forcibly interrupted.",
+      "Hard process termination and arbitrary repeated external cancellation are not covered.",
+      "Previously sent external requests cannot be recalled."
+    ]
+  },
+  "graph_metadata_snapshots": {
+    "during_first_generation": {
+      "status_code": 200,
+      "schema_ready": true,
+      "knowledge_base_id": "华为杯",
+      "extraction_version": "v3",
+      "service": {
+        "model": "qwen3.5-flash-2026-02-23",
+        "host": "dashscope.aliyuncs.com",
+        "target_id": "5f21f02b1134e0c38a6eaace37bbd067776ac5f55dd075c9f86e07eb3308ce39"
+      },
+      "documents": [
+        {
+          "file_hash": "d2d3c057149e26b3d86c1bc7edd23cf018b075cd04bc62553d93e4b0335e184f",
+          "job_id": "76001252-813d-495c-a2c9-00f16c5cca62",
+          "status": "READY",
+          "error_type": null,
+          "parents_total": 2,
+          "parents_completed": 2,
+          "model_calls": 0,
+          "cancel_requested": false,
+          "explicit_requested": false,
+          "usable_relations": 0,
+          "rejected_relations": 0
+        },
+        {
+          "file_hash": "1edb497c8b2af487ec9efb4a056a32807ac2c2861904a03f67b2f6f356a54b17",
+          "job_id": "2bddba3e-925e-4bbe-9822-ddb918889e56",
+          "status": "RUNNING",
+          "error_type": null,
+          "parents_total": 53,
+          "parents_completed": 50,
+          "model_calls": 53,
+          "cancel_requested": false,
+          "explicit_requested": true,
+          "usable_relations": 4,
+          "rejected_relations": 9
+        },
+        {
+          "file_hash": "4073f1db8db381b6cf078141629809e6b8cee53d6c0e98bb6082697418887879",
+          "job_id": "36d9d483-95bc-4ce2-ad21-461b5ed1b6ea",
+          "status": "PENDING",
+          "error_type": null,
+          "parents_total": 81,
+          "parents_completed": 0,
+          "model_calls": 0,
+          "cancel_requested": false,
+          "explicit_requested": true,
+          "usable_relations": 1,
+          "rejected_relations": 0
+        }
+      ]
+    },
+    "after_owner_reported_DOCX_rebuild": {
+      "status_code": 200,
+      "schema_ready": true,
+      "extraction_version": "v3",
+      "service": {
+        "model": "qwen3.5-flash-2026-02-23",
+        "host": "dashscope.aliyuncs.com",
+        "target_id": "5f21f02b1134e0c38a6eaace37bbd067776ac5f55dd075c9f86e07eb3308ce39"
+      },
+      "documents": [
+        {
+          "file_hash": "d2d3c057149e26b3d86c1bc7edd23cf018b075cd04bc62553d93e4b0335e184f",
+          "job_id": "76001252-813d-495c-a2c9-00f16c5cca62",
+          "status": "READY",
+          "error_type": null,
+          "parents_total": 2,
+          "parents_completed": 2,
+          "model_calls": 0,
+          "usable_relations": 0,
+          "rejected_relations": 0,
+          "explicit_requested": false
+        },
+        {
+          "file_hash": "1edb497c8b2af487ec9efb4a056a32807ac2c2861904a03f67b2f6f356a54b17",
+          "job_id": "2bddba3e-925e-4bbe-9822-ddb918889e56",
+          "status": "RUNNING",
+          "error_type": null,
+          "parents_total": 53,
+          "parents_completed": 5,
+          "model_calls": 8,
+          "usable_relations": 4,
+          "rejected_relations": 9,
+          "explicit_requested": true
+        },
+        {
+          "file_hash": "4073f1db8db381b6cf078141629809e6b8cee53d6c0e98bb6082697418887879",
+          "job_id": "36d9d483-95bc-4ce2-ad21-461b5ed1b6ea",
+          "status": "READY",
+          "error_type": null,
+          "parents_total": 81,
+          "parents_completed": 81,
+          "model_calls": 83,
+          "usable_relations": 0,
+          "rejected_relations": 1,
+          "explicit_requested": true
+        }
+      ]
+    },
+    "assessment": "Metadata snapshots only; changing completion counters belong to distinct owner-reported rebuilding phases; no semantic-accuracy or all-jobs-complete claim."
+  },
+  "static_boundaries": {
+    "identity": "Middleware derives user_id; conflicting query IDs and protected body/form identities rejected; no remote account registration.",
+    "operations": "Scoped current-user 1..168-hour aggregate, capped latest 500 runs; no source/question/answer text in aggregate response.",
+    "usage": "Only saved run model spans and reported usage; not graph worker, embedding/rerank cost, invoice, or SLA.",
+    "backup": "Dry-run default, explicit downtime acknowledgment, stopped DB archives, hash/path/type validation, new drill target only; no actual DB restoration acceptance.",
+    "historical_retention": "Own-user historical run snapshots can retain old document text; current citation source view rechecks current source; no claim of complete historical erasure.",
+    "rate_limit": "In-process backend peer based; shared peer/proxy and multiple processes require deployment validation."
+  },
+  "not_performed": [
+    "Real multi-account multi-browser concurrent end-to-end behavior",
+    "Cross-device logout propagation and browser autofill behavior",
+    "Production reverse-proxy and TLS certificate/termination traffic checks",
+    "Real cold backup, booting restored PostgreSQL/Milvus/Redis and business consistency acceptance",
+    "Production capacity, cost, SLA and hosted GitHub Actions execution"
+  ]
+}

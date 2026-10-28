@@ -1,0 +1,60 @@
+name: echomind-local
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${user:?Set user in .env}
+      POSTGRES_PASSWORD: ${password:?Set password in .env}
+      POSTGRES_DB: ${db_name:?Set db_name in .env}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - ./.runtime/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  redis:
+    image: redis/redis-stack-server:7.4.0-v8
+    environment:
+      REDIS_ARGS: "--appendonly yes"
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - ./.runtime/redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  milvus:
+    image: milvusdb/milvus:v2.5.10
+    command: ["milvus", "run", "standalone"]
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      ETCD_USE_EMBED: "true"
+      ETCD_DATA_DIR: /var/lib/milvus/etcd
+      ETCD_CONFIG_PATH: /milvus/configs/embedEtcd.yaml
+      COMMON_STORAGETYPE: local
+      DEPLOY_MODE: STANDALONE
+    ports:
+      - "127.0.0.1:19530:19530"
+      - "127.0.0.1:9091:9091"
+    volumes:
+      - ./.runtime/milvus:/var/lib/milvus
+      - ./deploy/embedEtcd.yaml:/milvus/configs/embedEtcd.yaml:ro
+      - ./deploy/milvus.yaml:/milvus/configs/user.yaml:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
+      interval: 10s
+      start_period: 90s
+      timeout: 10s
+      retries: 30
+    restart: unless-stopped

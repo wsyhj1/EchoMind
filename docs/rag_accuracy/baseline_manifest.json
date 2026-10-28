@@ -1,0 +1,102 @@
+{
+  "created_at": "2026-10-21T12:46:10.076251+00:00",
+  "git_sha": "273edce40b0db09bf245219a5601bf7fdbc614fc",
+  "dirty_worktree": [
+    " M .gitignore",
+    " M backend/agent.py",
+    " M backend/api.py",
+    " M backend/auto_store_memory_from_psql.py",
+    " M backend/config.py",
+    " M backend/documents_process.py",
+    " M backend/knowledeg_base_manager.py",
+    " M backend/main.py",
+    " M backend/memory_manager.py",
+    " M backend/milvus_client.py",
+    " M backend/postgresql_client.py",
+    " M backend/schemas.py",
+    " M backend/tools.py",
+    " M frontend/app.py",
+    " M frontend/style.css",
+    "?? DEPLOYMENT.md",
+    "?? backend/evaluation_config.py",
+    "?? backend/evaluation_store.py",
+    "?? backend/migrations/",
+    "?? backend/observability.py",
+    "?? backend/profile_store.py",
+    "?? backend/tests/",
+    "?? compose.yaml",
+    "?? deploy/",
+    "?? docs/",
+    "?? evaluation/",
+    "?? frontend/.streamlit/",
+    "?? frontend/evaluation_ui.py",
+    "?? frontend/profile_ui.py",
+    "?? frontend/tests/",
+    "?? start.ps1",
+    "?? stop.ps1"
+  ],
+  "python": "3.12.4",
+  "models_and_collections": {
+    "AGENT_BASE_MODEL": "qwen3.5-flash-2026-02-23",
+    "SUMMARIZATION_MODEL": "qwen-turbo",
+    "EMBEDDING_MODEL": "text-embedding-v4",
+    "dense_dimension": "1024",
+    "RERANK_MODEL": "gte-rerank-v2",
+    "knowledge_base_collection": "knowledge_base_collection",
+    "memory_collection": "memory_collection"
+  },
+  "source_sha256": {
+    "backend/tools.py": "5d263d7a373f7751273e03b06f0a20f30327b42c657fce98c098b171d2c71d56",
+    "backend/knowledeg_base_manager.py": "d426d99160e84f81cb745f76dccd7a9b22acc94b1eb486296c84e65421837a69",
+    "backend/milvus_client.py": "6a3da098d536e8c8307be85ec81fdd8b6145a56e6f20732249f39f01375566f0",
+    "backend/postgresql_client.py": "58ae2074d22f31ecc4497be56095dabe637f97a2fb11543f71abea3ad0db8e50",
+    "backend/documents_process.py": "aca62e7a3b843e7467aa2fb4a48afd05445dfe014f876cf6f43aa1c930f58b23",
+    "backend/agent.py": "f3e55d8a759398e5540467b16329eb9b75444fa2d15001c62e58afcd3f61d543",
+    "backend/config.py": "865a2d369a203320f7e25419975265815c449924d8197098d8ae4d365d2fb628",
+    "backend/schemas.py": "f9c118edbf563f77288d14d0511d21a3f6b538e88f19b1be3df6a11e77b5ab90",
+    "backend/observability.py": "b2009f36d6c02ef4b086f0ad3946c5f3f1ab686f5deba18d75988f854578075f"
+  },
+  "packages": {
+    "pymilvus": "2.6.10",
+    "asyncpg": "0.31.0",
+    "redis": "7.4.0",
+    "langchain": "1.2.14",
+    "langchain-core": "1.2.25",
+    "langgraph": "1.1.6",
+    "httpx": "0.28.1",
+    "dashscope": "1.25.15"
+  },
+  "chunking": {
+    "parent_size": 1000,
+    "parent_overlap": 200,
+    "child_size": 200,
+    "child_overlap": 50
+  },
+  "baseline_status": "measured_legacy_smoke_and_full100",
+  "baseline_definition": "pre-existing dirty worktree, not upstream HEAD; frozen modules in .runtime/rag_accuracy/legacy_source",
+  "database_versions": {
+    "postgresql": "16.15",
+    "milvus": "2.5.10",
+    "redis": "7.4.7"
+  },
+  "dataset_version": "echomind-synthetic-v1",
+  "gold_review": "pending_human_review",
+  "dataset_sha256": "2d1dcde0b4ef2f3f67c3957f8d34568af8631d440f933f415e832bc2cab485eb",
+  "retrieval_config": {
+    "top_k": 5,
+    "mode": "hybrid",
+    "dense_limit_multiplier": 7,
+    "sparse_limit_multiplier": 3,
+    "rrf_limit_multiplier": 3,
+    "rerank_input_cap": "min(3K,30)"
+  },
+  "baseline_run_paths": [
+    ".runtime/rag_accuracy/runs/baseline_legacy_smoke.jsonl",
+    ".runtime/rag_accuracy/runs/baseline_legacy_v1.jsonl"
+  ],
+  "post_change_run_paths": [
+    ".runtime/rag_accuracy/runs/baseline_structured_smoke.jsonl",
+    ".runtime/rag_accuracy/runs/baseline_structured_v1.jsonl"
+  ],
+  "updated_at": "2026-10-21T13:19:07.593426+00:00"
+}

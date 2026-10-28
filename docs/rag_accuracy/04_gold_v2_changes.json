@@ -1,0 +1,1921 @@
+{
+  "review_type": "agent_review",
+  "review_version": "echomind-gold-agent-review-2026-10-23-v1",
+  "human_reviewed": false,
+  "source_dataset": "evaluation/datasets/rag_v1.jsonl",
+  "source_sha256": "2d1dcde0b4ef2f3f67c3957f8d34568af8631d440f933f415e832bc2cab485eb",
+  "target_dataset": "evaluation\\datasets\\rag_v2_agent_reviewed.jsonl",
+  "target_sha256": "d924d74baa233dde7b709bea2f4fa3c2258f474d7b464453e484e297d832e246",
+  "unchanged_corpus": true,
+  "common_metadata_changes": [
+    "dataset_version",
+    "review_version",
+    "as_of",
+    "gold_review=agent_reviewed",
+    "review_method",
+    "human_reviewed=false",
+    "expected_claims"
+  ],
+  "query_changed_ids": [
+    "Q082",
+    "Q093"
+  ],
+  "rescore_policy": "Existing retrieval evidence may be rescored offline only for the 98 identical-query cases, under an explicit new dataset label and unchanged corpus/source mapping. Q082 and Q093 require fresh retrieval for a full v2 run. Never overwrite v1 runs or present a 98-case replay as a live 100-case v2 experiment. Answer changes require new answer-quality review, not evidence-only rescoring.",
+  "questions": [
+    {
+      "question_id": "Q001",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "订单系统使用哪个缓存集群？",
+      "query_after": "订单系统使用哪个缓存集群？",
+      "answer_before": "赤霄",
+      "answer_after": "赤霄",
+      "required_sources_before": [
+        "order_architecture"
+      ],
+      "required_sources_after": [
+        "order_architecture"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "entity_alias_normalization"
+      ]
+    },
+    {
+      "question_id": "Q002",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "订单系统的缓存有效期是多少秒？",
+      "query_after": "订单系统的缓存有效期是多少秒？",
+      "answer_before": "7200",
+      "answer_after": "7200",
+      "required_sources_before": [
+        "order_architecture"
+      ],
+      "required_sources_after": [
+        "order_architecture"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q003",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "赤霄缓存集群由谁维护？",
+      "query_after": "赤霄缓存集群由谁维护？",
+      "answer_before": "基础设施甲组",
+      "answer_after": "基础设施甲组",
+      "required_sources_before": [
+        "order_ownership"
+      ],
+      "required_sources_after": [
+        "order_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q004",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "赤霄缓存集群的典型故障是什么？",
+      "query_after": "赤霄缓存集群的典型故障是什么？",
+      "answer_before": "连接池耗尽",
+      "answer_after": "连接池耗尽",
+      "required_sources_before": [
+        "order_runbook"
+      ],
+      "required_sources_after": [
+        "order_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q005",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "赤霄处理故障前必须做什么？",
+      "query_after": "赤霄处理故障前必须做什么？",
+      "answer_before": "备份实例配置",
+      "answer_after": "备份实例配置",
+      "required_sources_before": [
+        "order_runbook"
+      ],
+      "required_sources_after": [
+        "order_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "short_alias_context_risk"
+      ]
+    },
+    {
+      "question_id": "Q006",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "支付系统使用哪个缓存集群？",
+      "query_after": "支付系统使用哪个缓存集群？",
+      "answer_before": "青岚",
+      "answer_after": "青岚",
+      "required_sources_before": [
+        "payment_architecture"
+      ],
+      "required_sources_after": [
+        "payment_architecture"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "entity_alias_normalization"
+      ]
+    },
+    {
+      "question_id": "Q007",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "支付系统的缓存有效期是多少秒？",
+      "query_after": "支付系统的缓存有效期是多少秒？",
+      "answer_before": "1800",
+      "answer_after": "1800",
+      "required_sources_before": [
+        "payment_architecture"
+      ],
+      "required_sources_after": [
+        "payment_architecture"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q008",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "青岚缓存集群由谁维护？",
+      "query_after": "青岚缓存集群由谁维护？",
+      "answer_before": "支付平台乙组",
+      "answer_after": "支付平台乙组",
+      "required_sources_before": [
+        "payment_ownership"
+      ],
+      "required_sources_after": [
+        "payment_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q009",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "青岚缓存集群的典型故障是什么？",
+      "query_after": "青岚缓存集群的典型故障是什么？",
+      "answer_before": "主从切换",
+      "answer_after": "主从切换",
+      "required_sources_before": [
+        "payment_runbook"
+      ],
+      "required_sources_after": [
+        "payment_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q010",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "青岚处理故障前必须做什么？",
+      "query_after": "青岚处理故障前必须做什么？",
+      "answer_before": "备份实例配置",
+      "answer_after": "备份实例配置",
+      "required_sources_before": [
+        "payment_runbook"
+      ],
+      "required_sources_after": [
+        "payment_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q011",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "库存系统使用哪个缓存集群？",
+      "query_after": "库存系统使用哪个缓存集群？",
+      "answer_before": "白泽",
+      "answer_after": "白泽",
+      "required_sources_before": [
+        "stock_architecture"
+      ],
+      "required_sources_after": [
+        "stock_architecture"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "entity_alias_normalization"
+      ]
+    },
+    {
+      "question_id": "Q012",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "库存系统的缓存有效期是多少秒？",
+      "query_after": "库存系统的缓存有效期是多少秒？",
+      "answer_before": "3600",
+      "answer_after": "3600",
+      "required_sources_before": [
+        "stock_architecture"
+      ],
+      "required_sources_after": [
+        "stock_architecture"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q013",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "白泽缓存集群由谁维护？",
+      "query_after": "白泽缓存集群由谁维护？",
+      "answer_before": "仓储技术丙组",
+      "answer_after": "仓储技术丙组",
+      "required_sources_before": [
+        "stock_ownership"
+      ],
+      "required_sources_after": [
+        "stock_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q014",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "白泽缓存集群的典型故障是什么？",
+      "query_after": "白泽缓存集群的典型故障是什么？",
+      "answer_before": "缓存击穿",
+      "answer_after": "缓存击穿",
+      "required_sources_before": [
+        "stock_runbook"
+      ],
+      "required_sources_after": [
+        "stock_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q015",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "白泽处理故障前必须做什么？",
+      "query_after": "白泽处理故障前必须做什么？",
+      "answer_before": "备份实例配置",
+      "answer_after": "备份实例配置",
+      "required_sources_before": [
+        "stock_runbook"
+      ],
+      "required_sources_after": [
+        "stock_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q016",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "物流系统使用哪个缓存集群？",
+      "query_after": "物流系统使用哪个缓存集群？",
+      "answer_before": "玄鹤",
+      "answer_after": "玄鹤",
+      "required_sources_before": [
+        "shipping_architecture"
+      ],
+      "required_sources_after": [
+        "shipping_architecture"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "entity_alias_normalization"
+      ]
+    },
+    {
+      "question_id": "Q017",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "物流系统的缓存有效期是多少秒？",
+      "query_after": "物流系统的缓存有效期是多少秒？",
+      "answer_before": "900",
+      "answer_after": "900",
+      "required_sources_before": [
+        "shipping_architecture"
+      ],
+      "required_sources_after": [
+        "shipping_architecture"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q018",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "玄鹤缓存集群由谁维护？",
+      "query_after": "玄鹤缓存集群由谁维护？",
+      "answer_before": "履约服务丁组",
+      "answer_after": "履约服务丁组",
+      "required_sources_before": [
+        "shipping_ownership"
+      ],
+      "required_sources_after": [
+        "shipping_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q019",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "玄鹤缓存集群的典型故障是什么？",
+      "query_after": "玄鹤缓存集群的典型故障是什么？",
+      "answer_before": "内存告警",
+      "answer_after": "内存告警",
+      "required_sources_before": [
+        "shipping_runbook"
+      ],
+      "required_sources_after": [
+        "shipping_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q020",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "玄鹤处理故障前必须做什么？",
+      "query_after": "玄鹤处理故障前必须做什么？",
+      "answer_before": "备份实例配置",
+      "answer_after": "备份实例配置",
+      "required_sources_before": [
+        "shipping_runbook"
+      ],
+      "required_sources_after": [
+        "shipping_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q021",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "订单系统使用的缓存由哪个团队维护？",
+      "query_after": "订单系统使用的缓存由哪个团队维护？",
+      "answer_before": "基础设施甲组",
+      "answer_after": "基础设施甲组",
+      "required_sources_before": [
+        "order_architecture",
+        "order_ownership"
+      ],
+      "required_sources_after": [
+        "order_architecture",
+        "order_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q022",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "谁负责订单系统依赖的缓存实例？",
+      "query_after": "谁负责订单系统依赖的缓存实例？",
+      "answer_before": "基础设施甲组",
+      "answer_after": "基础设施甲组",
+      "required_sources_before": [
+        "order_architecture",
+        "order_ownership"
+      ],
+      "required_sources_after": [
+        "order_architecture",
+        "order_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q023",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "订单系统缓存出问题应找哪个维护组？",
+      "query_after": "订单系统缓存出问题应找哪个维护组？",
+      "answer_before": "基础设施甲组",
+      "answer_after": "基础设施甲组",
+      "required_sources_before": [
+        "order_architecture",
+        "order_ownership"
+      ],
+      "required_sources_after": [
+        "order_architecture",
+        "order_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q024",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "查找订单系统到缓存维护团队的关系链。",
+      "query_after": "查找订单系统到缓存维护团队的关系链。",
+      "answer_before": "基础设施甲组",
+      "answer_after": "订单系统→赤霄缓存集群→基础设施甲组",
+      "required_sources_before": [
+        "order_architecture",
+        "order_ownership"
+      ],
+      "required_sources_after": [
+        "order_architecture",
+        "order_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "chain_answer_incomplete"
+      ]
+    },
+    {
+      "question_id": "Q025",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "订单系统的生产缓存归哪个团队管？",
+      "query_after": "订单系统的生产缓存归哪个团队管？",
+      "answer_before": "基础设施甲组",
+      "answer_after": "基础设施甲组",
+      "required_sources_before": [
+        "order_architecture",
+        "order_ownership"
+      ],
+      "required_sources_after": [
+        "order_architecture",
+        "order_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q026",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "支付系统使用的缓存由哪个团队维护？",
+      "query_after": "支付系统使用的缓存由哪个团队维护？",
+      "answer_before": "支付平台乙组",
+      "answer_after": "支付平台乙组",
+      "required_sources_before": [
+        "payment_architecture",
+        "payment_ownership"
+      ],
+      "required_sources_after": [
+        "payment_architecture",
+        "payment_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q027",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "谁负责支付系统依赖的缓存实例？",
+      "query_after": "谁负责支付系统依赖的缓存实例？",
+      "answer_before": "支付平台乙组",
+      "answer_after": "支付平台乙组",
+      "required_sources_before": [
+        "payment_architecture",
+        "payment_ownership"
+      ],
+      "required_sources_after": [
+        "payment_architecture",
+        "payment_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q028",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "支付系统缓存出问题应找哪个维护组？",
+      "query_after": "支付系统缓存出问题应找哪个维护组？",
+      "answer_before": "支付平台乙组",
+      "answer_after": "支付平台乙组",
+      "required_sources_before": [
+        "payment_architecture",
+        "payment_ownership"
+      ],
+      "required_sources_after": [
+        "payment_architecture",
+        "payment_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q029",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "查找支付系统到缓存维护团队的关系链。",
+      "query_after": "查找支付系统到缓存维护团队的关系链。",
+      "answer_before": "支付平台乙组",
+      "answer_after": "支付系统→青岚缓存集群→支付平台乙组",
+      "required_sources_before": [
+        "payment_architecture",
+        "payment_ownership"
+      ],
+      "required_sources_after": [
+        "payment_architecture",
+        "payment_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "chain_answer_incomplete"
+      ]
+    },
+    {
+      "question_id": "Q030",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "支付系统的生产缓存归哪个团队管？",
+      "query_after": "支付系统的生产缓存归哪个团队管？",
+      "answer_before": "支付平台乙组",
+      "answer_after": "支付平台乙组",
+      "required_sources_before": [
+        "payment_architecture",
+        "payment_ownership"
+      ],
+      "required_sources_after": [
+        "payment_architecture",
+        "payment_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q031",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "库存系统使用的缓存由哪个团队维护？",
+      "query_after": "库存系统使用的缓存由哪个团队维护？",
+      "answer_before": "仓储技术丙组",
+      "answer_after": "仓储技术丙组",
+      "required_sources_before": [
+        "stock_architecture",
+        "stock_ownership"
+      ],
+      "required_sources_after": [
+        "stock_architecture",
+        "stock_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q032",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "谁负责库存系统依赖的缓存实例？",
+      "query_after": "谁负责库存系统依赖的缓存实例？",
+      "answer_before": "仓储技术丙组",
+      "answer_after": "仓储技术丙组",
+      "required_sources_before": [
+        "stock_architecture",
+        "stock_ownership"
+      ],
+      "required_sources_after": [
+        "stock_architecture",
+        "stock_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q033",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "库存系统缓存出问题应找哪个维护组？",
+      "query_after": "库存系统缓存出问题应找哪个维护组？",
+      "answer_before": "仓储技术丙组",
+      "answer_after": "仓储技术丙组",
+      "required_sources_before": [
+        "stock_architecture",
+        "stock_ownership"
+      ],
+      "required_sources_after": [
+        "stock_architecture",
+        "stock_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q034",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "查找库存系统到缓存维护团队的关系链。",
+      "query_after": "查找库存系统到缓存维护团队的关系链。",
+      "answer_before": "仓储技术丙组",
+      "answer_after": "库存系统→白泽缓存集群→仓储技术丙组",
+      "required_sources_before": [
+        "stock_architecture",
+        "stock_ownership"
+      ],
+      "required_sources_after": [
+        "stock_architecture",
+        "stock_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "chain_answer_incomplete"
+      ]
+    },
+    {
+      "question_id": "Q035",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "库存系统的生产缓存归哪个团队管？",
+      "query_after": "库存系统的生产缓存归哪个团队管？",
+      "answer_before": "仓储技术丙组",
+      "answer_after": "仓储技术丙组",
+      "required_sources_before": [
+        "stock_architecture",
+        "stock_ownership"
+      ],
+      "required_sources_after": [
+        "stock_architecture",
+        "stock_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q036",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "物流系统使用的缓存由哪个团队维护？",
+      "query_after": "物流系统使用的缓存由哪个团队维护？",
+      "answer_before": "履约服务丁组",
+      "answer_after": "履约服务丁组",
+      "required_sources_before": [
+        "shipping_architecture",
+        "shipping_ownership"
+      ],
+      "required_sources_after": [
+        "shipping_architecture",
+        "shipping_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q037",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "谁负责物流系统依赖的缓存实例？",
+      "query_after": "谁负责物流系统依赖的缓存实例？",
+      "answer_before": "履约服务丁组",
+      "answer_after": "履约服务丁组",
+      "required_sources_before": [
+        "shipping_architecture",
+        "shipping_ownership"
+      ],
+      "required_sources_after": [
+        "shipping_architecture",
+        "shipping_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q038",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "物流系统缓存出问题应找哪个维护组？",
+      "query_after": "物流系统缓存出问题应找哪个维护组？",
+      "answer_before": "履约服务丁组",
+      "answer_after": "履约服务丁组",
+      "required_sources_before": [
+        "shipping_architecture",
+        "shipping_ownership"
+      ],
+      "required_sources_after": [
+        "shipping_architecture",
+        "shipping_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q039",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "查找物流系统到缓存维护团队的关系链。",
+      "query_after": "查找物流系统到缓存维护团队的关系链。",
+      "answer_before": "履约服务丁组",
+      "answer_after": "物流系统→玄鹤缓存集群→履约服务丁组",
+      "required_sources_before": [
+        "shipping_architecture",
+        "shipping_ownership"
+      ],
+      "required_sources_after": [
+        "shipping_architecture",
+        "shipping_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "chain_answer_incomplete"
+      ]
+    },
+    {
+      "question_id": "Q040",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "物流系统的生产缓存归哪个团队管？",
+      "query_after": "物流系统的生产缓存归哪个团队管？",
+      "answer_before": "履约服务丁组",
+      "answer_after": "履约服务丁组",
+      "required_sources_before": [
+        "shipping_architecture",
+        "shipping_ownership"
+      ],
+      "required_sources_after": [
+        "shipping_architecture",
+        "shipping_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q041",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "订单系统的缓存谁维护，连接池耗尽怎么处理？",
+      "query_after": "订单系统的缓存谁维护，连接池耗尽怎么处理？",
+      "answer_before": "基础设施甲组；限制突发请求，再将连接池上限调整到128，最后检查慢查询",
+      "answer_after": "基础设施甲组；执行前必须备份实例配置；限制突发请求，再将连接池上限调整到128，最后检查慢查询",
+      "required_sources_before": [
+        "order_architecture",
+        "order_ownership",
+        "order_runbook"
+      ],
+      "required_sources_after": [
+        "order_architecture",
+        "order_ownership",
+        "order_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "mandatory_precondition_omitted"
+      ]
+    },
+    {
+      "question_id": "Q042",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "订单系统缓存多久过期，谁负责？",
+      "query_after": "订单系统缓存多久过期，谁负责？",
+      "answer_before": "7200秒；基础设施甲组",
+      "answer_after": "7200秒；基础设施甲组",
+      "required_sources_before": [
+        "order_architecture",
+        "order_ownership"
+      ],
+      "required_sources_after": [
+        "order_architecture",
+        "order_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q043",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "订单系统缓存集群叫什么，典型故障是什么？",
+      "query_after": "订单系统缓存集群叫什么，典型故障是什么？",
+      "answer_before": "赤霄；连接池耗尽",
+      "answer_after": "赤霄；连接池耗尽",
+      "required_sources_before": [
+        "order_architecture",
+        "order_runbook"
+      ],
+      "required_sources_after": [
+        "order_architecture",
+        "order_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q044",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "赤霄由谁维护，处理故障前做什么？",
+      "query_after": "赤霄由谁维护，处理故障前做什么？",
+      "answer_before": "基础设施甲组；备份实例配置",
+      "answer_after": "基础设施甲组；备份实例配置",
+      "required_sources_before": [
+        "order_ownership",
+        "order_runbook"
+      ],
+      "required_sources_after": [
+        "order_ownership",
+        "order_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "short_alias_context_risk"
+      ]
+    },
+    {
+      "question_id": "Q045",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "说明订单系统的缓存名称、维护组和排障步骤。",
+      "query_after": "说明订单系统的缓存名称、维护组和排障步骤。",
+      "answer_before": "赤霄；基础设施甲组；限制突发请求，再将连接池上限调整到128，最后检查慢查询",
+      "answer_after": "赤霄；基础设施甲组；执行前必须备份实例配置；限制突发请求，再将连接池上限调整到128，最后检查慢查询",
+      "required_sources_before": [
+        "order_architecture",
+        "order_ownership",
+        "order_runbook"
+      ],
+      "required_sources_after": [
+        "order_architecture",
+        "order_ownership",
+        "order_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "mandatory_precondition_omitted"
+      ]
+    },
+    {
+      "question_id": "Q046",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "支付系统的缓存谁维护，主从切换怎么处理？",
+      "query_after": "支付系统的缓存谁维护，主从切换怎么处理？",
+      "answer_before": "支付平台乙组；暂停写入，确认新主节点可写，然后恢复流量",
+      "answer_after": "支付平台乙组；执行前必须备份实例配置；暂停写入，确认新主节点可写，然后恢复流量",
+      "required_sources_before": [
+        "payment_architecture",
+        "payment_ownership",
+        "payment_runbook"
+      ],
+      "required_sources_after": [
+        "payment_architecture",
+        "payment_ownership",
+        "payment_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "mandatory_precondition_omitted"
+      ]
+    },
+    {
+      "question_id": "Q047",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "支付系统缓存多久过期，谁负责？",
+      "query_after": "支付系统缓存多久过期，谁负责？",
+      "answer_before": "1800秒；支付平台乙组",
+      "answer_after": "1800秒；支付平台乙组",
+      "required_sources_before": [
+        "payment_architecture",
+        "payment_ownership"
+      ],
+      "required_sources_after": [
+        "payment_architecture",
+        "payment_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q048",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "支付系统缓存集群叫什么，典型故障是什么？",
+      "query_after": "支付系统缓存集群叫什么，典型故障是什么？",
+      "answer_before": "青岚；主从切换",
+      "answer_after": "青岚；主从切换",
+      "required_sources_before": [
+        "payment_architecture",
+        "payment_runbook"
+      ],
+      "required_sources_after": [
+        "payment_architecture",
+        "payment_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q049",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "青岚由谁维护，处理故障前做什么？",
+      "query_after": "青岚由谁维护，处理故障前做什么？",
+      "answer_before": "支付平台乙组；备份实例配置",
+      "answer_after": "支付平台乙组；备份实例配置",
+      "required_sources_before": [
+        "payment_ownership",
+        "payment_runbook"
+      ],
+      "required_sources_after": [
+        "payment_ownership",
+        "payment_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q050",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "说明支付系统的缓存名称、维护组和排障步骤。",
+      "query_after": "说明支付系统的缓存名称、维护组和排障步骤。",
+      "answer_before": "青岚；支付平台乙组；暂停写入，确认新主节点可写，然后恢复流量",
+      "answer_after": "青岚；支付平台乙组；执行前必须备份实例配置；暂停写入，确认新主节点可写，然后恢复流量",
+      "required_sources_before": [
+        "payment_architecture",
+        "payment_ownership",
+        "payment_runbook"
+      ],
+      "required_sources_after": [
+        "payment_architecture",
+        "payment_ownership",
+        "payment_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "mandatory_precondition_omitted"
+      ]
+    },
+    {
+      "question_id": "Q051",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "库存系统的缓存谁维护，缓存击穿怎么处理？",
+      "query_after": "库存系统的缓存谁维护，缓存击穿怎么处理？",
+      "answer_before": "仓储技术丙组；启用互斥重建，预热热点键，再恢复正常过期时间",
+      "answer_after": "仓储技术丙组；执行前必须备份实例配置；启用互斥重建，预热热点键，再恢复正常过期时间",
+      "required_sources_before": [
+        "stock_architecture",
+        "stock_ownership",
+        "stock_runbook"
+      ],
+      "required_sources_after": [
+        "stock_architecture",
+        "stock_ownership",
+        "stock_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "mandatory_precondition_omitted"
+      ]
+    },
+    {
+      "question_id": "Q052",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "库存系统缓存多久过期，谁负责？",
+      "query_after": "库存系统缓存多久过期，谁负责？",
+      "answer_before": "3600秒；仓储技术丙组",
+      "answer_after": "3600秒；仓储技术丙组",
+      "required_sources_before": [
+        "stock_architecture",
+        "stock_ownership"
+      ],
+      "required_sources_after": [
+        "stock_architecture",
+        "stock_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q053",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "库存系统缓存集群叫什么，典型故障是什么？",
+      "query_after": "库存系统缓存集群叫什么，典型故障是什么？",
+      "answer_before": "白泽；缓存击穿",
+      "answer_after": "白泽；缓存击穿",
+      "required_sources_before": [
+        "stock_architecture",
+        "stock_runbook"
+      ],
+      "required_sources_after": [
+        "stock_architecture",
+        "stock_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q054",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "白泽由谁维护，处理故障前做什么？",
+      "query_after": "白泽由谁维护，处理故障前做什么？",
+      "answer_before": "仓储技术丙组；备份实例配置",
+      "answer_after": "仓储技术丙组；备份实例配置",
+      "required_sources_before": [
+        "stock_ownership",
+        "stock_runbook"
+      ],
+      "required_sources_after": [
+        "stock_ownership",
+        "stock_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q055",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "说明库存系统的缓存名称、维护组和排障步骤。",
+      "query_after": "说明库存系统的缓存名称、维护组和排障步骤。",
+      "answer_before": "白泽；仓储技术丙组；启用互斥重建，预热热点键，再恢复正常过期时间",
+      "answer_after": "白泽；仓储技术丙组；执行前必须备份实例配置；启用互斥重建，预热热点键，再恢复正常过期时间",
+      "required_sources_before": [
+        "stock_architecture",
+        "stock_ownership",
+        "stock_runbook"
+      ],
+      "required_sources_after": [
+        "stock_architecture",
+        "stock_ownership",
+        "stock_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "mandatory_precondition_omitted"
+      ]
+    },
+    {
+      "question_id": "Q056",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "物流系统的缓存谁维护，内存告警怎么处理？",
+      "query_after": "物流系统的缓存谁维护，内存告警怎么处理？",
+      "answer_before": "履约服务丁组；停止大键写入，清理临时键，随后评估扩容",
+      "answer_after": "履约服务丁组；执行前必须备份实例配置；停止大键写入，清理临时键，随后评估扩容",
+      "required_sources_before": [
+        "shipping_architecture",
+        "shipping_ownership",
+        "shipping_runbook"
+      ],
+      "required_sources_after": [
+        "shipping_architecture",
+        "shipping_ownership",
+        "shipping_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "mandatory_precondition_omitted"
+      ]
+    },
+    {
+      "question_id": "Q057",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "物流系统缓存多久过期，谁负责？",
+      "query_after": "物流系统缓存多久过期，谁负责？",
+      "answer_before": "900秒；履约服务丁组",
+      "answer_after": "900秒；履约服务丁组",
+      "required_sources_before": [
+        "shipping_architecture",
+        "shipping_ownership"
+      ],
+      "required_sources_after": [
+        "shipping_architecture",
+        "shipping_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q058",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "物流系统缓存集群叫什么，典型故障是什么？",
+      "query_after": "物流系统缓存集群叫什么，典型故障是什么？",
+      "answer_before": "玄鹤；内存告警",
+      "answer_after": "玄鹤；内存告警",
+      "required_sources_before": [
+        "shipping_architecture",
+        "shipping_runbook"
+      ],
+      "required_sources_after": [
+        "shipping_architecture",
+        "shipping_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q059",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "玄鹤由谁维护，处理故障前做什么？",
+      "query_after": "玄鹤由谁维护，处理故障前做什么？",
+      "answer_before": "履约服务丁组；备份实例配置",
+      "answer_after": "履约服务丁组；备份实例配置",
+      "required_sources_before": [
+        "shipping_ownership",
+        "shipping_runbook"
+      ],
+      "required_sources_after": [
+        "shipping_ownership",
+        "shipping_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q060",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "说明物流系统的缓存名称、维护组和排障步骤。",
+      "query_after": "说明物流系统的缓存名称、维护组和排障步骤。",
+      "answer_before": "玄鹤；履约服务丁组；停止大键写入，清理临时键，随后评估扩容",
+      "answer_after": "玄鹤；履约服务丁组；执行前必须备份实例配置；停止大键写入，清理临时键，随后评估扩容",
+      "required_sources_before": [
+        "shipping_architecture",
+        "shipping_ownership",
+        "shipping_runbook"
+      ],
+      "required_sources_after": [
+        "shipping_architecture",
+        "shipping_ownership",
+        "shipping_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "mandatory_precondition_omitted"
+      ]
+    },
+    {
+      "question_id": "Q061",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "订单系统缓存的保鲜时长是多少？",
+      "query_after": "订单系统缓存的保鲜时长是多少？",
+      "answer_before": "7200",
+      "answer_after": "7200秒",
+      "required_sources_before": [
+        "order_architecture"
+      ],
+      "required_sources_after": [
+        "order_architecture"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "category_is_paraphrase",
+        "unit_normalization"
+      ]
+    },
+    {
+      "question_id": "Q062",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "支付系统缓存的保鲜时长是多少？",
+      "query_after": "支付系统缓存的保鲜时长是多少？",
+      "answer_before": "1800",
+      "answer_after": "1800秒",
+      "required_sources_before": [
+        "payment_architecture"
+      ],
+      "required_sources_after": [
+        "payment_architecture"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "category_is_paraphrase",
+        "unit_normalization"
+      ]
+    },
+    {
+      "question_id": "Q063",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "库存系统缓存的保鲜时长是多少？",
+      "query_after": "库存系统缓存的保鲜时长是多少？",
+      "answer_before": "3600",
+      "answer_after": "3600秒",
+      "required_sources_before": [
+        "stock_architecture"
+      ],
+      "required_sources_after": [
+        "stock_architecture"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "category_is_paraphrase",
+        "unit_normalization"
+      ]
+    },
+    {
+      "question_id": "Q064",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "物流系统缓存的保鲜时长是多少？",
+      "query_after": "物流系统缓存的保鲜时长是多少？",
+      "answer_before": "900",
+      "answer_after": "900秒",
+      "required_sources_before": [
+        "shipping_architecture"
+      ],
+      "required_sources_after": [
+        "shipping_architecture"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "category_is_paraphrase",
+        "unit_normalization"
+      ]
+    },
+    {
+      "question_id": "Q065",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "赤霄这个实例谁来管？",
+      "query_after": "赤霄这个实例谁来管？",
+      "answer_before": "基础设施甲组",
+      "answer_after": "基础设施甲组",
+      "required_sources_before": [
+        "order_ownership"
+      ],
+      "required_sources_after": [
+        "order_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "short_alias_context_risk",
+        "category_is_paraphrase"
+      ]
+    },
+    {
+      "question_id": "Q066",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "青岚这个实例谁来管？",
+      "query_after": "青岚这个实例谁来管？",
+      "answer_before": "支付平台乙组",
+      "answer_after": "支付平台乙组",
+      "required_sources_before": [
+        "payment_ownership"
+      ],
+      "required_sources_after": [
+        "payment_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "category_is_paraphrase"
+      ]
+    },
+    {
+      "question_id": "Q067",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "白泽这个实例谁来管？",
+      "query_after": "白泽这个实例谁来管？",
+      "answer_before": "仓储技术丙组",
+      "answer_after": "仓储技术丙组",
+      "required_sources_before": [
+        "stock_ownership"
+      ],
+      "required_sources_after": [
+        "stock_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "category_is_paraphrase"
+      ]
+    },
+    {
+      "question_id": "Q068",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "玄鹤这个实例谁来管？",
+      "query_after": "玄鹤这个实例谁来管？",
+      "answer_before": "履约服务丁组",
+      "answer_after": "履约服务丁组",
+      "required_sources_before": [
+        "shipping_ownership"
+      ],
+      "required_sources_after": [
+        "shipping_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "category_is_paraphrase"
+      ]
+    },
+    {
+      "question_id": "Q069",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "赤霄遇到连接池耗尽有哪些操作？",
+      "query_after": "赤霄遇到连接池耗尽有哪些操作？",
+      "answer_before": "限制突发请求，再将连接池上限调整到128，最后检查慢查询",
+      "answer_after": "执行前必须备份实例配置；限制突发请求，再将连接池上限调整到128，最后检查慢查询",
+      "required_sources_before": [
+        "order_runbook"
+      ],
+      "required_sources_after": [
+        "order_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "mandatory_precondition_omitted",
+        "short_alias_context_risk",
+        "category_is_paraphrase"
+      ]
+    },
+    {
+      "question_id": "Q070",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "青岚遇到主从切换有哪些操作？",
+      "query_after": "青岚遇到主从切换有哪些操作？",
+      "answer_before": "暂停写入，确认新主节点可写，然后恢复流量",
+      "answer_after": "执行前必须备份实例配置；暂停写入，确认新主节点可写，然后恢复流量",
+      "required_sources_before": [
+        "payment_runbook"
+      ],
+      "required_sources_after": [
+        "payment_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "mandatory_precondition_omitted",
+        "category_is_paraphrase"
+      ]
+    },
+    {
+      "question_id": "Q071",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "白泽遇到缓存击穿有哪些操作？",
+      "query_after": "白泽遇到缓存击穿有哪些操作？",
+      "answer_before": "启用互斥重建，预热热点键，再恢复正常过期时间",
+      "answer_after": "执行前必须备份实例配置；启用互斥重建，预热热点键，再恢复正常过期时间",
+      "required_sources_before": [
+        "stock_runbook"
+      ],
+      "required_sources_after": [
+        "stock_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "mandatory_precondition_omitted",
+        "category_is_paraphrase"
+      ]
+    },
+    {
+      "question_id": "Q072",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_answer"
+      ],
+      "query_before": "玄鹤遇到内存告警有哪些操作？",
+      "query_after": "玄鹤遇到内存告警有哪些操作？",
+      "answer_before": "停止大键写入，清理临时键，随后评估扩容",
+      "answer_after": "执行前必须备份实例配置；停止大键写入，清理临时键，随后评估扩容",
+      "required_sources_before": [
+        "shipping_runbook"
+      ],
+      "required_sources_after": [
+        "shipping_runbook"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "mandatory_precondition_omitted",
+        "category_is_paraphrase"
+      ]
+    },
+    {
+      "question_id": "Q073",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "订单系统把业务状态缓存在什么地方？",
+      "query_after": "订单系统把业务状态缓存在什么地方？",
+      "answer_before": "赤霄",
+      "answer_after": "赤霄",
+      "required_sources_before": [
+        "order_architecture"
+      ],
+      "required_sources_after": [
+        "order_architecture"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "category_is_paraphrase",
+        "entity_alias_normalization"
+      ]
+    },
+    {
+      "question_id": "Q074",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "支付系统把业务状态缓存在什么地方？",
+      "query_after": "支付系统把业务状态缓存在什么地方？",
+      "answer_before": "青岚",
+      "answer_after": "青岚",
+      "required_sources_before": [
+        "payment_architecture"
+      ],
+      "required_sources_after": [
+        "payment_architecture"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "category_is_paraphrase",
+        "entity_alias_normalization"
+      ]
+    },
+    {
+      "question_id": "Q075",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "库存系统把业务状态缓存在什么地方？",
+      "query_after": "库存系统把业务状态缓存在什么地方？",
+      "answer_before": "白泽",
+      "answer_after": "白泽",
+      "required_sources_before": [
+        "stock_architecture"
+      ],
+      "required_sources_after": [
+        "stock_architecture"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "category_is_paraphrase",
+        "entity_alias_normalization"
+      ]
+    },
+    {
+      "question_id": "Q076",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "生产订单系统的缓存是培训组维护的吗？",
+      "query_after": "生产订单系统的缓存是培训组维护的吗？",
+      "answer_before": "不是，生产缓存由基础设施甲组维护",
+      "answer_after": "不是，生产缓存由基础设施甲组维护",
+      "required_sources_before": [
+        "order_architecture",
+        "order_ownership",
+        "decoy"
+      ],
+      "required_sources_after": [
+        "order_architecture",
+        "order_ownership",
+        "decoy"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "negative_evidence_policy"
+      ]
+    },
+    {
+      "question_id": "Q077",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "赤霄演练缓存由谁维护？",
+      "query_after": "赤霄演练缓存由谁维护？",
+      "answer_before": "培训支持组",
+      "answer_after": "培训支持组",
+      "required_sources_before": [
+        "decoy"
+      ],
+      "required_sources_after": [
+        "decoy"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q078",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "订单演练系统的缓存有效期？",
+      "query_after": "订单演练系统的缓存有效期？",
+      "answer_before": "60秒",
+      "answer_after": "60秒",
+      "required_sources_before": [
+        "decoy"
+      ],
+      "required_sources_after": [
+        "decoy"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q079",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_sources"
+      ],
+      "query_before": "生产订单系统缓存有效期也是60秒吗？",
+      "query_after": "生产订单系统缓存有效期也是60秒吗？",
+      "answer_before": "不是，是7200秒",
+      "answer_after": "不是，是7200秒",
+      "required_sources_before": [
+        "order_architecture",
+        "decoy"
+      ],
+      "required_sources_after": [
+        "order_architecture"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "unnecessary_required_source"
+      ]
+    },
+    {
+      "question_id": "Q080",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "2026年赤霄缓存还由旧运维组维护吗？",
+      "query_after": "2026年赤霄缓存还由旧运维组维护吗？",
+      "answer_before": "不是，基础设施甲组",
+      "answer_after": "不是，基础设施甲组",
+      "required_sources_before": [
+        "history",
+        "order_ownership"
+      ],
+      "required_sources_after": [
+        "history",
+        "order_ownership"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "negative_evidence_policy"
+      ]
+    },
+    {
+      "question_id": "Q081",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "2024年赤霄缓存集群由谁维护？",
+      "query_after": "2024年赤霄缓存集群由谁维护？",
+      "answer_before": "旧运维组",
+      "answer_after": "旧运维组",
+      "required_sources_before": [
+        "history"
+      ],
+      "required_sources_after": [
+        "history"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q082",
+      "query_changed": true,
+      "semantic_changed_fields": [
+        "query"
+      ],
+      "query_before": "2028年的迁移计划现在执行了吗？",
+      "query_after": "根据2026年文档快照，赤霄缓存集群计划于2028年的迁移已经执行了吗？",
+      "answer_before": "尚未执行",
+      "answer_after": "尚未执行",
+      "required_sources_before": [
+        "history"
+      ],
+      "required_sources_after": [
+        "history"
+      ],
+      "replay_retrieval_evidence_eligible": false,
+      "notes": [
+        "relative_time_not_frozen"
+      ]
+    },
+    {
+      "question_id": "Q083",
+      "query_changed": false,
+      "semantic_changed_fields": [
+        "gold_sources"
+      ],
+      "query_before": "培训支持组维护赤霄生产缓存吗？",
+      "query_after": "培训支持组维护赤霄生产缓存吗？",
+      "answer_before": "不维护",
+      "answer_after": "不维护",
+      "required_sources_before": [
+        "decoy",
+        "order_ownership"
+      ],
+      "required_sources_after": [
+        "decoy"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": [
+        "unnecessary_required_source"
+      ]
+    },
+    {
+      "question_id": "Q084",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "赤霄演练缓存与赤霄缓存集群是同一实例吗？",
+      "query_after": "赤霄演练缓存与赤霄缓存集群是同一实例吗？",
+      "answer_before": "不是",
+      "answer_after": "不是",
+      "required_sources_before": [
+        "decoy"
+      ],
+      "required_sources_after": [
+        "decoy"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q085",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "赤霄缓存的旧职责在哪一年终止？",
+      "query_after": "赤霄缓存的旧职责在哪一年终止？",
+      "answer_before": "2025年",
+      "answer_after": "2025年",
+      "required_sources_before": [
+        "history"
+      ],
+      "required_sources_after": [
+        "history"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q086",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "2029年赤霄维护负责人是谁？",
+      "query_after": "2029年赤霄维护负责人是谁？",
+      "answer_before": null,
+      "answer_after": null,
+      "required_sources_before": [],
+      "required_sources_after": [],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q087",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "基础设施甲组的值班电话号码？",
+      "query_after": "基础设施甲组的值班电话号码？",
+      "answer_before": null,
+      "answer_after": null,
+      "required_sources_before": [],
+      "required_sources_after": [],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q088",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "青岚缓存实例IP是什么？",
+      "query_after": "青岚缓存实例IP是什么？",
+      "answer_before": null,
+      "answer_after": null,
+      "required_sources_before": [],
+      "required_sources_after": [],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q089",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "白泽实例的访问密码？",
+      "query_after": "白泽实例的访问密码？",
+      "answer_before": null,
+      "answer_after": null,
+      "required_sources_before": [],
+      "required_sources_after": [],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q090",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "玄鹤缓存的月度费用？",
+      "query_after": "玄鹤缓存的月度费用？",
+      "answer_before": null,
+      "answer_after": null,
+      "required_sources_before": [],
+      "required_sources_after": [],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q091",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "星河审计服务的SLA数字？",
+      "query_after": "星河审计服务的SLA数字？",
+      "answer_before": null,
+      "answer_after": null,
+      "required_sources_before": [],
+      "required_sources_after": [],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q092",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "订单系统的数据库版本？",
+      "query_after": "订单系统的数据库版本？",
+      "answer_before": null,
+      "answer_after": null,
+      "required_sources_before": [],
+      "required_sources_after": [],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q093",
+      "query_changed": true,
+      "semantic_changed_fields": [
+        "query"
+      ],
+      "query_before": "支付系统明年维护团队是谁？",
+      "query_after": "根据2026年文档快照，支付系统在2027年的维护团队是谁？",
+      "answer_before": null,
+      "answer_after": null,
+      "required_sources_before": [],
+      "required_sources_after": [],
+      "replay_retrieval_evidence_eligible": false,
+      "notes": [
+        "relative_time_not_frozen"
+      ]
+    },
+    {
+      "question_id": "Q094",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "2028年的迁移已完成的验收编号？",
+      "query_after": "2028年的迁移已完成的验收编号？",
+      "answer_before": null,
+      "answer_after": null,
+      "required_sources_before": [],
+      "required_sources_after": [],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q095",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "旧运维组2026年的负责人手机号？",
+      "query_after": "旧运维组2026年的负责人手机号？",
+      "answer_before": null,
+      "answer_after": null,
+      "required_sources_before": [],
+      "required_sources_after": [],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q096",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "租户乙的秘密标记是什么？",
+      "query_after": "租户乙的秘密标记是什么？",
+      "answer_before": null,
+      "answer_after": null,
+      "required_sources_before": [],
+      "required_sources_after": [],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q097",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "其他知识库中审计系统的独立标记？",
+      "query_after": "其他知识库中审计系统的独立标记？",
+      "answer_before": null,
+      "answer_after": null,
+      "required_sources_before": [],
+      "required_sources_after": [],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q098",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "审计系统由谁负责？",
+      "query_after": "审计系统由谁负责？",
+      "answer_before": "合规维护组",
+      "answer_after": "合规维护组",
+      "required_sources_before": [
+        "other_kb"
+      ],
+      "required_sources_after": [
+        "other_kb"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q099",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "租户乙的秘密标记是什么？",
+      "query_after": "租户乙的秘密标记是什么？",
+      "answer_before": "TENANT_B_ONLY_791",
+      "answer_after": "TENANT_B_ONLY_791",
+      "required_sources_before": [
+        "private"
+      ],
+      "required_sources_after": [
+        "private"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    },
+    {
+      "question_id": "Q100",
+      "query_changed": false,
+      "semantic_changed_fields": [],
+      "query_before": "审计系统的独立标记？",
+      "query_after": "审计系统的独立标记？",
+      "answer_before": "OTHER_KB_ONLY_381",
+      "answer_after": "OTHER_KB_ONLY_381",
+      "required_sources_before": [
+        "other_kb"
+      ],
+      "required_sources_after": [
+        "other_kb"
+      ],
+      "replay_retrieval_evidence_eligible": true,
+      "notes": []
+    }
+  ]
+}

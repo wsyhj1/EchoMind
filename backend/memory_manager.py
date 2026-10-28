@@ -1,6 +1,7 @@
 import os
 import asyncio
 import time
+from observability import timed, measure
 from dotenv import load_dotenv
 from typing import List, Optional, Dict, Any
 from langchain_community.embeddings import DashScopeEmbeddings
@@ -129,8 +130,8 @@ class MemoryManager:
         )
 
         index_params.add_index(field_name="user_id", index_type="STL_SORT")
-        index_params.add_index(field_name="thread_id", index_type="STL_SORT")
-        index_params.add_index(field_name="memory_type", index_type="STL_SORT")
+        index_params.add_index(field_name="thread_id", index_type="INVERTED")
+        index_params.add_index(field_name="memory_type", index_type="INVERTED")
         index_params.add_index(field_name="importance", index_type="STL_SORT")
         index_params.add_index(field_name="last_access_at", index_type="STL_SORT")
         index_params.add_index(field_name="created_at", index_type="STL_SORT")
@@ -144,12 +145,14 @@ class MemoryManager:
         )
         await self.client.load_collection(self.collection_name)
 
+    @timed("embedding", "memory")
     async def get_dense_vector(self, query: str) -> List[float]:
         """生成稠密向量，带重试机制"""
         max_retries = 3
         for attempt in range(max_retries):
             try:
-                dense_vector = await self.embeddings.aembed_query(query)
+                with measure("embedding_attempt", "memory", attempt=attempt + 1):
+                    dense_vector = await self.embeddings.aembed_query(query)
                 break
             except Exception as e:
                 logger.error(
@@ -160,7 +163,8 @@ class MemoryManager:
                     return []
                 else:
                     logger.warning(f"等待 1 秒后重试...")
-                    await asyncio.sleep(1)
+                    with measure("retry_wait", "memory"):
+                        await asyncio.sleep(1)
                     continue
         return dense_vector
 
@@ -211,20 +215,21 @@ class MemoryManager:
                     expr=filter_expr,
                 )
 
-                results = await self.client.hybrid_search(
-                    collection_name=self.collection_name,
-                    reqs=[dense_req, sparse_req],
-                    ranker=RRFRanker(),
-                    limit=k * 3,
-                    output_fields=[
-                        "id",
-                        "memory_type",
-                        "content",
-                        "summary_id",
-                        "importance",
-                        "last_access_at",
-                    ],
-                )
+                with measure("retrieval", "memory", mode="hybrid_search"):
+                    results = await self.client.hybrid_search(
+                        collection_name=self.collection_name,
+                        reqs=[dense_req, sparse_req],
+                        ranker=RRFRanker(),
+                        limit=k * 3,
+                        output_fields=[
+                            "id",
+                            "memory_type",
+                            "content",
+                            "summary_id",
+                            "importance",
+                            "last_access_at",
+                        ],
+                    )
 
                 memories = []
                 seen_ids = set()
@@ -256,22 +261,23 @@ class MemoryManager:
                 )
 
                 try:
-                    results = await self.client.search(
-                        collection_name=self.collection_name,
-                        data=[dense_vector],
-                        anns_field="vector",
-                        search_params={"metric_type": "COSINE", "params": {"ef": 64}},
-                        limit=k * 6,
-                        filter=filter_expr,
-                        output_fields=[
-                            "id",
-                            "memory_type",
-                            "content",
-                            "summary_id",
-                            "importance",
-                            "last_access_at",
-                        ],
-                    )
+                    with measure("retrieval", "memory", mode="search"):
+                        results = await self.client.search(
+                            collection_name=self.collection_name,
+                            data=[dense_vector],
+                            anns_field="vector",
+                            search_params={"metric_type": "COSINE", "params": {"ef": 64}},
+                            limit=k * 6,
+                            filter=filter_expr,
+                            output_fields=[
+                                "id",
+                                "memory_type",
+                                "content",
+                                "summary_id",
+                                "importance",
+                                "last_access_at",
+                            ],
+                        )
 
                     memories = []
                     if results and len(results) > 0:

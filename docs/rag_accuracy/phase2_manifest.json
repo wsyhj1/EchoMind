@@ -1,0 +1,87 @@
+{
+  "completed_at": "2026-10-22T03:09:16.715823+00:00",
+  "git_sha": "273edce40b0db09bf245219a5601bf7fdbc614fc",
+  "working_tree_contains_preexisting_changes": true,
+  "graph_settings": {
+    "version": "v2",
+    "max_hops": 2,
+    "max_seeds": 3,
+    "max_relations": 20,
+    "max_parents": 5,
+    "query_timeout_ms": 400,
+    "bridge_quota": 2,
+    "batch_size": 4,
+    "extraction_timeout_seconds": 30
+  },
+  "user_env_flags": {
+    "GRAPH_RAG_ENABLED": false,
+    "GRAPH_EXTRACTION_ENABLED": false,
+    "EVIDENCE_CHECK_ENABLED": false
+  },
+  "source_sha256": {
+    "backend/graph/extractor.py": "db017f29330415435db0a2d3c92c4b65ca0b2267f48998e548ac9beb85053192",
+    "backend/graph/fusion.py": "caab68b0609dffb4de6af921dccd9dd797f246845a821e9e001b0ed5300b1ccc",
+    "backend/graph/indexer.py": "d5ab89bbbb49681bbfc2194239f968db1bb76dbb3b417046862b9e62cef5c9f9",
+    "backend/graph/repository.py": "502bd3dbb2017cd42a78e89f4f771a0ac39161ab6c7838f1181df2ff0ecfb3fd",
+    "backend/graph/retriever.py": "271244d101f9fc9ba135f8e56bb2205e3f2f76f2e615ca89e85ba3a443ef54a4",
+    "backend/graph/schemas.py": "131d75784e77a3d68074c0c52c380f0b937edadac39df0ddbbbb18b7f1ee5a3b",
+    "backend/graph/settings.py": "037cc667906a979044f1d0d02416cdb9b2381f824d1c9390646545591e3bdfba",
+    "backend/graph/worker.py": "f6a4b2f874bf7a3929ccf898e6b509f698dd74df61eb7553c3ffb30424fbdb7d",
+    "backend/graph/__init__.py": "ba695d5647af2ab3c66fac375165234f289f47fc4c9fb21832714994a3ca990c",
+    "backend/rag/retrieval_service.py": "e7c6df940f5d63b94d55bc857b5d3d780e067ed66eb56d952c6e78b96ef412a0",
+    "backend/rag/settings.py": "26f3540d825854b048e883e918db27cbd81a92d68c242d22d0487c08ab284d42",
+    "backend/rag/types.py": "d7143efe88de2697c700f4f502afea25d4fb9026ede8419566bc88e173ff3fe5",
+    "backend/rag/__init__.py": "4f0cc7313638b6b2b7aac7a4119d1b29ca3d521189b455bb06e63380a9d8e9b2",
+    "backend/graph_cli.py": "1b96f16a61e6a950e033dca8305851875ee1a9520933440c6eb1e8ca16fd91e7",
+    "backend/documents_process.py": "a506b061a7e5167d25766cde14f4b433be88000c04f344eb8f67e37554cd4453",
+    "backend/knowledeg_base_manager.py": "7f74409e5221206dcef589d2fca1b05f02617555fa85d4928f8532c520fa3762",
+    "backend/postgresql_client.py": "b57a6074cb9de4f7fa9eb2f51a48ff413a3bbd9b2c68ad753c9e31247f698315",
+    "backend/api.py": "0cbd516216fd8e211e9289f9c1b54ac8ec2718b44de5f993c0254ccaea175a49",
+    "backend/main.py": "8b1bf102d4e957864240a75e6cc68676f0a4d81400eefbd7c9902049b2506b1a"
+  },
+  "untouched_baseline_modules": {
+    "agent.py": true,
+    "schemas.py": true,
+    "config.py": true,
+    "observability.py": true
+  },
+  "test_results": {
+    "full_backend_suite": {
+      "tests": 67,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "successful": true
+    },
+    "final_graph_suite": {
+      "tests": 18,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "successful": true
+    },
+    "unique_backend_tests_passed": 69,
+    "benchmark_tool_tests_passed": 5
+  },
+  "cloud_retrieval_cases": 100,
+  "graph_used_cases": 42,
+  "replay": {
+    "verification_type": "recorded_vector_and_rerank_live_postgres_graph_replay",
+    "cases": 100,
+    "same_evidence_sets": 100,
+    "same_metrics": 100,
+    "all_passed": true,
+    "model_calls": 0
+  },
+  "gold_review": "pending_human_review",
+  "formal_effectiveness_gate_passed": false,
+  "stage3_implemented": false,
+  "result_sha256": {
+    "graph_v2_100.jsonl": "b1261c29afb7333f6fa4116b2607ef99c39437df84ee529c5c8165cfc56b3284",
+    "graph_v2_100.summary.json": "582d7353e8a6c6e752762a45a75e750d284bc21392826dff718c47546c504c27",
+    "index_v2_snapshot.json": "d27c91381f0d2263c5ccd282eed57fe6bccfa953491cc5aee43a9332420844e7",
+    "graph_audit.json": "611645d0d84f2d5244594117d64ca0a946b4807428393dc8a4c4849c2688d2b0",
+    "qa_graph.jsonl": "647be5eaa8fa3df67d13fb5e1a14b6da8393569b9abfa06ec22c336634f0f5f1",
+    "final_replay.json": "48733045964d5f8f1444aea8b39a57f7d20432ef8cbed4a70d959d093d4c4400"
+  }
+}

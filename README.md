@@ -35,7 +35,7 @@ EchoMind 是一款基于 **FastAPI** 和 **LangChain** 构建的个性化 AI 问
 ## 🎯 项目概述
 
 EchoMind 是一个全功能的个性化 AI 问答系统，主要特点包括：
-- **短期记忆**：支持多轮对话，Redis缓存会话历史，保证对话连贯性。
+- **会话与上下文**：同一知识库可建立多条独立会话；新制会话从 PostgreSQL 恢复历史，Redis 保存本轮执行状态，并在调用前治理输入窗口。
 - **长期记忆系统**：自动提取和存储用户对话记忆，支持个性化回答
 - **知识库管理**：支持多知识库文档上传、检索和管理
 - **混合检索**：结合稠密向量检索和稀疏检索，提供准确的文档匹配
@@ -43,6 +43,23 @@ EchoMind 是一个全功能的个性化 AI 问答系统，主要特点包括：
 - **智能记忆**：自动识别和过滤重复记忆，保持记忆库的高效性
 
 ## 项目网页文档
+
+### 工作与学习个人助手
+
+新增个人工作台：项目、工作/学习任务、进展与决定记录、资料关联、按可用时间恢复工作、基于变更记录的复盘。项目下可建立多段聊天，读取同一份持久项目状态；助手产生的变更先保存为候选，采纳后才成为正式任务。完成依据是用户报告，不能当作系统已验证成果。
+
+沿用 `start.ps1 -Service Databases`、`start.ps1 -Service Backend`、`start.ps1 -Service Frontend` 启动数据库与前后端（后两项分别在终端运行），打开 [个人工作台](http://127.0.0.1:8501)。使用前需已完成下方依赖与环境配置。`stop.ps1` 可停止后台服务。方案、技术路线与阶段边界见[实施方案](docs/personal-assistant-plan.md)，逐文件理解实现见[学习文档](docs/personal-assistant-learning.md)，实际结果见[交付验收](docs/personal-assistant-delivery.md)。
+
+需要一份标明“示例”的演示项目时运行 `.venv/Scripts/python.exe scripts/seed_personal_assistant_demo.py`。脚本可重复运行，不读取私人文档、不调用模型；不会把示例内容写成你的真实工作成绩。工作台表单、明确命令、恢复和复盘不调用模型，自由项目聊天沿用已配置模型服务。
+
+已续建持久站内提醒：项目「提醒」页设置时间，到期进入工作台收件箱，支持取消、已读和30分钟后提醒；停机错过的提醒在后端重启后补发。归档项目、完成任务等在到期检查时会自动跳过。实现与动手实验见[提醒学习文档](docs/personal-assistant-reminders.md)，验证结果见[第二阶段验收](docs/personal-assistant-reminders-delivery.md)。外部日历、邮件和系统推送尚未接入。
+
+当前工作区新增设置中心、引用原文核验、报告领域图谱及逐文档管理、可选账号模式和运维工具。修改范围、268项本机回归与真实验证边界见[本轮验收](docs/rag_accuracy/06_improvements_acceptance.md)；账号创建、运行检查与备份命令见[身份与运维说明](docs/identity_and_operations.md)。默认仍使用仅监听本机的工作区。
+
+首页已精简，资料与配置收进折叠入口；支持用`/`或`&`唤出摘要、对比、查证等[内置技能](docs/skills_commands.md)。界面调整与验证方式见[首页与技能说明](docs/homepage_and_skills.md)。
+
+已新增知识库下的多会话列表、切换、重命名、归档和新标签页打开；旧聊天在“更多 → 旧版历史会话”只读查看。新会话的持久历史、上下文输入投影、并发与重试规则见[多会话交付说明](docs/multi_conversation_delivery.md)。前端继续使用 Streamlit，界面参考 Codex 的简洁会话导航。
+
 [![zread](https://img.shields.io/badge/Ask_Zread-_.svg?style=flat&color=00b0aa&labelColor=000000&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuOTYxNTYgMS42MDAxSDIuMjQxNTZDMS44ODgxIDEuNjAwMSAxLjYwMTU2IDEuODg2NjQgMS42MDE1NiAyLjI0MDFWNC45NjAxQzEuNjAxNTYgNS4zMTM1NiAxLjg4ODEgNS42MDAxIDIuMjQxNTYgNS42MDAxSDQuOTYxNTZDNS4zMTUwMiA1LjYwMDEgNS42MDE1NiA1LjMxMzU2IDUuNjAxNTYgNC45NjAxVjIuMjQwMUM1LjYwMTU2IDEuODg2NjQgNS4zMTUwMiAxLjYwMDEgNC45NjE1NiAxLjYwMDFaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00Ljk2MTU2IDEwLjM5OTlIMi4yNDE1NkMxLjg4ODEgMTAuMzk5OSAxLjYwMTU2IDEwLjY4NjQgMS42MDE1NiAxMS4wMzk5VjEzLjc1OTlDMS42MDE1NiAxNC4xMTM0IDEuODg4MSAxNC4zOTk5IDIuMjQxNTYgMTQuMzk5OUg0Ljk2MTU2QzUuMzE1MDIgMTQuMzk5OSA1LjYwMTU2IDE0LjExMzQgNS42MDE1NiAxMy43NTk5VjExLjAzOTlDNS42MDE1NiAxMC42ODY0IDUuMzE1MDIgMTAuMzk5OSA0Ljk2MTU2IDEwLjM5OTlaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik0xMy43NTg0IDEuNjAwMUgxMS4wMzg0QzEwLjY4NSAxLjYwMDEgMTAuMzk4NCAxLjg4NjY0IDEwLjM5ODQgMi4yNDAxVjQuOTYwMUMxMC4zOTg0IDUuMzEzNTYgMTAuNjg1IDUuNjAwMSAxMS4wMzg0IDUuNjAwMUgxMy43NTg0QzE0LjExMTkgNS42MDAxIDE0LjM5ODQgNS4zMTM1NiAxNC4zOTg0IDQuOTYwMVYyLjI0MDFDMTQuMzk4NCAxLjg4NjY0IDE0LjExMTkgMS42MDAxIDEzLjc1ODQgMS42MDAxWiIgZmlsbD0iI2ZmZiIvPgo8cGF0aCBkPSJNNCAxMkwxMiA0TDQgMTJaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00IDEyTDEyIDQiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K&logoColor=ffffff)](https://zread.ai/Dreamt0511/EchoMind)
 
 ## 📸 界面预览
@@ -279,8 +296,10 @@ uvicorn main:app --reload
 6. **启动前端界面**
 ```bash
 cd frontend
-streamlit run app.py
+streamlit run app.py --server.address=127.0.0.1
 ```
+
+本机模式（`ECHOMIND_AUTH_MODE=local`）要求前端只监听 `127.0.0.1`、`localhost` 或 `::1`；公开监听会在加载知识库前拒绝启动，即使身份仍在缓存中。远程部署请配置 `ECHOMIND_AUTH_MODE=password` 与独立账号后再开放前端访问。
 
 ### 访问应用
 

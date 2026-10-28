@@ -9,6 +9,7 @@ from fastapi import (
     Request,
     status,
     Depends,
+    Query,
 )
 from typing import List, Dict, Optional
 import logging
@@ -20,6 +21,15 @@ import aiofiles
 import os
 from fastapi.responses import StreamingResponse
 from agent import stream_agent_response
+from observability import RunTrace
+from evaluation_config import METRICS, evaluator_config
+from pydantic import BaseModel, Field
+from typing import Literal
+from uuid import UUID
+from profile_store import ProfileConflict
+from user_settings import SettingsValues, SettingsEdit, SettingsConflict, public_runtime_settings
+from auth import require_matching_user
+from skill_registry import public_skills, resolve_command, SkillCommandError, registry_metadata
 from schemas import (
     DocumentUploadResponse,
     DocumentDeleteResponse,
@@ -74,6 +84,8 @@ async def file_upload(
     background_tasks: BackgroundTasks = None,
 ):
     """上传文档并进行embedding,支持文件去重"""
+
+    user_id = require_matching_user(request, user_id)
 
     # 初始化变量，避免作用域问题
     temp_file_path = None
@@ -157,6 +169,11 @@ async def file_upload(
                 raise HTTPException(status_code=400, detail="客户端已断开连接")
 
             # 异步调用检查文件是否重复（传入 user_id）
+            from graph.repository import pending_delete
+            database = await get_postgresql_client(request)
+            if await pending_delete(database.pool, user_id, knowledge_base_id):
+                await temp_processor.delete_temp_file(temp_file_path)
+                raise HTTPException(status_code=409, detail="知识库正在完成删除清理，请稍后重试")
             if await hash_storage.is_file_duplicate(
                 file_hash, knowledge_base_id, user_id
             ):
@@ -280,6 +297,8 @@ async def delete_knowledge_base(
                 user_id=user_id,
             )
             logger.info(f"Milvus 删除成功，删除了 {child_chunks_deleted} 个子块")
+            from graph.repository import acknowledge_delete
+            await acknowledge_delete(postgresql_client.pool, user_id, knowledge_base_id)
         except Exception as e:
             # Milvus 删除失败，但 PostgreSQL 已删除成功
             logger.error(
@@ -408,6 +427,8 @@ async def delete_file(
                 user_id=user_id,
             )
             logger.info(f"Milvus 删除成功，删除了 {deleted_child_count} 个子块")
+            from graph.repository import acknowledge_delete
+            await acknowledge_delete(postgresql_client.pool, user_id, knowledge_base_id, file_hash)
         except Exception as e:
             # Milvus 删除失败，但 PostgreSQL 已删除成功
             # 记录错误但返回部分成功的信息
@@ -432,22 +453,219 @@ async def delete_file(
         raise HTTPException(status_code=500, detail=f"删除失败: {str(e)}")
 
 
+class ProfileFields(BaseModel):
+    model_config = {"extra": "forbid"}
+    background: str = Field(default="", max_length=2000)
+    goals: str = Field(default="", max_length=2000)
+    interests: str = Field(default="", max_length=2000)
+    preferences: str = Field(default="", max_length=2000)
+
+
+class ProfileEdit(BaseModel):
+    model_config = {"extra": "forbid"}
+    fields: ProfileFields
+    expected_revision: int = Field(ge=1)
+
+
+class ProfileSettings(BaseModel):
+    model_config = {"extra": "forbid"}
+    expected_revision: int = Field(ge=1)
+    personalization_enabled: Optional[bool] = None
+    auto_update_enabled: Optional[bool] = None
+
+
+async def profile_operation(operation):
+    try:
+        return await operation
+    except LookupError as error:
+        raise HTTPException(404, str(error))
+    except ProfileConflict as error:
+        raise HTTPException(409, str(error))
+
+
+@router.get("/user-profile")
+async def get_user_profile(request: Request, user_id: int = Query(ge=1)):
+    return await profile_operation(request.app.state.profile_store.get(user_id))
+
+
+@router.put("/user-profile")
+async def edit_user_profile(payload: ProfileEdit, request: Request, user_id: int = Query(ge=1)):
+    return await profile_operation(request.app.state.profile_store.save_fields(
+        user_id, payload.fields.model_dump(), payload.expected_revision))
+
+
+@router.patch("/user-profile/settings")
+async def set_profile_settings(payload: ProfileSettings, request: Request, user_id: int = Query(ge=1)):
+    if payload.personalization_enabled is None and payload.auto_update_enabled is None:
+        raise HTTPException(422, "请选择要修改的设置")
+    return await profile_operation(request.app.state.profile_store.settings(
+        user_id, payload.expected_revision, personalization_enabled=payload.personalization_enabled,
+        auto_update_enabled=payload.auto_update_enabled))
+
+
+@router.delete("/user-profile")
+async def clear_user_profile(request: Request, user_id: int = Query(ge=1), expected_revision: int = Query(ge=1)):
+    return await profile_operation(request.app.state.profile_store.clear(user_id, expected_revision))
+
+
+@router.get('/skills')
+async def list_registered_skills():
+    """Public catalog metadata; protected by the application's identity middleware."""
+    return {'skills': public_skills(), 'version': registry_metadata()['version']}
+
+
 @router.get("/chat_with_agent/stream")
 async def chat_with_agent(
-    query: str,
     knowledge_base_id: str,
-    user_id: int,
+    request: Request,
+    query: str = Query(min_length=1,max_length=8000),
+    user_id: int = Query(ge=1),
     background_tasks: BackgroundTasks = None,
+    session_id: str = Query(default="legacy", pattern=r"^[A-Za-z0-9_-]{1,64}$"),
+    top_k: Optional[int] = Query(default=None, ge=1, le=20),
+    memory_enabled: Optional[bool] = None,
+    rerank_enabled: Optional[bool] = None,
+    retrieval_mode: Optional[Literal["hybrid", "dense"]] = None,
+    graph_enabled: Optional[bool] = None,
+    evidence_enabled: Optional[bool] = None,
+    evaluation_mode: bool = False,
 ): 
     """
     流式返回 agent 响应
     """
+    try:
+        command = resolve_command(query)
+    except SkillCommandError as error:
+        raise HTTPException(422, str(error)) from None
+    if command is not None and command.kind == 'local':
+        raise HTTPException(422, '这是界面本地命令，请在 EchoMind 输入框中执行。')
+    conversations = getattr(request.app.state, 'conversation_store', None)
+    if conversations is not None:
+        try:
+            if await conversations.by_session(user_id, session_id):
+                raise HTTPException(409, '请使用会话发送入口，避免绕过范围绑定和并发保护。')
+        except LookupError:
+            raise HTTPException(404, '会话不存在或不可访问。') from None
+    # Evaluation keeps reproducible defaults; explicit request options always win.
+    saved = None if evaluation_mode else await settings_operation(request.app.state.user_settings_store.get(user_id))
+    values = SettingsValues.model_validate(saved["values"] if saved else {}).model_dump()
+    values.update({key: value for key, value in {
+        "top_k": top_k, "memory_enabled": memory_enabled, "rerank_enabled": rerank_enabled,
+        "retrieval_mode": retrieval_mode, "graph_enabled": graph_enabled,
+        "evidence_enabled": evidence_enabled}.items() if value is not None})
+    trace = RunTrace(user_id, session_id, query, knowledge_base_id)
+    trace.config["settings_revision"] = saved["revision"] if saved else None
     return StreamingResponse(
         stream_agent_response(
-            user_message=query,
+            user_message=command.argument if command is not None else query,
             knowledge_base_id=knowledge_base_id,
             user_id=user_id,
             background_tasks=background_tasks,
+            trace=trace,
+            store=request.app.state.evaluation_store,
+            session_id=session_id, top_k=values["top_k"],
+            memory_enabled=values["memory_enabled"] and not evaluation_mode,
+            rerank_enabled=values["rerank_enabled"], retrieval_mode=values["retrieval_mode"],
+            graph_enabled=values["graph_enabled"],
+            evidence_enabled=values["evidence_enabled"],
+            evaluation_mode=evaluation_mode,
+            skill_id=command.skill_id if command is not None else None,
+            skill_version=command.version if command is not None else None,
         ),
         media_type="text/plain; charset=utf-8",
     )
+
+
+async def settings_operation(operation):
+    try:
+        return await operation
+    except LookupError as error:
+        raise HTTPException(404, str(error))
+    except SettingsConflict as error:
+        raise HTTPException(409, str(error))
+
+
+@router.get("/user-settings")
+async def get_user_settings(request: Request, user_id: int = Query(ge=1)):
+    saved = await settings_operation(request.app.state.user_settings_store.get(user_id))
+    return {**saved, "defaults": SettingsValues().model_dump(), "runtime": public_runtime_settings()}
+
+
+@router.put("/user-settings")
+async def save_user_settings(payload: SettingsEdit, request: Request, user_id: int = Query(ge=1)):
+    saved = await settings_operation(request.app.state.user_settings_store.save(
+        user_id, payload.values, payload.expected_revision))
+    return {**saved, "defaults": SettingsValues().model_dump(), "runtime": public_runtime_settings()}
+
+
+class EvaluationRequest(BaseModel):
+    metrics: List[Literal["faithfulness", "response_relevancy", "context_precision", "context_recall",
+                          "factual_correctness", "precision_at_k", "recall_at_k"]] = Field(
+                              default_factory=lambda: list(METRICS), min_length=1, max_length=7)
+    reference: Optional[str] = Field(default=None, max_length=30000)
+    reference_context_ids: Optional[List[str]] = Field(default=None, max_length=200)
+    requires_retrieval: Optional[bool] = None
+
+
+@router.get("/runs")
+async def list_chat_runs(request: Request, user_id: int = Query(ge=1),
+                         session_id: str = Query(pattern=r"^[A-Za-z0-9_-]{1,64}$"),
+                         limit: int = Query(default=50, ge=1, le=100)):
+    return await request.app.state.evaluation_store.list_runs(user_id, session_id, limit)
+
+
+@router.get("/runs/{run_id}")
+async def get_chat_run(run_id: UUID, request: Request, user_id: int = Query(ge=1)):
+    run = await request.app.state.evaluation_store.get_run(run_id, user_id)
+    if run is None:
+        raise HTTPException(404, "Run not found")
+    return run
+
+
+@router.delete("/runs/{run_id}")
+async def delete_chat_run(run_id: UUID, request: Request, user_id: int = Query(ge=1)):
+    conversations = getattr(request.app.state, 'conversation_store', None)
+    if conversations is not None and await conversations.pool.fetchval('''SELECT EXISTS(
+        SELECT 1 FROM chat_turns t JOIN chat_conversations c USING(conversation_id)
+        WHERE t.run_id=$1 AND c.user_id=$2)''', run_id, user_id):
+        raise HTTPException(409, '此运行关联会话消息，请使用会话归档保留完整历史。')
+    result = await request.app.state.evaluation_store.pool.execute(
+        "DELETE FROM evaluation_runs WHERE run_id=$1 AND user_id=$2", run_id, user_id)
+    if result == "DELETE 0":
+        raise HTTPException(404, "Run not found")
+    return {"status": "deleted"}
+
+
+@router.post("/runs/{run_id}/evaluations", status_code=202)
+async def evaluate_chat_run(run_id: UUID, payload: EvaluationRequest, request: Request,
+                            user_id: int = Query(ge=1)):
+    data = payload.model_dump()
+    data["metrics"] = sorted(set(data["metrics"]))
+    data["reference"] = data["reference"].strip() if data["reference"] else None
+    if data["reference_context_ids"] is not None:
+        data["reference_context_ids"] = sorted(set(data["reference_context_ids"]))
+    data["config"] = evaluator_config()
+    try:
+        return await request.app.state.evaluation_store.create_job(run_id, user_id, data)
+    except LookupError:
+        raise HTTPException(404, "Run not found")
+    except ValueError as error:
+        raise HTTPException(409, str(error))
+
+
+@router.get("/evaluations/{job_id}")
+async def get_evaluation(job_id: UUID, request: Request, user_id: int = Query(ge=1)):
+    job = await request.app.state.evaluation_store.get_job(job_id, user_id)
+    if job is None:
+        raise HTTPException(404, "Evaluation not found")
+    return job
+
+
+@router.post("/evaluations/{job_id}/retry", status_code=202)
+async def retry_evaluation(job_id: UUID, request: Request, user_id: int = Query(ge=1)):
+    try:
+        return await request.app.state.evaluation_store.retry_job(job_id, user_id)
+    except LookupError:
+        raise HTTPException(404, "Evaluation not found")
+    except ValueError as error:
+        raise HTTPException(409, str(error))

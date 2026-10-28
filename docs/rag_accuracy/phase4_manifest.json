@@ -1,0 +1,307 @@
+{
+  "completed_at_utc": "2026-10-23T13:20:22.094402+00:00",
+  "client_date_local": "2026-10-23",
+  "git_sha": "273edce40b0db09bf245219a5601bf7fdbc614fc",
+  "working_tree_contains_preexisting_changes": true,
+  "acceptance_basis": "user_delegated_agent_review",
+  "human_review_performed": false,
+  "gold_questions_agent_reviewed": 100,
+  "local_controlled_activation_complete": true,
+  "formal_production_effectiveness_gate_passed": false,
+  "real_library": {
+    "user_id": 1,
+    "knowledge_base_id": "华为杯",
+    "files_ready": 3,
+    "parents": 136,
+    "stored_relations": 14,
+    "online_accepted_relations": 5,
+    "online_rejected_relations": 9,
+    "semantic_policy": "explicit-directed-quote-v1",
+    "original_parents_unchanged": true
+  },
+  "user_settings": {
+    "revision": 2,
+    "graph_enabled": true,
+    "auto_extraction_enabled": false,
+    "environment_changed": false,
+    "evidence_enabled": null,
+    "evidence_default_enabled": false,
+    "other_preferences_preserved": true,
+    "profile_unchanged": true
+  },
+  "verification": {
+    "live_graph_used": true,
+    "graph_failure_fallback": true,
+    "other_user_and_kb_isolation": true,
+    "synthetic_replay": {
+      "verification_type": "recorded_vector_and_rerank_live_postgres_graph_replay",
+      "cases": 100,
+      "same_evidence_sets": 100,
+      "same_metrics": 100,
+      "all_passed": true,
+      "model_calls": 0
+    },
+    "browser": {
+      "graph_active_sidebar": true,
+      "graph_setting_saved": true,
+      "desktop_mobile_no_exceptions": true,
+      "revision": 2,
+      "no_user_settings_written": true
+    }
+  },
+  "tests": {
+    "backend": {
+      "passed": 120,
+      "seconds": 125.606,
+      "log": ".runtime/rag_accuracy/phase4/checks/backend_final.log",
+      "sha256": "4af0cb5ba0ffb31df404a4aa16fa5872a54cca84a0923052e1bccdf0ac6daa6e"
+    },
+    "frontend": {
+      "passed": 19,
+      "seconds": 8.907,
+      "log": ".runtime/rag_accuracy/phase4/checks/frontend.log",
+      "sha256": "866bc945cd57927d3cb69b94af8f2511843e1dcb01d174dff5525bbd69dedb56"
+    },
+    "evaluation_core": {
+      "passed": 27,
+      "seconds": 2.47,
+      "log": ".runtime/rag_accuracy/phase4/checks/evaluation_final.log",
+      "sha256": "2f29b0a2dca8ea323ca7b8b285dc4853a2a3418d9f607682e8a1e4b2e100756d"
+    },
+    "ragas_dedicated_env": {
+      "passed": 1,
+      "seconds": 104.963,
+      "log": ".runtime/rag_accuracy/phase4/checks/ragas_adapter.log",
+      "sha256": "a91f2e155f4a57f5f76765a72263f6f41504de80105804a3eab0edf26be4f378"
+    }
+  },
+  "answer_experiments": {
+    "independent_questions": 18,
+    "first_round_executions": 72,
+    "source_metadata_delivery_executions": 72,
+    "all_delivery_arm_source_fingerprints_equal_and_stable": true,
+    "all_delivery_arm_data_stable": true,
+    "measured_source_sha256": {
+      "backend/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "backend/agent.py": "2ab6756a5219541f6a97c5c0f1289180f949f80f85322162070ba49f62bf2b91",
+      "backend/api.py": "4d58f00e016e223487bbe33215bdbac542c911cfdb69f6f593497424a1b972cd",
+      "backend/auto_store_memory_from_psql.py": "e61c685a3f2e5f7dc5672640d092a833a2ab86f3519569da6c9a5bd545821aef",
+      "backend/config.py": "fad05b830e9ad1b891c8ca44b73744fe912acfd55d3f0d48c29ce0e6d6d895aa",
+      "backend/documents_process.py": "acb664301339a917e439afb56771f7d53e577ba0c371987c9cd8685d12f681ee",
+      "backend/evaluation_config.py": "d0f20bdff58cfb18338550de5e237de76f586aef369c2fddda86bc0ed5f2b099",
+      "backend/evaluation_store.py": "4fbf0150df6b67cb18102a80e7ff8d04829c3d4e9e857028c54af11105cab7cc",
+      "backend/graph/__init__.py": "ba695d5647af2ab3c66fac375165234f289f47fc4c9fb21832714994a3ca990c",
+      "backend/graph/extractor.py": "db017f29330415435db0a2d3c92c4b65ca0b2267f48998e548ac9beb85053192",
+      "backend/graph/fusion.py": "caab68b0609dffb4de6af921dccd9dd797f246845a821e9e001b0ed5300b1ccc",
+      "backend/graph/indexer.py": "d5ab89bbbb49681bbfc2194239f968db1bb76dbb3b417046862b9e62cef5c9f9",
+      "backend/graph/repository.py": "f5fd35a4351fb695cd08864c89a279f9377100e1933ee4b9e4cfdeb8dadcccd5",
+      "backend/graph/retriever.py": "271244d101f9fc9ba135f8e56bb2205e3f2f76f2e615ca89e85ba3a443ef54a4",
+      "backend/graph/schemas.py": "131d75784e77a3d68074c0c52c380f0b937edadac39df0ddbbbb18b7f1ee5a3b",
+      "backend/graph/settings.py": "037cc667906a979044f1d0d02416cdb9b2381f824d1c9390646545591e3bdfba",
+      "backend/graph/worker.py": "f6a4b2f874bf7a3929ccf898e6b509f698dd74df61eb7553c3ffb30424fbdb7d",
+      "backend/graph_cli.py": "ac401d8b3aaf6954961091fab00db716991e863ad34033a1bb41f39452459d12",
+      "backend/hash_storage.py": "f2198e3268b18b479bfddf7f5655e205ee63abe549c6f4dfa2fe34230bc0055a",
+      "backend/knowledeg_base_manager.py": "7f74409e5221206dcef589d2fca1b05f02617555fa85d4928f8532c520fa3762",
+      "backend/main.py": "a8224085a1ce41bd9f9226bea5b83a9a667f03b0cb067c32feefff5baf361667",
+      "backend/memory_manager.py": "920a7b4fe84cce83f338ca996a35d3df4d5779fc596808db42d3e4cb7556bb8b",
+      "backend/milvus_client.py": "188e1337315fa8b534dfb883a3063d2f708f62c455f732a0336f1d46f2040069",
+      "backend/observability.py": "b2009f36d6c02ef4b086f0ad3946c5f3f1ab686f5deba18d75988f854578075f",
+      "backend/postgresql_client.py": "b57a6074cb9de4f7fa9eb2f51a48ff413a3bbd9b2c68ad753c9e31247f698315",
+      "backend/profile_store.py": "6654b737d9f76b0ec3da44c649afa720dd6f292a6064306586f955447c7b838b",
+      "backend/rag/__init__.py": "4f0cc7313638b6b2b7aac7a4119d1b29ca3d521189b455bb06e63380a9d8e9b2",
+      "backend/rag/context.py": "a7f1e84b52325552aa4c2bf0f20c37faccc22b2c98e57c004e998bff242ef941",
+      "backend/rag/evidence_checker.py": "21f9dedf2669f96ad56fba88e2be1e7e2a1ecdfe2d234c37bf006ae288b95281",
+      "backend/rag/evidence_settings.py": "627c384b2baf17de7b8f307241f7d856c82f3e3c7d4a8748bfa589ddd149ac89",
+      "backend/rag/retrieval_service.py": "5356ff922c3d3245286bb417f2d2eb6cbb9aa8901fad4d3f1cf99a1928e9a662",
+      "backend/rag/settings.py": "26f3540d825854b048e883e918db27cbd81a92d68c242d22d0487c08ab284d42",
+      "backend/rag/targeted_retriever.py": "913f1a2b818fd301e47edddfb4a85b04c73bf3e6ed102122e91178915d28be7e",
+      "backend/rag/types.py": "5713209af2f1092dbd59d3957cab59a5aeccd292d1435a76b9e51624b3ce27ee",
+      "backend/redis_cache.py": "908aa40eeffcfe45fdd826e34c151f31d4913d5d53c53d671ebee4105438e916",
+      "backend/schemas.py": "6a0e9fa2a37dd36ca9d5d25b6ec569b8d03981754d2c63bed50868118def207a",
+      "backend/test/check_data_in_redis.py": "b742183949994e244a88c0d214b0da442740c7c5e632aafa85fa22d874cd38a3",
+      "backend/test/delete_data_in_redis.py": "bb1293178bfbd628a5e5c78310b55e2578294078b100bd0372bc6f0f6d7e00bf",
+      "backend/test/查看集合分区的脚本.py": "8bae9a668406057d330f474372e67727de02ae51946787bd936242f838e5185f",
+      "backend/test/草稿纸.py": "c9715f3c0cdd4627f584844f8ef99989606152dcc2f07187014c2644c5492d45",
+      "backend/tests/test_answer_grounding.py": "621a693306c31eda6ec62a7dd534e4c72e9205835ed82df8890147a89c3a253a",
+      "backend/tests/test_evaluation_framework.py": "77369fc42ffe307e5f4226e1664ed7268bfa50bacebd979d124ba95ba7985063",
+      "backend/tests/test_evidence_coverage.py": "7b5eb410f6f79a3e25899520bcac93304f3005030da3b316f570c6e5a0ba725f",
+      "backend/tests/test_graph.py": "41403eca883b03fb0523e61c99e3daf0fd41ad486c8067f5046cd0851ae2870b",
+      "backend/tests/test_graph_backfill.py": "5cce17badb0587b0e3c588c355e71a93f0a1dc7cdec897177da19ae90fa5b535",
+      "backend/tests/test_graph_repository.py": "7cb0dfd75551d9ed003a5109664a3e6447a6249bd59641aaf1dc19b3757db975",
+      "backend/tests/test_milvus_schema.py": "a143d5900b992dad8992a5078abaecb0d828e60f44b07dc7cabba3b34454de92",
+      "backend/tests/test_rag_integration.py": "96ee0943e99074015856588763b43dfdfeb08f13e57d8b864bda75c0cf1df976",
+      "backend/tests/test_rag_retrieval.py": "51503c04fc83ddb03f9a6172495ea74b31ee891b66e3dbaa5da08bab4c70e443",
+      "backend/tests/test_rerank_transport.py": "cce4f6a5a0a241aaa3893fa2354856c53f0bc07218f1938d5814de2986d0ff59",
+      "backend/tests/test_user_profile.py": "5a2d996b82e216b41cead4cc92e1bdcabaf711db2a880ae10a3c4ddc2d46d1a7",
+      "backend/tests/test_user_settings.py": "a2c7a318e9f4c4d6241ba54662aa96f906c429584e7fc47786823de55cf57fa4",
+      "backend/tools.py": "55dfd94e6d104b63a21dc569e759637e28f2723ab6b6cf72d700abbf9bc34ab3",
+      "backend/user_settings.py": "2eee13c96db057909bc5175f511f8c5c603d6639ceb52fb90235fb6ef291f2f2"
+    },
+    "measured_dataset_sha256": "d1d24b110aa597ef8d5b84834a7eeb3bf0d156339498dd08f0adf381d3745c3b",
+    "delivered_changes_after_cloud_measurement": [
+      "graph_semantic_guard",
+      "graph_extractor_format_feedback",
+      "unicode_tool_evidence_parser"
+    ],
+    "not_a_cloud_rerun_of_delivered_semantic_guard": true,
+    "reviewed_core_success": {
+      "A": [
+        11,
+        18
+      ],
+      "B": [
+        14,
+        18
+      ],
+      "C": [
+        17,
+        18
+      ],
+      "D": [
+        18,
+        18
+      ]
+    },
+    "reviewed_strict_content_success": {
+      "A": [
+        10,
+        18
+      ],
+      "B": [
+        13,
+        18
+      ],
+      "C": [
+        16,
+        18
+      ],
+      "D": [
+        16,
+        18
+      ]
+    },
+    "reviewed_complete_citations": {
+      "A": [
+        13,
+        17
+      ],
+      "B": [
+        15,
+        17
+      ],
+      "C": [
+        14,
+        17
+      ],
+      "D": [
+        13,
+        17
+      ]
+    },
+    "unsupported_assertions": [
+      6,
+      290
+    ],
+    "limits": "Purpose-selected synthetic sample; not production accuracy or SLA."
+  },
+  "delivered_source_sha256": {
+    "backend/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "backend/agent.py": "2ab6756a5219541f6a97c5c0f1289180f949f80f85322162070ba49f62bf2b91",
+    "backend/api.py": "4d58f00e016e223487bbe33215bdbac542c911cfdb69f6f593497424a1b972cd",
+    "backend/auto_store_memory_from_psql.py": "e61c685a3f2e5f7dc5672640d092a833a2ab86f3519569da6c9a5bd545821aef",
+    "backend/config.py": "fad05b830e9ad1b891c8ca44b73744fe912acfd55d3f0d48c29ce0e6d6d895aa",
+    "backend/documents_process.py": "acb664301339a917e439afb56771f7d53e577ba0c371987c9cd8685d12f681ee",
+    "backend/evaluation_config.py": "d0f20bdff58cfb18338550de5e237de76f586aef369c2fddda86bc0ed5f2b099",
+    "backend/evaluation_store.py": "4fbf0150df6b67cb18102a80e7ff8d04829c3d4e9e857028c54af11105cab7cc",
+    "backend/graph/__init__.py": "ba695d5647af2ab3c66fac375165234f289f47fc4c9fb21832714994a3ca990c",
+    "backend/graph/extractor.py": "86d63a0afab0c3fa525e8dfd181f18bd6c75c0b79d1f001120fab8b7833b25f6",
+    "backend/graph/fusion.py": "caab68b0609dffb4de6af921dccd9dd797f246845a821e9e001b0ed5300b1ccc",
+    "backend/graph/indexer.py": "d5ab89bbbb49681bbfc2194239f968db1bb76dbb3b417046862b9e62cef5c9f9",
+    "backend/graph/repository.py": "f5fd35a4351fb695cd08864c89a279f9377100e1933ee4b9e4cfdeb8dadcccd5",
+    "backend/graph/retriever.py": "944408d130633bb581c37e07aad951586905471ddf7f1eaa7df83477f79d6d24",
+    "backend/graph/schemas.py": "f33028a8e047d859712573df0492da6de385b01a9c775618992b69afc784da13",
+    "backend/graph/semantic_guard.py": "c6fc85768658ee574e5ed819ab00d89a755be215880c1296852b1e1775d1d952",
+    "backend/graph/settings.py": "037cc667906a979044f1d0d02416cdb9b2381f824d1c9390646545591e3bdfba",
+    "backend/graph/worker.py": "f6a4b2f874bf7a3929ccf898e6b509f698dd74df61eb7553c3ffb30424fbdb7d",
+    "backend/graph_cli.py": "ac401d8b3aaf6954961091fab00db716991e863ad34033a1bb41f39452459d12",
+    "backend/hash_storage.py": "f2198e3268b18b479bfddf7f5655e205ee63abe549c6f4dfa2fe34230bc0055a",
+    "backend/knowledeg_base_manager.py": "7f74409e5221206dcef589d2fca1b05f02617555fa85d4928f8532c520fa3762",
+    "backend/main.py": "a8224085a1ce41bd9f9226bea5b83a9a667f03b0cb067c32feefff5baf361667",
+    "backend/memory_manager.py": "920a7b4fe84cce83f338ca996a35d3df4d5779fc596808db42d3e4cb7556bb8b",
+    "backend/milvus_client.py": "188e1337315fa8b534dfb883a3063d2f708f62c455f732a0336f1d46f2040069",
+    "backend/observability.py": "b2009f36d6c02ef4b086f0ad3946c5f3f1ab686f5deba18d75988f854578075f",
+    "backend/postgresql_client.py": "b57a6074cb9de4f7fa9eb2f51a48ff413a3bbd9b2c68ad753c9e31247f698315",
+    "backend/profile_store.py": "6654b737d9f76b0ec3da44c649afa720dd6f292a6064306586f955447c7b838b",
+    "backend/rag/__init__.py": "4f0cc7313638b6b2b7aac7a4119d1b29ca3d521189b455bb06e63380a9d8e9b2",
+    "backend/rag/context.py": "a7f1e84b52325552aa4c2bf0f20c37faccc22b2c98e57c004e998bff242ef941",
+    "backend/rag/evidence_checker.py": "21f9dedf2669f96ad56fba88e2be1e7e2a1ecdfe2d234c37bf006ae288b95281",
+    "backend/rag/evidence_settings.py": "627c384b2baf17de7b8f307241f7d856c82f3e3c7d4a8748bfa589ddd149ac89",
+    "backend/rag/retrieval_service.py": "58c8a6827f58f99dfd7952413df3dd9d78bcee22bfd66dd49bf116cb44583085",
+    "backend/rag/settings.py": "26f3540d825854b048e883e918db27cbd81a92d68c242d22d0487c08ab284d42",
+    "backend/rag/targeted_retriever.py": "913f1a2b818fd301e47edddfb4a85b04c73bf3e6ed102122e91178915d28be7e",
+    "backend/rag/types.py": "80bd1f2ce6d3a9a4a17c97286980542208be75d344de07d9b21c38b15f8a77fd",
+    "backend/redis_cache.py": "908aa40eeffcfe45fdd826e34c151f31d4913d5d53c53d671ebee4105438e916",
+    "backend/schemas.py": "6a0e9fa2a37dd36ca9d5d25b6ec569b8d03981754d2c63bed50868118def207a",
+    "backend/test/check_data_in_redis.py": "b742183949994e244a88c0d214b0da442740c7c5e632aafa85fa22d874cd38a3",
+    "backend/test/delete_data_in_redis.py": "bb1293178bfbd628a5e5c78310b55e2578294078b100bd0372bc6f0f6d7e00bf",
+    "backend/test/查看集合分区的脚本.py": "8bae9a668406057d330f474372e67727de02ae51946787bd936242f838e5185f",
+    "backend/test/草稿纸.py": "c9715f3c0cdd4627f584844f8ef99989606152dcc2f07187014c2644c5492d45",
+    "backend/tests/test_answer_grounding.py": "621a693306c31eda6ec62a7dd534e4c72e9205835ed82df8890147a89c3a253a",
+    "backend/tests/test_evaluation_framework.py": "77369fc42ffe307e5f4226e1664ed7268bfa50bacebd979d124ba95ba7985063",
+    "backend/tests/test_evidence_coverage.py": "7b5eb410f6f79a3e25899520bcac93304f3005030da3b316f570c6e5a0ba725f",
+    "backend/tests/test_graph.py": "41403eca883b03fb0523e61c99e3daf0fd41ad486c8067f5046cd0851ae2870b",
+    "backend/tests/test_graph_backfill.py": "5cce17badb0587b0e3c588c355e71a93f0a1dc7cdec897177da19ae90fa5b535",
+    "backend/tests/test_graph_extractor_feedback.py": "1c04a512db0cc3c5af95b5444ace2bccb3ef5ed8b7025c8c3f50ff589ac11c67",
+    "backend/tests/test_graph_repository.py": "7cb0dfd75551d9ed003a5109664a3e6447a6249bd59641aaf1dc19b3757db975",
+    "backend/tests/test_graph_semantic_guard.py": "0caf37c498bf1c234e0e200d195952175d1a18c46a60ac4c9fe452bdd6e0d5e3",
+    "backend/tests/test_graph_semantics.py": "dd3b0f36573c3b636543f34ae3f9d9b7784ff51c83b111a06c1bc4b2bed1c18c",
+    "backend/tests/test_milvus_schema.py": "a143d5900b992dad8992a5078abaecb0d828e60f44b07dc7cabba3b34454de92",
+    "backend/tests/test_rag_integration.py": "96ee0943e99074015856588763b43dfdfeb08f13e57d8b864bda75c0cf1df976",
+    "backend/tests/test_rag_retrieval.py": "51503c04fc83ddb03f9a6172495ea74b31ee891b66e3dbaa5da08bab4c70e443",
+    "backend/tests/test_rerank_transport.py": "cce4f6a5a0a241aaa3893fa2354856c53f0bc07218f1938d5814de2986d0ff59",
+    "backend/tests/test_user_profile.py": "5a2d996b82e216b41cead4cc92e1bdcabaf711db2a880ae10a3c4ddc2d46d1a7",
+    "backend/tests/test_user_settings.py": "a2c7a318e9f4c4d6241ba54662aa96f906c429584e7fc47786823de55cf57fa4",
+    "backend/tools.py": "55dfd94e6d104b63a21dc569e759637e28f2723ab6b6cf72d700abbf9bc34ab3",
+    "backend/user_settings.py": "2eee13c96db057909bc5175f511f8c5c603d6639ceb52fb90235fb6ef291f2f2",
+    "evaluation/__init__.py": "c841f0b2b92138a61f90b06113a3f8f10dde23b77c14e1cb4f565b6e29816fdd",
+    "evaluation/ablation.py": "e080e36c574a9bedf693b77c0856ce0058c902b7a2a058ad8d1eb69df547db61",
+    "evaluation/answer_eval.py": "9c0ae22ad234ed2d9f36c505ee6b110f945bf174be6139f541e19684010c3f2a",
+    "evaluation/batch.py": "6abbc45ce001c568c5cdbd56f20efa21a763e357357a514cc0fcc35fde9da485",
+    "evaluation/compare_retrieval.py": "b1dc0356284ccfb0c60110e19d53fdd6774c5773925ab5bef1dcf473d40925c6",
+    "evaluation/engine.py": "8cd0b975d43446903a113543e7e8574c95ec383a7b6799026c06e44eec23a10a",
+    "evaluation/freeze_rag_baseline.py": "a1711a98328333ff0c58e519e73dc72022e2140a24fda15585978f2610dc11d1",
+    "evaluation/graph_benchmark.py": "17c49d378625a43c42fce4d5bd773000b252d5fc001e0c32469521d932657287",
+    "evaluation/rag_corpus.py": "1d934338a44606652738f2754c7f44d020efc955504a8d4d08242e9622e133e2",
+    "evaluation/rag_fixtures.py": "647ddb3cd2acbb4b85279aec587a944ab2e5fd54ef173a6875f4b38141beed1a",
+    "evaluation/rag_metrics.py": "a713d18b82b46852d0f0c02d7851748e6868dd4dff0f8eb6b31e0b429ac6a4ff",
+    "evaluation/replay_graph.py": "b298bfce286540f9b4abb3b6ba52e1df0369c4c958a4b93fe53e80ab7140ad97",
+    "evaluation/rescore_reviewed.py": "99063c745aaab1087218aa38d7ed4d0288112e6fe0630de61be2ae613279b64d",
+    "evaluation/retrieval.py": "e478f39423fd09f69f3c028b301493b8c0da3c4d4f42e2d12ce7c954efd6725e",
+    "evaluation/worker.py": "551ca49a46a898c6c7882f504624879019d68ef25a07a666d331d5935deafabd"
+  },
+  "artifact_sha256": {
+    "docs/rag_accuracy/04_gold_agent_review.json": "8767634a462b9d50c552aa9c57ca991d3d50cacaef0e127ee97e025a621b0835",
+    "docs/rag_accuracy/04_gold_v2_changes.json": "016415c617ca620b24e550c93334843d6dcdf00f65064ce11f003f67d318b249",
+    "docs/rag_accuracy/04_reviewed_retrieval_rescore.json": "c1d2cb8c43ee104226e0fb8b41ffbf8d0ab915cae03010ec0ff55b0c5b0631e2",
+    "docs/rag_accuracy/04_answer_agent_review.json": "90dadb39fcca3126461fde1bcbd6fa80dc629331b45eb78aa2e5d59762b1ad51",
+    "docs/rag_accuracy/04_qa_export_correction_audit.json": "cc55383fb8c7913b60c5a0a9afd39277d27a32b697107f023f9c37a409b7268f",
+    "docs/rag_accuracy/04_answer_ablation_agent_review.json": "0d71ba57c5e5c0a30070c84c01177a506fc18be9f098f8718af3c3c3f9ffc10e",
+    "docs/rag_accuracy/04_answer_delivery_agent_review.json": "f71adeec34e42afc3b8556162f8d9067d6fe4f97e2739aa069005e26645ce51c",
+    "docs/rag_accuracy/04_public_graph_quote_review.md": "5d36733635bba5de2f98495240f6bbb40ee7d63dda4bc3b73fabbaeffed50656",
+    "docs/rag_accuracy/04_activation_report.md": "35aba80f17c398794059d0f061d1d2b3783ccb5afadec0057e741b267f6261d6",
+    ".runtime/rag_accuracy/phase4/semantic_live_audit.json": "67b4decb37a01316521538af78f2f969f9edcc36ff00da18a072dc4e897e8d5f",
+    ".runtime/rag_accuracy/phase4/live_verification.json": "a64beb5f7e52d05280971bb26f90c67d7cfe329c3f81dc7c35559426361f68f2",
+    ".runtime/rag_accuracy/phase4/semantic_synthetic_replay_final.json": "48733045964d5f8f1444aea8b39a57f7d20432ef8cbed4a70d959d093d4c4400",
+    ".runtime/rag_accuracy/phase4/activation_before.json": "81466801fbc0bdc4ca83cec49a06300eff91fdba55a7fc0b66da2c8ae122435f",
+    ".runtime/rag_accuracy/phase4/activation_after.json": "6da8a47083f62aab8f55978d3ec24af62ebd80ea1f58a41b7566191b564a2115",
+    ".runtime/rag_accuracy/phase4/ui_activation.log": "9bde19b1882f28d0fa72cf80694f5749b1755e567aec4c7cc7c9fcc38708fdc9",
+    ".runtime/rag_accuracy/phase4/answers_delivery/A.jsonl": "c98f7d26fceeb38a8baa1436be85e612aebf5f51711b9176fa3f1a9ed14f1312",
+    ".runtime/rag_accuracy/phase4/answers_delivery/A.summary.json": "17dac0838a62034d5c5ec1d83edd70379944314e1aa44ca1f90eb85db08fe70b",
+    ".runtime/rag_accuracy/phase4/answers_delivery/B.jsonl": "fcd64f2747f3f2aab65a6ebb98f99e65898ea7581882817a6cd052eac421de57",
+    ".runtime/rag_accuracy/phase4/answers_delivery/B.summary.json": "7554a4392acfda13a117758e51284a11a5c562b58465ab4b6900c17211331607",
+    ".runtime/rag_accuracy/phase4/answers_delivery/C.jsonl": "e9481b428676b3413a584d09a2d4ac3ce34202ec8f8bf4ba40f21fb8ff4d1497",
+    ".runtime/rag_accuracy/phase4/answers_delivery/C.summary.json": "b4c5dd8eeac159245a4a6624183a144a9975d610ee7d713000fd5398eed750a1",
+    ".runtime/rag_accuracy/phase4/answers_delivery/D.jsonl": "70abc344bdaf91c4657fc51e15f1701e84f9e8b9f647fd24f0edfaa64c1a5097",
+    ".runtime/rag_accuracy/phase4/answers_delivery/D.summary.json": "ed5253d22352b5ceb537c55166e1a39f5061c02c285752dc78edc85f8d55ac57"
+  }
+}

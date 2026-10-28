@@ -11,6 +11,7 @@ import json
 from typing import List, Dict, Any
 from datetime import datetime
 import config
+from profile_store import ProfileStore
 from langchain_core.messages import HumanMessage
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages.utils import count_tokens_approximately
@@ -237,7 +238,12 @@ async def _store_memories(
     summary_id = str(uuid.uuid4())
 
     # 查询旧画像（用于回滚和画像补充）
-    old_user_profile = await pg_client.get_user_profile(user_id)
+    profile_store = ProfileStore(pg_client.pool)
+    profile_state = await profile_store.get(user_id)
+    old_user_profile = profile_state["automatic_summary"]
+    profile_write_revision = None
+    if not profile_state["auto_update_enabled"]:
+        new_user_profile = ""
 
     # 确定需要更新的消息ID
     all_message_ids = [str(msg["id"]) for msg in messages]
@@ -304,21 +310,11 @@ async def _store_memories(
 
         # 2. 更新用户画像
         if new_user_profile:
-            profile_success = await pg_client.update_user_profile(
-                user_id, new_user_profile
+            profile_write_revision = await profile_store.save_automatic(
+                user_id, new_user_profile, profile_state["revision"]
             )
-            if not profile_success:
-                logger.error(f"用户画像更新失败，回滚 summary_id")
-                await pg_client.update_messages_with_summary_id(
-                    update_message_ids, None
-                )
-                return {
-                    "success": False,
-                    "reason": "用户画像更新失败，已回滚",
-                    "filtered_message_ids": filtered_message_ids,
-                    "token_count": total_tokens,
-                    "message_count": len(messages),
-                }
+            if profile_write_revision is None:
+                logger.info("画像更新已跳过：用户修改了画像或暂停了自动更新")
 
         # 3. 更新 Milvus
         milvus_success = await milvus_client.add_memories_batch(
@@ -333,8 +329,8 @@ async def _store_memories(
             # 回滚 summary_id
             await pg_client.update_messages_with_summary_id(update_message_ids, None)
             # 回滚用户画像
-            if old_user_profile is not None:
-                await pg_client.update_user_profile(user_id, old_user_profile)
+            if profile_write_revision is not None:
+                await profile_store.restore_automatic(user_id, old_user_profile, profile_write_revision)
             return {
                 "success": False,
                 "reason": "Milvus插入失败，已回滚PostgreSQL",
@@ -361,8 +357,8 @@ async def _store_memories(
         # 尝试回滚
         try:
             await pg_client.update_messages_with_summary_id(update_message_ids, None)
-            if old_user_profile is not None:
-                await pg_client.update_user_profile(user_id, old_user_profile)
+            if profile_write_revision is not None:
+                await profile_store.restore_automatic(user_id, old_user_profile, profile_write_revision)
         except Exception as rollback_error:
             logger.error(f"回滚失败: {rollback_error}")
 

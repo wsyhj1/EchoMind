@@ -1,0 +1,740 @@
+{
+  "method": "business_holdout_dry_run_preflight",
+  "status": "validated_no_live_execution",
+  "mode": "span_history",
+  "capabilities": [
+    "actual_message_history",
+    "source_span_mapping",
+    "tenant_and_kb_scope"
+  ],
+  "dataset_version": "echomind-report-holdout-v2-agent-reviewed",
+  "gold_review": "agent_reviewed",
+  "human_reviewed": false,
+  "new_model_calls": 0,
+  "new_retrieval_calls": 0,
+  "answer_accuracy": null,
+  "observed_retrieval_span_recall": null,
+  "observed_complete_evidence": null,
+  "question_count": 32,
+  "source_document_count": 12,
+  "parent_count": 14,
+  "history_case_count": 2,
+  "gold_span_count": 33,
+  "offset_unit": "Python Unicode code points; half-open [start_char,end_char)",
+  "segmentation": {
+    "algorithm": "deterministic_fixed_character_windows_v1",
+    "max_chars": 1000,
+    "overlap": 200
+  },
+  "fingerprints": {
+    "dataset": "0e0d125ff7415bbb0aebfdba49a82288ad6f5eb9f1b9141917e932a40aa53d25",
+    "manifest": "7605508dad77b87b4efc05ddfb391961b05940463383053430303a3e424373cc",
+    "sources": "84bce6e6bd9bde6d710bea5dbeb21ce9a72d3f84efab9be988cccd6f7458cf97",
+    "independent_review": "f52e65c3b170a263df44572d8ce44b5926034a965910296526e297459c7c33c6",
+    "preserved_draft": "ffaf421bc01a8302d0326506aeda095b4166a8665edaf2faff2237d3b34cc791",
+    "runner_source": "1e096614ec4d9e30e763c67af6042bedc876a89c0cb91de0d25b92349466a91e"
+  },
+  "runtime_fields_allowlist": [
+    "question_id",
+    "user_id",
+    "knowledge_base_id",
+    "as_of",
+    "messages"
+  ],
+  "case_plans": [
+    {
+      "question_id": "BH001",
+      "runtime_request": {
+        "question_id": "BH001",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "映澈作品台有哪些已实现的功能？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 2,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH002",
+      "runtime_request": {
+        "question_id": "BH002",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "证据定位功能由哪个模块实现？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 1,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH003",
+      "runtime_request": {
+        "question_id": "BH003",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "映澈作品台的证据定位功能由什么实现？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 2,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH004",
+      "runtime_request": {
+        "question_id": "BH004",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "表格规整模块用什么数据评估？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 1,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH005",
+      "runtime_request": {
+        "question_id": "BH005",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "映澈作品台的表格规整模块在哪个数据集评估？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 2,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH006",
+      "runtime_request": {
+        "question_id": "BH006",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "表格规整模块使用哪个模型？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 1,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH007",
+      "runtime_request": {
+        "question_id": "BH007",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "去除页码实验报告哪些指标？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 2,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH008",
+      "runtime_request": {
+        "question_id": "BH008",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "去除页码实验的平均跳转步数是多少？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 1,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH009",
+      "runtime_request": {
+        "question_id": "BH009",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "映澈作品台的去除页码实验用哪份评估数据？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 1,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH010",
+      "runtime_request": {
+        "question_id": "BH010",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "表5中列切分实验的宏平均F1是多少，用了多少样本？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 1,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH011",
+      "runtime_request": {
+        "question_id": "BH011",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "去噪实验和列切分实验用了相同的数据吗？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 1,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH012",
+      "runtime_request": {
+        "question_id": "BH012",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "2024年映澈作品台的定位命中率是多少？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 1,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH013",
+      "runtime_request": {
+        "question_id": "BH013",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "2026年6月页码锚点模块在N1的定位命中率确定是多少？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 2,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH014",
+      "runtime_request": {
+        "question_id": "BH014",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "映澈具有哪些功能？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 1,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH015",
+      "runtime_request": {
+        "question_id": "BH015",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "页签究竟是哪个模块？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 0,
+        "review_only_span_count": 2,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH016",
+      "runtime_request": {
+        "question_id": "BH016",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "映澈作品台已经实现自动评分了吗？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 1,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH017",
+      "runtime_request": {
+        "question_id": "BH017",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "跨作品推荐现在已经上线了吗？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 1,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH018",
+      "runtime_request": {
+        "question_id": "BH018",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "对照视图模块依赖页码锚点模块吗？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 1,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH019",
+      "runtime_request": {
+        "question_id": "BH019",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "版面样本集L2与合成网格集G4是同一个数据集吗？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 1,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH020",
+      "runtime_request": {
+        "question_id": "BH020",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "参考文献中的某研究组就是映澈作品台开发方吗？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 1,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH021",
+      "runtime_request": {
+        "question_id": "BH021",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "去除页码实验的准确率是多少？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 0,
+        "review_only_span_count": 1,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH022",
+      "runtime_request": {
+        "question_id": "BH022",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "列切分实验宏平均F1的95%置信区间是多少？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 0,
+        "review_only_span_count": 1,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH023",
+      "runtime_request": {
+        "question_id": "BH023",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "2027年映澈作品台的正式评分成绩是多少？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 0,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH024",
+      "runtime_request": {
+        "question_id": "BH024",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "映澈作品台总共有多少真实用户？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 0,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH025",
+      "runtime_request": {
+        "question_id": "BH025",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "另一作者私有实验的访问标记是什么？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 0,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH026",
+      "runtime_request": {
+        "question_id": "BH026",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "制作预算知识库的预算核对标记是什么？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 0,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH027",
+      "runtime_request": {
+        "question_id": "BH027",
+        "user_id": 4101,
+        "knowledge_base_id": "默认知识库",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "制作预算是多少？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 1,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 13
+    },
+    {
+      "question_id": "BH028",
+      "runtime_request": {
+        "question_id": "BH028",
+        "user_id": 4102,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "另一作者私有实验的访问标记是什么？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 1,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 1
+    },
+    {
+      "question_id": "BH029",
+      "runtime_request": {
+        "question_id": "BH029",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "下面只谈表格规整模块。"
+          },
+          {
+            "role": "assistant",
+            "content": "好的，继续讨论表格规整模块。"
+          },
+          {
+            "role": "user",
+            "content": "它在哪个数据集上评估？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 1,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH030",
+      "runtime_request": {
+        "question_id": "BH030",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "对照2026年6月两份页码锚点模块评估记录。"
+          },
+          {
+            "role": "assistant",
+            "content": "可以针对这两份记录提问。"
+          },
+          {
+            "role": "user",
+            "content": "它的定位命中率是哪个数值？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 2,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH031",
+      "runtime_request": {
+        "question_id": "BH031",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "根据2026年文档快照，L0在2026年还用于当前评估吗？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 1,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    },
+    {
+      "question_id": "BH032",
+      "runtime_request": {
+        "question_id": "BH032",
+        "user_id": 4101,
+        "knowledge_base_id": "report_holdout",
+        "as_of": "2026-10-24",
+        "messages": [
+          {
+            "role": "user",
+            "content": "2024年的67.0%可以直接与2026年的93.0%比较并宣称提高26个百分点吗？"
+          }
+        ]
+      },
+      "offline_mapping_validation": {
+        "gold_span_count": 3,
+        "review_only_span_count": 0,
+        "all_gold_offsets_reachable": true
+      },
+      "authorized_parent_count": 12
+    }
+  ],
+  "limitations": [
+    "No index ingestion, vector retrieval, graph extraction, reranking or answer generation occurred.",
+    "Mapping all Gold offsets in all authorized source text is structural reachability, never measured retrieval accuracy.",
+    "Future live adapters must actually deliver these messages and validate the model-visible selected-parent text/offset catalog before scoring.",
+    "Gold/review_evidence/expected_claims are offline-only and absent from every runtime request."
+  ]
+}

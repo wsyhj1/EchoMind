@@ -1,0 +1,55 @@
+{
+  "dataset_version": "echomind-report-holdout-v2-agent-reviewed",
+  "gold_review": "agent_reviewed",
+  "human_reviewed": false,
+  "as_of": "2026-10-24",
+  "documents": 12,
+  "questions": 32,
+  "sources_sha256": "84bce6e6bd9bde6d710bea5dbeb21ce9a72d3f84efab9be988cccd6f7458cf97",
+  "dataset_sha256": "0e0d125ff7415bbb0aebfdba49a82288ad6f5eb9f1b9141917e932a40aa53d25",
+  "new_retrieval_calls": 0,
+  "new_model_calls": 0,
+  "evaluation_status": "source_review_complete_no_live_model_evaluation",
+  "not_a_live_accuracy_result": true,
+  "coverage": [
+    "long_report",
+    "cross_section",
+    "table_row",
+    "same_time_conflict",
+    "ambiguous_alias",
+    "historical",
+    "multi_turn",
+    "unanswerable",
+    "tenant_isolation",
+    "kb_isolation"
+  ],
+  "execution_requirements": [
+    "Dedicated isolated schema/collection and users; never ingest into a real user's library.",
+    "Long documents require source-span/parent mapping rather than requiring the full document in one parent.",
+    "History-bearing cases require a runner that actually supplies history; the existing single-query answer runner is not sufficient.",
+    "Numeric and conflict answers require full evidence and claim review; graph edge hit is not answer correctness."
+  ],
+  "dataset_file": "business_holdout_v2_agent_reviewed.jsonl",
+  "sources_file": "business_holdout_v1.sources.json",
+  "reviewer": "/root/answer_review",
+  "review_file": "docs/rag_accuracy/05_business_holdout_agent_review.json",
+  "review_sha256": "f52e65c3b170a263df44572d8ce44b5926034a965910296526e297459c7c33c6",
+  "input_draft_sha256": "ffaf421bc01a8302d0326506aeda095b4166a8665edaf2faff2237d3b34cc791",
+  "scoring_unit": "exact_source_span",
+  "answer_modes": {
+    "answer": 23,
+    "conflict": 2,
+    "clarify": 1,
+    "abstain": 6
+  },
+  "substantively_revised_questions": [
+    "BH001",
+    "BH007",
+    "BH011",
+    "BH013",
+    "BH030",
+    "BH031",
+    "BH032"
+  ],
+  "runtime_tuning_from_gold_allowed": false
+}

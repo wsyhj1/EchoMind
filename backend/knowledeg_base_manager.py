@@ -9,6 +9,8 @@ from pymilvus import AnnSearchRequest, RRFRanker
 import logging
 from langgraph.config import get_stream_writer
 import time
+import json
+from observability import timed, measure, record_context
 
 
 logger = logging.getLogger(__name__)
@@ -113,13 +115,13 @@ class KnowledgeBaseManager:
         index_params.add_index(
             field_name="knowledge_base_id",
             index_name="kb_id_idx",
-            index_type="STL_SORT",
+            index_type="INVERTED",
         )
 
         index_params.add_index(
             field_name="file_hash",
             index_name="file_hash_idx",
-            index_type="STL_SORT",
+            index_type="INVERTED",
         )
 
         # 异步创建集合
@@ -168,12 +170,27 @@ class KnowledgeBaseManager:
                 }
             )
 
-        # 批量向量化
-        dense_vectors = await self.embeddings.aembed_documents(texts)
-
-        # 填充向量
-        for i in range(len(data)):
-            data[i]["dense_vector"] = dense_vectors[i]
+        # Reuse embeddings, while retaining a row for every parent/file source.
+        unique_texts = list(dict.fromkeys(texts))
+        vectors = {}
+        hashes = list(dict.fromkeys(c.metadata.get("child_chunk_hash", "") for c in chunks))[:1000]
+        if hashes and hashes != [""]:
+            try:
+                existing = await self.client.query(collection_name=self.collection_name,
+                    filter=f'user_id == {user_id} and knowledge_base_id == {json.dumps(knowledge_base_id)} and metadata["child_chunk_hash"] in {json.dumps(hashes)}',
+                    output_fields=["text", "dense_vector"], limit=1000)
+                vectors = {row["text"]: row["dense_vector"] for row in existing
+                           if row["text"] in unique_texts and len(row["dense_vector"]) == self.dense_dim}
+            except Exception as error:
+                logger.warning("embedding_reuse_unavailable error_type=%s", type(error).__name__)
+        missing = [text for text in unique_texts if text not in vectors]
+        if missing:
+            generated = await self.embeddings.aembed_documents(missing)
+            if len(generated) != len(missing):
+                raise RuntimeError("Embedding count differs from submitted chunks")
+            vectors.update(zip(missing, generated))
+        for item in data:
+            item["dense_vector"] = vectors[item["text"]]
 
         result = await self.client.insert(
             collection_name=self.collection_name, data=data
@@ -184,6 +201,7 @@ class KnowledgeBaseManager:
         )
         return result
 
+    @timed("embedding", "knowledge")
     async def get_dense_vector(self, query: str) -> List[float]:
         """生成稠密向量，带重试机制"""
         max_retries = 3
@@ -191,7 +209,8 @@ class KnowledgeBaseManager:
 
         for attempt in range(max_retries):
             try:
-                dense_vector = await self.embeddings.aembed_query(query)
+                with measure("embedding_attempt", "knowledge", attempt=attempt + 1):
+                    dense_vector = await self.embeddings.aembed_query(query)
                 break
             except Exception as e:
                 logger.error(
@@ -202,28 +221,47 @@ class KnowledgeBaseManager:
                     return []
                 else:
                     logger.warning(f"等待 1 秒后重试...")
-                    await asyncio.sleep(1)
+                    with measure("retry_wait", "knowledge"):
+                        await asyncio.sleep(1)
                     continue
 
         return dense_vector
 
     async def hybrid_retrieval_knowledge_base(
-        self, query: str, knowledge_base_id: str, user_id: int, top_k: int = 5
+        self, query: str, knowledge_base_id: str, user_id: int, top_k: int = 5,
+        retrieval_mode: str = "hybrid",
     ) -> List[str]:
         """混合检索，返回去重后的父块 ID 列表，混合检索失败时自动降级为稠密向量检索"""
-        
+        return await self._retrieve(query, knowledge_base_id, user_id, top_k, retrieval_mode)
+
+    async def retrieve_knowledge_hits(self, query: str, knowledge_base_id: str, user_id: int,
+                                      top_k: int = 5, retrieval_mode: str = "hybrid"):
+        """Return every ordered child hit with its score space and source identity."""
+        from rag.types import RetrievalScope, RetrievalOptions
+        RetrievalScope(user_id, knowledge_base_id)
+        RetrievalOptions(retrieval_mode=retrieval_mode)
+        if type(top_k) is not int or not 1 <= top_k <= 20:
+            raise ValueError("top_k must be between 1 and 20")
+        return await self._retrieve(query, knowledge_base_id, user_id, top_k, retrieval_mode, structured=True)
+
+    async def _retrieve(self, query, knowledge_base_id, user_id, top_k, retrieval_mode, structured=False):
         # 构建过滤表达式
         if knowledge_base_id == "默认知识库":
             filter_expr = f"user_id == {user_id}"
         else:
-            filter_expr = f'knowledge_base_id == "{knowledge_base_id}" and user_id == {user_id}'
+            filter_expr = f'knowledge_base_id == {json.dumps(knowledge_base_id)} and user_id == {user_id}'
         
-        writer = get_stream_writer()
+        try:
+            writer = get_stream_writer()
+        except RuntimeError:
+            writer = lambda _: None  # direct retriever-only evaluation has no LangGraph runtime
         writer("正在准备查询向量嵌入...")
         start_time = time.time()
         # 生成稠密向量，带重试机制
         dense_vector = await self.get_dense_vector(query)
         if not dense_vector:
+            if structured:
+                raise RuntimeError("Embedding unavailable")
             return []
         writer(f"查询向量嵌入耗时：{time.time() - start_time:.4f} 秒")
 
@@ -246,18 +284,23 @@ class KnowledgeBaseManager:
 
         # 异步混合检索
         try:
-            results = await self.client.hybrid_search(
-                collection_name=self.collection_name,
-                reqs=[dense_req, sparse_req],
-                ranker=RRFRanker(),
-                limit=top_k * 3,
-                output_fields=["parent_id"],
-            )
-            # 返回去重后的父块 ID 列表
-            return list(set([hit["entity"]["parent_id"] for hit in results[0]]))
+            if retrieval_mode == "dense":
+                return await self._dense_search(query, dense_vector, filter_expr, top_k, structured=structured)
+            with measure("retrieval", "knowledge", mode="hybrid") as call:
+                results = await self.client.hybrid_search(
+                    collection_name=self.collection_name, reqs=[dense_req, sparse_req],
+                    ranker=RRFRanker(), limit=top_k * 3,
+                    output_fields=["id", "parent_id", "knowledge_base_id", "file_hash", "text"],
+                )
+                call["attributes"]["returned"] = len(results[0]) if results else 0
+            return self._record_hits(results, query, "hybrid", structured=structured)
         except Exception as e:
             logger.error(f"混合检索失败：{e},降级为稠密向量检索")
 
+            return await self._dense_search(query, dense_vector, filter_expr, top_k, fallback=True, structured=structured)
+
+    async def _dense_search(self, query, dense_vector, filter_expr, top_k, fallback=False, structured=False):
+        with measure("retrieval", "knowledge", mode="dense", fallback=fallback) as call:
             results = await self.client.search(
                 collection_name=self.collection_name,
                 data=[dense_vector],
@@ -265,16 +308,32 @@ class KnowledgeBaseManager:
                 search_params={"metric_type": "COSINE", "params": {"ef": 64}},
                 limit=top_k,
                 filter=filter_expr,
-                output_fields=["parent_id"],
+                output_fields=["id", "parent_id", "knowledge_base_id", "file_hash", "text"],
             )
+            call["attributes"]["returned"] = len(results[0]) if results else 0
+        return self._record_hits(results, query, "dense", structured=structured, fallback=fallback)
 
-            parent_ids = set()
-            if results and len(results) > 0:
-                for hit in results[0]:
-                    entity = hit["entity"]
-                    parent_id = entity.get("parent_id")
-                    parent_ids.add(parent_id)
-            return list(parent_ids)
+    @staticmethod
+    def _record_hits(results, query, mode, structured=False, fallback=False):
+        parent_ids = []
+        child_hits = []
+        for rank, hit in enumerate(results[0] if results else [], 1):
+            entity = hit["entity"]
+            record_context("candidate", "knowledge", entity.get("text", ""),
+                           source_id=str(entity.get("id", hit.get("id", ""))),
+                           parent_id=entity["parent_id"], knowledge_base_id=entity.get("knowledge_base_id"),
+                           file_hash=entity.get("file_hash"), rank=rank, score=hit.get("distance"),
+                           score_type="rrf" if mode == "hybrid" else "cosine", query=query,
+                           included_in_prompt=False)
+            if entity["parent_id"] not in parent_ids:
+                parent_ids.append(entity["parent_id"])
+            if structured:
+                from rag.types import ChildHit
+                child_hits.append(ChildHit(parent_id=entity["parent_id"], knowledge_base_id=entity["knowledge_base_id"],
+                    child_id=str(entity.get("id", hit.get("id", ""))), rank=rank, score=hit.get("distance"),
+                    score_type="rrf" if mode == "hybrid" else "cosine", source="rrf" if mode == "hybrid" else "dense",
+                    file_hash=entity.get("file_hash", ""), fallback=fallback))
+        return child_hits if structured else parent_ids
 
     async def delete_knowledge_file_chunks(
         self, knowledge_base_id: str, user_id: int
@@ -285,15 +344,13 @@ class KnowledgeBaseManager:
         """
         try:
             filter_condition = (
-                f'knowledge_base_id == "{knowledge_base_id}" and user_id == {user_id}'
+                f'knowledge_base_id == {json.dumps(knowledge_base_id)} and user_id == {user_id}'
             )
             result = await self.client.delete(
                 collection_name=self.collection_name, filter=filter_condition
             )
             print(f"删除知识库的结果：{result}")
-            deleted_count = (
-                result["delete_count"] if hasattr(result, "delete_count") else 0
-            )
+            deleted_count = int(result.get("delete_count", 0))
             logger.info(
                 f"从 Milvus 删除知识库 {knowledge_base_id}（用户 {user_id}）的所有文件子块"
             )
@@ -309,7 +366,7 @@ class KnowledgeBaseManager:
     ) -> int:
         """删除指定文件的所有子块（只负责 Milvus 数据删除）"""
         try:
-            filter = f'knowledge_base_id == "{knowledge_base_id}" and file_hash == "{file_hash}" and user_id == {user_id}'
+            filter = f'knowledge_base_id == {json.dumps(knowledge_base_id)} and file_hash == {json.dumps(file_hash)} and user_id == {user_id}'
 
             result = await self.client.delete(
                 collection_name=self.collection_name, filter=filter
@@ -317,9 +374,7 @@ class KnowledgeBaseManager:
             logger.info(
                 f"从 Milvus 删除文件 {file_hash[:16]} 的子块，影响数量：{result['delete_count']}"
             )
-            deleted_count = (
-                result["delete_count"] if hasattr(result, "delete_count") else 0
-            )
+            deleted_count = int(result.get("delete_count", 0))
             return deleted_count
 
         except Exception as e:

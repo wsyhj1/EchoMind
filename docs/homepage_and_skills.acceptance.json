@@ -1,0 +1,43 @@
+{
+  "checked_at": "2026-10-26T03:32:51.619764+00:00",
+  "tests": {
+    "backend": 203,
+    "frontend": 50,
+    "backup": 4,
+    "core_evaluation": 44
+  },
+  "total": 301,
+  "browser": {
+    "desktop_mobile_clean_layout": true,
+    "management_and_more_collapsed": true,
+    "skill_help_in_settings": true,
+    "slash_amp_chinese_search": true,
+    "enter_tab_only_choose": true,
+    "arrow_escape": true,
+    "ime_no_accidental_send": true,
+    "no_duplicate_handlers_after_rerun": true,
+    "fixture_requests": 1,
+    "actual_model_calls": 0,
+    "user_settings_unchanged": true
+  },
+  "skill_catalog": {
+    "version": "echomind-skills-v1:067d0affcde4db9c",
+    "agent_skills": 6,
+    "local_commands": 3
+  },
+  "settings_mode": "local",
+  "temporary_fixture_services_stopped": true,
+  "actual_model_calls_in_browser_acceptance": 0,
+  "preserves_prior_acceptance": true,
+  "evidence_sha256": {
+    ".runtime\\homepage_skills_full_checks.log": "441f1a47cfa2076dc8c58119800b2108c7b3287d4598f7eb3c913b2f6f2b531d",
+    ".runtime\\homepage_skills_browser_result.json": "93e009aaf88983e0b69cc1f4620d9db31bc0b883340c5764565c683369ad9a97",
+    ".runtime\\skills_multiturn.log": "46acd0b347bca763ea0e8a61bb7fd8ec4fb1db9f41ad4031c761ac765416de1b"
+  },
+  "supplementary_frontend_verification": {
+    "tests": 50,
+    "result": "passed",
+    "purpose": "Settings uses one close action for the skill help panel",
+    "log_sha256": "3f266f41a755099403a333e5c42f4392ea78d592e4b59b47f3831b397875c2a0"
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "checked_at": "2026-10-25T07:51:17.941483+00:00",
+  "tests": {
+    "backend": 181,
+    "frontend": 39,
+    "backup": 4,
+    "core_evaluation": 44,
+    "total": 268,
+    "failed": 0,
+    "optional_ragas_executed": false
+  },
+  "graph": {
+    "all_three_files_ready": true,
+    "parent_count": 136,
+    "original_parent_content_unchanged": true,
+    "parent_content_sha256": "2c11051e181a90d6b5326a1914747f51030e21efc70176bb1cc27cf1749dcc17",
+    "semantic_policy": "explicit-directed-quote-v3-report-composition",
+    "query": "可执行系统有哪些模块？",
+    "actual_graph_path_count": 3,
+    "actual_graph_parent_count": 1,
+    "actual_predicate": "HAS_MODULE",
+    "other_user_and_kb_isolation_passed": true,
+    "retained_version_jobs": [
+      {
+        "extraction_version": "v2",
+        "status": "READY",
+        "count": 3
+      },
+      {
+        "extraction_version": "v3",
+        "status": "READY",
+        "count": 2
+      }
+    ]
+  },
+  "graph_documents": [
+    {
+      "file_name": "个人简历.pdf",
+      "extraction_version": "v2",
+      "status": "READY",
+      "generation": 1,
+      "parents_completed": 2,
+      "parents_total": 2,
+      "model_calls": 0,
+      "lifetime_model_calls": 0,
+      "usable_relations": 0,
+      "effective_ready_version": "v2"
+    },
+    {
+      "file_name": "知止_官方模板完整作品报告.docx",
+      "extraction_version": "v3",
+      "status": "READY",
+      "generation": 2,
+      "parents_completed": 53,
+      "parents_total": 53,
+      "model_calls": 57,
+      "lifetime_model_calls": 111,
+      "usable_relations": 3,
+      "effective_ready_version": "v3"
+    },
+    {
+      "file_name": "知止_官方模板完整作品报告.pdf",
+      "extraction_version": "v3",
+      "status": "READY",
+      "generation": 1,
+      "parents_completed": 81,
+      "parents_total": 81,
+      "model_calls": 83,
+      "lifetime_model_calls": 83,
+      "usable_relations": 0,
+      "effective_ready_version": "v3"
+    }
+  ],
+  "one_authorized_answer": {
+    "checked_at": "2026-10-25T07:38:17.203001+00:00",
+    "run_id": "3347c8ef-5593-4f9b-9fc2-41402ab65857",
+    "session_id": "phase5_report_citation_20261025",
+    "answer_status": "complete",
+    "persisted": true,
+    "citation_occurrences": 2,
+    "structure_verified": 2,
+    "semantic_verified": 0,
+    "selected_plaintext_nonempty": true,
+    "foreign_user_rejected": true,
+    "settings_revision": 2,
+    "profile_unchanged": true,
+    "memory_disabled": true,
+    "evaluation_mode": true,
+    "graph_used": false,
+    "new_answer_runs": 1,
+    "business_holdout_executed": false
+  },
+  "answer_timing_note": "The one authorized answer preceded the final linking correction; its graph_used=false is preserved. Subsequent graph verification was local-only; no second cloud answer was generated.",
+  "business_holdout": {
+    "status": "validated_no_live_execution",
+    "question_count": 32,
+    "source_document_count": 12,
+    "gold_span_count": 33,
+    "history_case_count": 2,
+    "new_model_calls": 0,
+    "new_retrieval_calls": 0,
+    "answer_accuracy": null
+  },
+  "runtime": {
+    "auth_mode": "local",
+    "local_user_id": 1,
+    "settings_revision": 2,
+    "profile_unchanged": true,
+    "graph_enabled_for_user": true,
+    "global_auto_extraction": false,
+    "environment_file_modified": false,
+    "github_ci_executed": false,
+    "production_backup_executed": false,
+    "git_commit_created": false
+  },
+  "evidence_file_sha256": {
+    "phase5_handoff_checks.log": "17ed2bb2d7ad7c9177af8bd1e62e67d16c611af88ae0210971b89d8042e92d08",
+    "phase5_graph_final_result.json": "537476f399ad54c0ad5030b08a7585fb5194fe636cea5ff21426ae294af01101",
+    "phase5_citation_live_result.json": "e6152b4e92a57137d36c34f1e0c388e0f5f9b4018e79d7012adda3688d086d9c",
+    "phase5_management_final_ui.log": "d8f4733cef2c7ed3202248ab37face5ceb1210d95f7f9a1e60334e79a79ebded",
+    "phase5_citation_ui.log": "84e21b5223d3149c634c19b5a46065c467cdb2a17012567f0e787f666954b6b9",
+    "graph_management_debug/lifecycle_before.log": "d4a59b3a02a45413b76d71e6679cf9d81db0e4c74e1d0d118156d34726ae226a",
+    "graph_management_debug/lifecycle_final.log": "b0a3d5f3a71c2448cf831eddf5a240162a7f83d01e81be35bfddeb198afda9ca",
+    "graph_management_debug/linking_before.log": "5f63a75395f7229af508eeec0c0e75811d3c17f3705e1dd19cc93dec6c35e6ba",
+    "graph_management_debug/linking_after.log": "d8ca4c7cc3940092d5f346ad76043f7ea5d01164a92307f7e51a92515f732959"
+  },
+  "limitations": [
+    "No measured accuracy for all 32 business holdout questions.",
+    "Citation verification is structural, semantic verification remains unperformed.",
+    "Report PDF produced no usable v3 relation; text retrieval remains necessary.",
+    "Real multiple-browser accounts, TLS, production restore and SLA are not certified."
+  ]
+}
